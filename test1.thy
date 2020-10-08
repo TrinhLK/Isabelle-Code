@@ -63,6 +63,6 @@ lemma test1:
 theorem test2:
 \<open>((\<And>l\<in>L.\<And>j\<in>L.\<And>u\<in>U.\<And>t\<in>T. \<not>P j u t l) \<or> (\<Or>h\<in>H.\<Or>i\<in>I.\<Or>v\<in>V.\<And>k\<in>K. (Q i v k h \<and> (\<And>h\<^sub>1\<in>H\<^sub>1. \<not>Q i v k h\<^sub>1))))
 \<and> (\<Or>l\<in>L.\<Or>h\<in>H.((\<And>j\<in>L.\<And>u\<in>U.\<And>t\<in>T.\<And>l\<^sub>1\<in>L\<^sub>1. \<not>P j u t l\<^sub>1) \<and> (\<Or>i\<in>I.\<Or>v\<in>V.\<And>k\<in>K.\<And>h\<^sub>1\<in>H\<^sub>1. \<not>Q i v k h\<^sub>1)))
-\<Longrightarrow> \<Or>l\<in>L.\<Or>h\<in>H.(\<And>j\<in>L.\<And>u\<in>U.(\<And>t\<in>T. P j u t l \<longrightarrow> (\<Or>i\<in>I.\<Or>v\<in>V.\<And>k\<in>K. Q i v k h)) \<and> (\<And>l\<^sub>1\<in>L\<^sub>1. \<not>P j u t l\<^sub>1) \<and> (\<And>h\<^sub>1\<in>H\<^sub>1. \<not>Q i v k h\<^sub>1))\<close>
+\<Longrightarrow> \<Or>l\<in>L.\<Or>h\<in>H.(\<And>j\<in>L.\<And>u\<in>U.\<And>t\<in>T.( P j u t l \<longrightarrow> (\<Or>i\<in>I.\<Or>v\<in>V.\<And>k\<in>K. Q i v k h)) \<and> (\<And>l\<^sub>1\<in>L\<^sub>1. \<not>P j u t l\<^sub>1) \<and> (\<Or>i\<in>I.\<Or>v\<in>V.\<And>k\<in>K.\<And>h\<^sub>1\<in>H\<^sub>1. \<not>Q i v k h\<^sub>1))\<close>
 using [[simp_trace]]
   apply auto
