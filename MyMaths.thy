@@ -31,8 +31,8 @@ lemma "(\<forall>l \<in> L.\<forall>j \<in> J.\<forall>u \<in> U.\<forall>t \<in
   apply (auto)
   done
 
-lemma test1: "(\<And>j\<in>J.\<And>u\<in>U.\<And>t\<in>T.\<And>l\<in>L.\<And>l1\<noteq>l. \<not>P j u t l1) \<or> (\<Or>i\<in>I.\<Or>v\<in>V.\<And>k\<in>K.\<Or>h\<in>H.Q i v k h) 
-\<Longrightarrow>  (\<Or>i\<in>I.\<Or>v\<in>V.\<And>k\<in>K.\<Or>h\<in>H.Q i v k h) \<or> (\<And>j\<in>J.\<And>u\<in>U.\<And>t\<in>T.\<And>l\<in>L.\<And>l1\<noteq>l. \<not>P j u t l1)"
+lemma test1: "(\<forall>j\<in>J.\<forall>u\<in>U.\<forall>t\<in>T.\<forall>l\<in>L.\<forall>l1\<noteq>l. \<not>P j u t l1) \<or> (\<exists>i\<in>I.\<exists>v\<in>V.\<forall>k\<in>K.\<Or>h\<in>H.Q i v k h) 
+\<Longrightarrow> (\<exists>i\<in>I.\<exists>v\<in>V.\<forall>k\<in>K.\<Or>h\<in>H.Q i v k h) \<or> (\<forall>j\<in>J.\<forall>u\<in>U.\<forall>t\<in>T.\<forall>l\<in>L.\<forall>l1\<noteq>l. \<not>P j u t l1)"
   apply (auto)
   done
 
