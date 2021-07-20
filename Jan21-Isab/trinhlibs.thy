@@ -40,11 +40,18 @@ fun product_betaSet :: "'a list list list \<Rightarrow> 'a list list list" where
 
 (*----definitions------------------------------------------------------------------------*)
 definition t_SyncInstance_1 :: "(nat * nat list) list list list" where
-"t_SyncInstance_1 = [[[(0, [1,2,3])]]]"
+"t_SyncInstance_1 = [[[(0, [1,2,3]), (1,[4,5])]], [[(3,[6,7])]]]"
 definition t_TrigInstance_1 :: "(nat * nat list) list list list" where
-"t_TrigInstance_1 = [[[(0, [5, 6]), (1, [7, 8, 9])]], [[(2,[10]), (3, [11,12])]] ]"
+"t_TrigInstance_1 = [[[(0, [5, 6]), (1, [7, 8, 9])]], [[(2,[10]), (3, [11,12])]]]"
 definition t_betaSet_1 :: "(nat * nat) list list list" where
 "t_betaSet_1 = product_betaSet (mk_pair_4 t_TrigInstance_1)"
 
 value "t_betaSet_1"
+
+(*----lemma equiv------------------------------------------------------------------------*)
+lemma my_equiv: "((\<forall>i \<in> set t_TrigInstance_1. \<forall>v \<in> set i. \<forall>k \<in> set v. \<exists>h \<in> set (snd k).\<forall>h1 \<in> set (snd k) - {h}. \<not> Q (fst k) h1))
+\<Longrightarrow> (\<exists>bet \<in> set t_betaSet_1.\<forall>elm \<in> set bet.\<forall>el1 \<in> set elm.\<forall>h \<in> set (lookup_3 (fst el1) t_TrigInstance_1) - {snd el1}. \<not>Q (fst el1) h)"
+proof -
+  show ?thesis sorry
+qed
 end

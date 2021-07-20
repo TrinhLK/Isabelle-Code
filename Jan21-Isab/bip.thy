@@ -3,13 +3,18 @@ theory bip
 begin
 
 (*---- BIP encoding - 1st trans----*)
-(*2nd style*)
+(*2nd style:
+(\<not>P(t,l) \<or> Q(el,el)) \<and> \<not>P(t,l1) \<and> \<not>Q(el1,h)
+*)
 value "\<exists>bet \<in> set t_betaSet_1. (\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<exists>t \<in> set u.\<exists>l \<in> set (snd t).(\<not>P (fst t) l \<or> (\<forall>export \<in> set bet.\<exists>elm \<in> set export. Q (fst elm) (snd elm)))
 \<and> (\<forall>elm \<in> set bet.\<forall>el1 \<in> set elm.\<forall>h \<in> set (lookup_3 (fst el1) t_TrigInstance_1) - {snd el1}. \<not>Q (fst el1) h)
 \<and> (\<forall>l1 \<in> set (snd t) - {l}. \<not> P (fst t) l1)
 )"
 
 (*2nd style - 1trans*)
+(*(\<not>P(t,l) \<or> Q(el,el)) \<and> \<not>P(t,l1) \<and> \<not>Q(el1,h)
+\<equiv> (\<not>P(t,l) \<and> \<not>P(t,l1) \<and> \<not>Q(el1,h)) \<or> (Q(el,el) \<and> \<not>P(t,l1) \<and> \<not>Q(el1,h))
+*)
 value "\<exists>bet \<in> set t_betaSet_1. (
   \<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<exists>t \<in> set u.\<exists>l \<in> set (snd t).(
     (\<not>P (fst t) l 
@@ -39,6 +44,8 @@ lemma fst_trans: "\<exists>bet \<in> set t_betaSet_1. (\<forall>j \<in> set t_Sy
   by metis
 
 (*---- BIP encoding - 2nd trans----*)
+(*(\<not>P(t,l) \<or> Q(el1,el1)) \<and> \<not>P(t,l1) \<and> \<not>Q(el1,h)
+\<equiv> [\<not>P(t,l) \<and> \<not>P(t,l1) \<and> \<not>Q(el1,h)] \<or> [Q(el1,el1) \<and> \<not>P(t,l1) \<and> \<not>Q(el1,h)]*)
 value "\<exists>bet \<in> set t_betaSet_1. 
 (
   \<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<exists>t \<in> set u.\<exists>l \<in> set (snd t).(
@@ -55,6 +62,7 @@ value "\<exists>bet \<in> set t_betaSet_1.
 )"
 
 (*---- 2nd-trans - the 1st-sub ----*)
+(*(\<not>Pi \<and> \<not>Pi' \<and> \<not>Qj')*)
 value "\<exists>bet \<in> set t_betaSet_1.(\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<exists>t \<in> set u.\<exists>l \<in> set (snd t).(\<not>P (fst t) l  \<and> (\<forall>elm \<in> set bet.\<forall>el1 \<in> set elm.\<forall>h \<in> set (lookup_3 (fst el1) t_TrigInstance_1) - {snd el1}. \<not>Q (fst el1) h) \<and> (\<forall>l1 \<in> set (snd t) - {l}. \<not> P (fst t) l1)))"
 
 value "\<exists>bet \<in> set t_betaSet_1.((\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<exists>t \<in> set u.\<forall>l \<in> set (snd t).(\<not>P (fst t) l))  \<and> ((\<forall>elm \<in> set bet.\<forall>el1 \<in> set elm.\<forall>h \<in> set (lookup_3 (fst el1) t_TrigInstance_1) - {snd el1}. \<not>Q (fst el1) h)))"
@@ -71,10 +79,19 @@ value "\<exists>bet \<in> set t_betaSet_1.((\<forall>j \<in> set t_SyncInstance_
 value "((\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j.\<forall>t \<in> set u. \<forall>l \<in> set (snd t). \<not>P (fst t) l) 
 \<and> (\<forall>i \<in> set t_TrigInstance_1. \<forall>v \<in> set i. \<forall>k \<in> set v. \<exists>h \<in> set (snd k).\<forall>h1 \<in> set (snd k) - {h}. \<not> Q (fst k) h1))"
 
+(*compare1 doesn't work*)
 (*
 lemma compare1: "\<exists>bet \<in> set t_betaSet_1.((\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<exists>t \<in> set u.\<forall>l \<in> set (snd t).(\<not>P (fst t) l))  \<and> ((\<forall>elm \<in> set bet.\<forall>el1 \<in> set elm.\<forall>h \<in> set (lookup_3 (fst el1) t_TrigInstance_1) - {snd el1}. \<not>Q (fst el1) h)))
-==> ((\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j.\<forall>t \<in> set u. \<forall>l \<in> set (snd t). \<not>P (fst t) l) 
+\<Longrightarrow> ((\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j.\<forall>t \<in> set u. \<forall>l \<in> set (snd t). \<not>P (fst t) l) 
 \<and> (\<forall>i \<in> set t_TrigInstance_1. \<forall>v \<in> set i. \<forall>k \<in> set v. \<exists>h \<in> set (snd k).\<forall>h1 \<in> set (snd k) - {h}. \<not> Q (fst k) h1))" 
+  unfolding t_betaSet_1_def t_SyncInstance_1_def t_TrigInstance_1_def
+  sledgehammer
+*)
+
+(*
+lemma rev_compare1: "((\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j.\<forall>t \<in> set u. \<forall>l \<in> set (snd t). \<not>P (fst t) l) 
+\<and> (\<forall>i \<in> set t_TrigInstance_1. \<forall>v \<in> set i. \<forall>k \<in> set v. \<exists>h \<in> set (snd k).\<forall>h1 \<in> set (snd k) - {h}. \<not> Q (fst k) h1))
+\<Longrightarrow> \<exists>bet \<in> set t_betaSet_1.((\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<exists>t \<in> set u.\<forall>l \<in> set (snd t).(\<not>P (fst t) l))  \<and> ((\<forall>elm \<in> set bet.\<forall>el1 \<in> set elm.\<forall>h \<in> set (lookup_3 (fst el1) t_TrigInstance_1) - {snd el1}. \<not>Q (fst el1) h)))" 
   unfolding t_betaSet_1_def t_SyncInstance_1_def t_TrigInstance_1_def
   sledgehammer
 *)
@@ -84,6 +101,7 @@ lemma compare1: "\<exists>bet \<in> set t_betaSet_1.((\<forall>j \<in> set t_Syn
 
 (*-----------------------------------------------------------------------------------------------*)
 (*---- 2nd-trans - the 2nd-sub ----*)
+(*(Qj \<and> \<not>Pi' \<and> \<not>Qj')*)
 value "
 \<exists>bet \<in> set t_betaSet_1.(\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<exists>t \<in> set u.\<exists>l \<in> set (snd t).
 (\<forall>elm \<in> set bet.\<exists>el1 \<in> set elm. Q (fst el1) (snd el1) 
