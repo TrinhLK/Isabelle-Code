@@ -18,37 +18,26 @@ value "\<exists>bet \<in> set t_betaSet_1.(\<forall>j \<in> set t_SyncInstance_1
 \<and> (\<forall>elm \<in> set bet.\<forall>el1 \<in> set elm.\<forall>h \<in> set (lookup_3 (fst el1) t_TrigInstance_1) - {snd el1}. \<not>Q (fst el1) h)
 )"
 
-lemma test_1:
+value "(\<exists>bet \<in> set t_betaSet_1.\<forall>elm \<in> set bet.\<forall>el1 \<in> set elm.\<forall>h \<in> set (lookup_3 (fst el1) t_TrigInstance_1) - {snd el1}. \<not>Q (fst el1) h) 
+\<and> (\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<forall>t \<in> set u.\<forall>l \<in> set (snd t).(\<not>P (fst t) l))"
+
+lemma bip_ve1_trans:
 "\<exists>bet \<in> set t_betaSet_1.(\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<exists>t \<in> set u.\<exists>l \<in> set (snd t).(\<not>P (fst t) l)
 \<and> (\<forall>l1 \<in> set (snd t) - {l}. \<not> P (fst t) l1)
 \<and> (\<forall>j1 \<in> set t_SyncInstance_1.\<forall>u1 \<in> set j1.\<forall>t1 \<in> set u1-{t}.\<forall>l2 \<in> set (snd t1). \<not> P (fst t1) l2)
 \<and> (\<forall>elm \<in> set bet.\<forall>el1 \<in> set elm.\<forall>h \<in> set (lookup_3 (fst el1) t_TrigInstance_1) - {snd el1}. \<not>Q (fst el1) h)
 )
-\<Longrightarrow> (\<exists>bet \<in> set t_betaSet_1.(\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<exists>t \<in> set u.\<exists>l \<in> set (snd t).(\<not>P (fst t) l)
-\<and> (\<forall>elm \<in> set bet.\<forall>el1 \<in> set elm.\<forall>h \<in> set (lookup_3 (fst el1) t_TrigInstance_1) - {snd el1}. \<not>Q (fst el1) h)))"
-  by metis
+\<Longrightarrow> (\<exists>bet \<in> set t_betaSet_1.\<forall>elm \<in> set bet.\<forall>el1 \<in> set elm.\<forall>h \<in> set (lookup_3 (fst el1) t_TrigInstance_1) - {snd el1}. \<not>Q (fst el1) h) 
+\<and> (\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<forall>t \<in> set u.\<forall>l \<in> set (snd t).(\<not>P (fst t) l))"
+  by (smt DiffI empty_iff insertE list.set_intros(1) t_SyncInstance_1_def)
 
-lemma test_2:
-"\<exists>bet \<in> set t_betaSet_1.(\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<exists>t \<in> set u.\<exists>l \<in> set (snd t).(\<not>P (fst t) l)
-\<and> (\<forall>l1 \<in> set (snd t) - {l}. \<not> P (fst t) l1)
-\<and> (\<forall>j1 \<in> set t_SyncInstance_1.\<forall>u1 \<in> set j1.\<forall>t1 \<in> set u1-{t}.\<forall>l2 \<in> set (snd t1). \<not> P (fst t1) l2)
-)
-\<Longrightarrow> (\<exists>bet \<in> set t_betaSet_1.(\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<exists>t \<in> set u.\<exists>l \<in> set (snd t).(\<not>P (fst t) l)))"
-  by metis
+(*BIP - ve 1*)
+value "(\<exists>bet \<in> set t_betaSet_1.\<forall>elm \<in> set bet.\<forall>el1 \<in> set elm.\<forall>h \<in> set (lookup_3 (fst el1) t_TrigInstance_1) - {snd el1}. \<not>Q (fst el1) h) 
+\<and> (\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<forall>t \<in> set u.\<forall>l \<in> set (snd t).(\<not>P (fst t) l))"
 
-lemma test_3:"(\<exists>bet \<in> set t_betaSet_1.(\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<exists>t \<in> set u.\<exists>l \<in> set (snd t).(\<not>P (fst t) l)
-\<and> (\<forall>elm \<in> set bet.\<forall>el1 \<in> set elm.\<forall>h \<in> set (lookup_3 (fst el1) t_TrigInstance_1) - {snd el1}. \<not>Q (fst el1) h)))
-\<Longrightarrow>
-((\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<exists>t \<in> set u.\<exists>l \<in> set (snd t).(\<not>P (fst t) l)) \<and> (\<exists>bet \<in> set t_betaSet_1.\<forall>elm \<in> set bet.\<forall>el1 \<in> set elm.\<forall>h \<in> set (lookup_3 (fst el1) t_TrigInstance_1) - {snd el1}. \<not>Q (fst el1) h))"
-  by (metis list.set_intros(1) t_SyncInstance_1_def)
-
-lemma bip_ve_1:"(\<exists>bet \<in> set t_betaSet_1.(\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<exists>t \<in> set u.\<exists>l \<in> set (snd t).(\<not>P (fst t) l)
-\<and> (\<forall>l1 \<in> set (snd t) - {l}. \<not> P (fst t) l1)
-\<and> (\<forall>j1 \<in> set t_SyncInstance_1.\<forall>u1 \<in> set j1.\<forall>t1 \<in> set u1-{t}.\<forall>l2 \<in> set (snd t1). \<not> P (fst t1) l2)
-\<and> (\<forall>elm \<in> set bet.\<forall>el1 \<in> set elm.\<forall>h \<in> set (lookup_3 (fst el1) t_TrigInstance_1) - {snd el1}. \<not>Q (fst el1) h)))
-\<Longrightarrow> ((\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<exists>t \<in> set u.\<exists>l \<in> set (snd t).(\<not>P (fst t) l)) \<and> (\<exists>bet \<in> set t_betaSet_1.\<forall>elm \<in> set bet.\<forall>el1 \<in> set elm.\<forall>h \<in> set (lookup_3 (fst el1) t_TrigInstance_1) - {snd el1}. \<not>Q (fst el1) h))"
-  by (metis (mono_tags, hide_lams) test_3)
-
+(*JavaBIP - ve 1*)
+value "(\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j.\<forall>t \<in> set u. \<forall>l \<in> set (snd t). \<not>P (fst t) l)
+\<and> (\<forall>i \<in> set t_TrigInstance_1. \<forall>v \<in> set i. \<forall>k \<in> set v. \<exists>h \<in> set (snd k).\<forall>h1 \<in> set (snd k) - {h}. \<not> Q (fst k) h1)"
 (*
 (\<not>P(t,l) \<or> Q(el,el)) \<and> \<not>P(t,l1) \<and> \<not>Q(el1,h)
 \<equiv> \<not>P(t,l) \<and> \<not>P(t,l1) \<and> \<not>Q(el1,h) \<or> Q(el,el)\<and> \<not>P(t,l1) \<and> \<not>Q(el1,h)
@@ -65,22 +54,23 @@ value "\<exists>bet \<in> set t_betaSet_1. (\<forall>j \<in> set t_SyncInstance_
 value "\<exists>bet \<in> set t_betaSet_1. (
 (\<forall>elm \<in> set bet.\<exists>el1 \<in> set elm. Q (fst el1) (snd el1))
 \<and> (\<forall>elm \<in> set bet.\<forall>el1 \<in> set elm.\<forall>h \<in> set (lookup_3 (fst el1) t_TrigInstance_1) - {snd el1}. \<not>Q (fst el1) h)
-\<and> (\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<exists>t \<in> set u.\<exists>l \<in> set (snd t).(\<forall>l1 \<in> set (snd t) - {l}. \<not> P (fst t) l1)
-\<and> (\<forall>j1 \<in> set t_SyncInstance_1.\<forall>u1 \<in> set j1.\<forall>t1 \<in> set u1-{t}.\<forall>l2 \<in> set (snd t1). \<not> P (fst t1) l2)
+\<and> (\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<forall>t \<in> set u.\<exists>l \<in> set (snd t).(\<forall>l1 \<in> set (snd t) - {l}. \<not> P (fst t) l1)
 ))"  
 
-lemma ve2_trans1: "(\<exists>bet \<in> set t_betaSet_1. (\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<exists>t \<in> set u.\<exists>l \<in> set (snd t).
+(*JavaBIP - ve 2*)
+value "((\<exists>bet \<in> set t_betaSet_1. (\<forall>elm \<in> set bet.\<exists>el1 \<in> set elm. Q (fst el1) (snd el1)) 
+\<and> (\<forall>elm \<in> set bet.\<forall>el1 \<in> set elm.\<forall>h \<in> set (lookup_3 (fst el1) t_TrigInstance_1) - {snd el1}. \<not>Q (fst el1) h)) 
+\<and> (\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<forall>t \<in> set u.\<exists>l \<in> set (snd t).\<forall>l1 \<in> set (snd t) - {l}. \<not> P (fst t)  l1))"
+
+lemma ve2_trans1: "(((\<exists>bet \<in> set t_betaSet_1. (\<forall>elm \<in> set bet.\<exists>el1 \<in> set elm. Q (fst el1) (snd el1)) 
+\<and> (\<forall>elm \<in> set bet.\<forall>el1 \<in> set elm.\<forall>h \<in> set (lookup_3 (fst el1) t_TrigInstance_1) - {snd el1}. \<not>Q (fst el1) h)) 
+\<and> (\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<forall>t \<in> set u. \<exists>l \<in> set (snd t).\<forall>l1 \<in> set (snd t) - {l}. \<not> P (fst t)  l1)))
+\<Longrightarrow> (\<exists>bet \<in> set t_betaSet_1. (\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<exists>t \<in> set u.\<exists>l \<in> set (snd t).
 (\<forall>elm \<in> set bet.\<exists>el1 \<in> set elm. Q (fst el1) (snd el1))
 \<and> (\<forall>elm \<in> set bet.\<forall>el1 \<in> set elm.\<forall>h \<in> set (lookup_3 (fst el1) t_TrigInstance_1) - {snd el1}. \<not>Q (fst el1) h)
 \<and> (\<forall>l1 \<in> set (snd t) - {l}. \<not> P (fst t) l1)
 \<and> (\<forall>j1 \<in> set t_SyncInstance_1.\<forall>u1 \<in> set j1.\<forall>t1 \<in> set u1-{t}.\<forall>l2 \<in> set (snd t1). \<not> P (fst t1) l2)
-)) \<Longrightarrow>
-(\<exists>bet \<in> set t_betaSet_1. (
-(\<forall>elm \<in> set bet.\<exists>el1 \<in> set elm. Q (fst el1) (snd el1))
-\<and> (\<forall>elm \<in> set bet.\<forall>el1 \<in> set elm.\<forall>h \<in> set (lookup_3 (fst el1) t_TrigInstance_1) - {snd el1}. \<not>Q (fst el1) h)
-\<and> (\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<exists>t \<in> set u.\<exists>l \<in> set (snd t).(\<forall>l1 \<in> set (snd t) - {l}. \<not> P (fst t) l1)
-\<and> (\<forall>j1 \<in> set t_SyncInstance_1.\<forall>u1 \<in> set j1.\<forall>t1 \<in> set u1-{t}.\<forall>l2 \<in> set (snd t1). \<not> P (fst t1) l2)
-)))"
+))"
   sledgehammer
 
 value "((\<exists>bet \<in> set t_betaSet_1. (\<forall>elm \<in> set bet.\<exists>el1 \<in> set elm. Q (fst el1) (snd el1)) \<and> (\<forall>elm \<in> set bet.\<forall>el1 \<in> set elm.\<forall>h \<in> set (lookup_3 (fst el1) t_TrigInstance_1) - {snd el1}. \<not>Q (fst el1) h)) \<and> (\<forall>j \<in> set t_SyncInstance_1. \<forall>u \<in> set j. \<forall>t \<in> set u. \<exists>l \<in> set (snd t).\<forall>l1 \<in> set (snd t) - {l}. \<not> P (fst t)  l1))" 
