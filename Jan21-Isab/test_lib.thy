@@ -33,7 +33,7 @@ definition test_Type_Ins_list_list_1 :: "(string * string list) list list" where
 definition test_Type_Ins_list_list_2 :: "(string * string list) list list" where
 "test_Type_Ins_list_list_2 = [[(''2'',[''1''])]]"
 definition test_Type_Ins_list_list_3 :: "(string * string list) list list" where
-"test_Type_Ins_list_list_3 = [[(''3a'',[''1''])], [(''3b1'',[''1'']),(''3b2'',[''1'',''2''])]]"
+"test_Type_Ins_list_list_3 = [[(''3a'',[''1'',''2''])], [(''3b1'',[''1'',''2'']), (''3b2'',[''1'',''2''])]]"
 
 
 value "mk_pair_3 test_Type_Ins_list_list_1"
@@ -41,10 +41,11 @@ value "product_lists (mk_pair_3 test_Type_Ins_list_list_1)"
 value "mk_pair_3 test_Type_Ins_list_list_2"
 value "product_lists (mk_pair_3 test_Type_Ins_list_list_2)"
 value "mk_pair_3 test_Type_Ins_list_list_3"
+value "concat (mk_pair_3 test_Type_Ins_list_list_3)"
 value "product_lists (mk_pair_3 test_Type_Ins_list_list_3)"
 value "concat (product_lists (mk_pair_3 test_Type_Ins_list_list_3))"
 
-value "merge_list (List.product (concat (product_lists (mk_pair_3 test_Type_Ins_list_list_1))) (concat (product_lists (mk_pair_3 test_Type_Ins_list_list_3))))"
+value "merge_list (List.product ((product_lists (mk_pair_3 test_Type_Ins_list_list_1))) ((product_lists (mk_pair_3 test_Type_Ins_list_list_3))))"
 
 value "merge_list (List.product (concat (product_lists (mk_pair_3 test_Type_Ins_list_list_1))) (merge_list (List.product (concat (product_lists (mk_pair_3 test_Type_Ins_list_list_2))) (concat (product_lists (mk_pair_3 test_Type_Ins_list_list_3))))))"
 
@@ -55,13 +56,41 @@ fun make_betaSet :: "(string * string list) list list list \<Rightarrow> (string
 "make_betaSet (x#y#[]) = merge_list (List.product (concat (product_lists (mk_pair_3 x))) (concat (product_lists (mk_pair_3 y))))" |
 "make_betaSet (x#y#xs) = merge_list (List.product (merge_list (List.product (concat (product_lists (mk_pair_3 x))) (concat (product_lists (mk_pair_3 y))))) (make_betaSet xs))"
 
+(*Chuyen tu list cac synchron de tao beta set*)
+fun make_betaSet_1 :: "(string * string list) list list list \<Rightarrow> (string * string) list list list" where
+"make_betaSet_1 [] = []" |
+"make_betaSet_1 (x#[]) =  (product_lists (mk_pair_3 x))" |
+"make_betaSet_1 (x#y#[]) = merge_list (List.product ( (product_lists (mk_pair_3 x))) ( (product_lists (mk_pair_3 y))))" |
+"make_betaSet_1 (x#y#xs) = merge_list (List.product (merge_list (List.product ((product_lists (mk_pair_3 x))) ((product_lists (mk_pair_3 y))))) (make_betaSet_1 xs))"
+
 definition test_synchron :: "(string * string list) list list list" where
 "test_synchron = [[[(''1a'',[''1'',''2''])], [(''1b'',[''1'',''2''])]],
 [[(''2'',[''1''])]],
 [[(''3a'',[''1''])], [(''3b1'',[''1'']),(''3b2'',[''1'',''2''])]]
 ]"
 
+definition test_Type_Ins_list_list_11 :: "(string * string list) list list list" where
+"test_Type_Ins_list_list_11 = [[[(''1a'',[''1'',''2''])]], [[(''1b'',[''1'',''2''])]]]"
+
+definition test_Type_Ins_list_list_12 :: "(string * string list) list list list" where
+"test_Type_Ins_list_list_12 = [[[(''1a'',[''1'',''2''])], [(''1b'',[''1'',''2''])]]]"
+
+definition test_Type_Ins_Synch :: "(string * string list) list list list" where
+"test_Type_Ins_Synch = [[[(''3a'',[''1'',''2''])]], [[(''3b1'',[''1'']),(''3b2'',[''1'',''2''])]]]"
+
+value "make_betaSet test_Type_Ins_list_list_11"
+value "make_betaSet test_Type_Ins_list_list_12"
+value "make_betaSet test_Type_Ins_Synch"
+value "mk_pair_4 test_Type_Ins_Synch"
+value "make_betaSet_1 test_Type_Ins_Synch"
+
 value "make_betaSet test_synchron"
+value "make_betaSet_1 test_synchron"
+
+definition betaSet_synchron :: "(string * string) list list" where
+"betaSet_synchron = make_betaSet test_synchron"
+value "betaSet_synchron"
+
 fun mk_beta :: "(string * string) list list list \<Rightarrow> (string * string) list list list" where
 "mk_beta [] = []" |
 "mk_beta x#[] = []" |
