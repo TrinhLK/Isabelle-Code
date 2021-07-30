@@ -36,6 +36,26 @@ fun mk_pair_4 :: "(string * string list) list list list \<Rightarrow> (string * 
 "mk_pair_4 [] = []" |
 "mk_pair_4 (x#xs) = product_lists (mk_pair_3 x) @ mk_pair_4 xs"
 
+fun mk_pair_3_no_product :: "(string * string list) list list \<Rightarrow> (string * string) list list list" where
+"mk_pair_3_no_product [] = []" |
+"mk_pair_3_no_product (x#xs) = [(mk_pair_2 x)] @ mk_pair_3_no_product xs"
+
+fun mk_pair_4_no_product :: "(string * string list) list list list \<Rightarrow> (string * string) list list list" where
+"mk_pair_4_no_product [] = []" |
+"mk_pair_4_no_product (x#xs) = (mk_pair_3_no_product x) @ mk_pair_4_no_product xs"
+
+(*----
+get all pairs (Type, Instance) of a  trigger list or a synchron list
+----*)
+fun all_pairs :: "(string * string list) list list list \<Rightarrow> (string * string) list" where
+"all_pairs x = concat (concat (mk_pair_4_no_product x))"
+
+(*----
+the remaining pair (Type, Instance) of a  trigger list or a synchron list from the current connector
+----*)
+fun remaining_pairs :: "(string \<times> string) list \<Rightarrow> (string \<times> string) list \<Rightarrow> (string \<times> string) set" where
+"remaining_pairs x y = set (x) - set (y)"
+
 (*----------------------------
 merge_list: After producting 2 lists, we need to convert list of pairs to list of lists -----------------------------*)
 fun merge_list :: "('a list \<times> 'a list) list \<Rightarrow> 'a list list list" where 
@@ -122,21 +142,45 @@ value "make_betaSet_3 test_triggers"
 value "make_betaSet_3 test_triggers_1"
 value "make_betaSet_3 test_triggers_2"
 
-(*Final: make all possible combination of pairs in triggers*)
+(*Final: make all possible combination of pairs in triggers or rendezvous connector*)
 value "mk_pair_4 (make_betaSet_3 test_triggers)"
 value "mk_pair_4 (make_betaSet_3 test_triggers_1)"
 value "mk_pair_4 (make_betaSet_3 test_triggers_2)"
 
 
 (*synchron*)
-definition test_synchron :: "(string * string list) list list list" where
-"test_synchron = [[[(''1a'',[''1'',''2''])], [(''1b'',[''1'',''2''])]],
-[[(''2'',[''1''])]],
-[[(''3a'',[''1''])], [(''3b1'',[''1'']),(''3b2'',[''1'',''2''])]],
-[[(''4'',[''1''])]],
-[[(''5a'',[''1''])], [(''5b'',[''6''])]]
+definition test_synchron_1 :: "(string * string list) list list list" where
+"test_synchron_1 = [ [[(''4'', [''1'',''2''])]],
+[[(''5c'',[''1'']),(''5d'',[''1'',''2''])]]
 ]"
 
+value "mk_pair_4 test_synchron"
+value "concat (concat (mk_pair_4 test_synchron))"
+value "\<forall>x \<in> set (concat (concat (mk_pair_4 test_synchron))) - {(''5c'', ''1''), (''5d'', ''2'')}. P (fst x) (snd x)"
+
+value "List.product (concat (mk_pair_4 test_synchron)) (mk_pair_4 (make_betaSet_3 test_triggers))"
+
+value "mk_pair_3_no_product test_1_triggers"
+value "mk_pair_4_no_product test_triggers"
+
+
+value "all_pairs test_synchron"
+value "all_pairs test_triggers"
+value "all_pairs test_triggers_2"
+(*synchron*)
+definition connectors :: "((string \<times> string) list list \<times> (string \<times> string) list list) list" where
+"connectors = List.product (mk_pair_4 test_synchron) (mk_pair_4 (make_betaSet_3 test_triggers))"
+
+
+value "connectors"
+value "concat [[(''4'', ''1'')]]"
+value "concat [[(''3a'', ''1'')], [(''4'', ''1'')], [(''1a'', ''1'')]]"
+
+value "all_pairs test_triggers"
+value "concat (concat (mk_pair_3_no_product test_1_triggers))"
+value "remaining_ports (all_pairs test_triggers) (concat (concat (mk_pair_3_no_product test_1_triggers)))"
+
+value "union (set (concat [[(''4'', ''1'')]])) (set (concat [[(''3a'', ''1'')], [(''2'', ''1'')], [(''1a'', ''1'')]]))"
 end
 
 
