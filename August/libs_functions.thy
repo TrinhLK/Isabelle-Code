@@ -76,6 +76,12 @@ fun make_betaSet_3 :: "(string * string list) list list list \<Rightarrow> (stri
 "make_betaSet_3 (x#y#xs#[]) = merge_list_1 (List.product (merge_list (List.product xs y)) (x))"|
 "make_betaSet_3 (x#y#xs#ys) = merge_list_1 (List.product (make_betaSet_3 (y#xs#ys)) (x))"
 
+definition test_triggers_a :: "(string * string list) list list list" where
+"test_triggers_a = [[[(''1a'',[''1'',''2''])], [(''1b'',[''1'',''2''])]],
+[[(''2'',[''1''])]],
+[[(''3a'',[''1''])], [(''3b1'',[''1'']),(''3b2'',[''1'',''2''])]]
+]"
+
 definition test_triggers :: "(string * string list) list list list" where
 "test_triggers = [[[(''1a'',[''1'',''2''])], [(''1b'',[''1'',''2''])]],
 [[(''2'',[''1''])]],
@@ -84,6 +90,11 @@ definition test_triggers :: "(string * string list) list list list" where
 
 definition test_triggers_null :: "(string * string list) list list list" where
 "test_triggers_null = [[[]]]"
+
+definition test_synchron_1 :: "(string * string list) list list list" where
+"test_synchron_1 = [ [[(''4'', [''1'',''2''])]],
+[[(''5c'',[''1'']),(''5d'',[''1'',''2''])]]
+]"
 
 definition test_synchron :: "(string * string list) list list list" where
 "test_synchron = [ [[(''4'', [''1'',''2''])]],
@@ -149,8 +160,8 @@ value "mk_pair_4 (make_betaSet_3 test_triggers_2)"
 
 
 (*synchron*)
-definition test_synchron_1 :: "(string * string list) list list list" where
-"test_synchron_1 = [ [[(''4'', [''1'',''2''])]],
+definition test_synchron_12 :: "(string * string list) list list list" where
+"test_synchron_12 = [ [[(''4'', [''1'',''2''])]],
 [[(''5c'',[''1'']),(''5d'',[''1'',''2''])]]
 ]"
 
