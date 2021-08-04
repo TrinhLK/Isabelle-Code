@@ -1,7 +1,8 @@
 theory compare
-  imports Main "/Volumes/Setup/Isabelle/Isabelle-Code/August/libs_functions" "/Volumes/Setup/Isabelle/Isabelle-Code/August/bip" "/Volumes/Setup/Isabelle/Isabelle-Code/August/javabip"
+  imports Main 
+(*"/Volumes/Setup/Isabelle/Isabelle-Code/August/libs_functions" "/Volumes/Setup/Isabelle/Isabelle-Code/August/bip" "/Volumes/Setup/Isabelle/Isabelle-Code/August/javabip"*)
 begin
-
+(*
 lemma instance_test: "((((P ''4'' ''1'' \<longrightarrow>
     (Q ''1a'' ''1'' \<and> \<not> Q ''1a'' ''2'' \<or> Q ''1a'' ''2'' \<and> \<not> Q ''1a'' ''1'') \<or>
     (Q ''1b'' ''1'' \<and> \<not> Q ''1b'' ''2'' \<or> Q ''1b'' ''2'' \<and> \<not> Q ''1b'' ''1'') \<or>
@@ -406,7 +407,8 @@ lemma instance_test: "((((P ''4'' ''1'' \<longrightarrow>
   \<not> Q ''1a'' ''1'' \<and> \<not> Q ''1a'' ''2'' \<and> \<not> Q ''1b'' ''1'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b2'' ''1''))
 "
   by force
-
+*)
+(*
 lemma equations: "
 (\<exists>connector\<in>set BIP_Connector.\<exists>sync\<in>set (fst connector).(P (fst sync) (snd sync) \<longrightarrow> ((\<exists>trig\<in>set (snd connector).\<forall>elm\<in>set trig. Q (fst elm) (snd elm)) 
   \<and> (\<forall>sync1\<in>set (fst connector) - {sync}. P (fst sync1) (snd sync1))
@@ -422,5 +424,170 @@ lemma equations: "
 ))
 \<and> (\<forall>j \<in> set test_synchron. \<forall>u \<in> set j. \<forall>t \<in> set u. \<exists>l \<in> set (snd t).\<forall>l1 \<in> set (snd t) - {l}. \<not> P (fst t) l1) 
 \<and> (\<forall>i \<in> set test_triggers. \<forall>v \<in> set i. \<forall>k \<in> set v. \<exists>h \<in> set (snd k).\<forall>h1 \<in> set (snd k) - {h}. \<not> Q (fst k) h1))
+"*)
+value "
+\<forall>x \<in> Tracker.\<forall>y \<in> Peer. (
+  broadcast(x) \<and> isReg(y,x) \<longrightarrow> (speak(y) \<Longleftrightarrow> \<not>listen(y))
+)"
+
+value "
+\<forall>x \<in> Tracker.\<forall>y \<in> Peer. (
+  \<not>(broadcast(x) \<and> isReg(y,x)) \<or> (\<not>speak(y)\<and>listen(y) \<or> \<not>listen(y)\<and>speak(y))
+)"
+
+value "
+\<not>broadcast(x) \<or> \<not>isReg(y,x) \<or> \<not>speak(y)\<and>listen(y) \<or> \<not>listen(y)\<and>speak(y)
 "
+
+
+(*---------*)
+value "
+\<forall>x \<in> Tracker. (
+  broadcast(x) \<longrightarrow> (
+    \<exists>y \<in> Peer.(isReg(y,x) \<and> speak(y) \<and> (
+      \<forall>y'\<in>Peer.(differ(y', y) \<and> isReg(y',x) \<longrightarrow> listen(y')) 
+    ))
+    \<or> (\<forall>y \<in> Peer. isReg(y,x) \<longrightarrow> listen(y))
+  )
+)"
+
+value "
+\<forall>x \<in> Tracker. (
+  \<not>broadcast(x) \<or> (
+    \<exists>y \<in> Peer.(broadcast(x) \<and> isReg(y,x) \<and> speak(y) \<and> (
+      \<forall>y'\<in>Peer.(\<not>(differ(y', y) \<and> isReg(y',x)) \<or> listen(y') \<and> differ(y', y) \<and> isReg(y',x)) 
+    ))
+  )
+  \<or> (\<forall>y \<in> Peer. broadcast(x) \<and> (\<not>isReg(y,x) \<or> isReg(y,x) \<and> listen(y)))
+)"
+
+value "
+  \<not>broadcast(x) \<or> (
+    broadcast(x) \<and> isReg(Px,x) \<and> speak(Px) \<and> (
+      \<not>(differ(y', y) \<and> isReg(y',x)) \<or> listen(y') \<and> differ(y', y) \<and> isReg(y',x) 
+    )
+  )
+  \<or> broadcast(x) \<and> (\<not>isReg(y,x) \<or> isReg(y,x) \<and> listen(y))
+"
+
+value "
+\<not>broadcast(x) 
+\<or> (
+    broadcast(x) \<and> isReg(Px,x) \<and> speak(Px) 
+    \<and> (\<not>differ(y', y) \<or> listen(y') \<and> differ(y', y) \<and> isReg(y',x))
+    \<and> (\<not>isReg(y',x) \<or> listen(y') \<and> differ(y', y) \<and> isReg(y',x))
+  )
+\<or> broadcast(x) \<and> (\<not>isReg(y,x) \<or> isReg(y,x) \<and> listen(y))
+"
+
+value "
+(broadcast(x) \<Rightarrow> False)
+\<or> 
+(
+    (True \<Rightarrow> broadcast(x))
+    \<and> (True \<Rightarrow> isReg(Px,x)) 
+    \<and> (True \<Rightarrow> speak(Px)) 
+    \<and> (\<not>differ(y', y) \<or> listen(y') \<and> differ(y', y) \<and> isReg(y',x))
+    \<and> (\<not>isReg(y',x) \<or> listen(y') \<and> differ(y', y) \<and> isReg(y',x))
+)
+\<or> 
+(
+  (True \<Rightarrow> broadcast(x)) 
+  \<and> (\<not>isReg(y,x) \<or> isReg(y,x) \<and> listen(y))
+)
+"
+
+value "
+(
+  True \<Longrightarrow> broadcast(x)
+  \<and> True \<Longrightarrow> isReg(Px,x)
+  \<and> True \<Longrightarrow> speak(Px)
+  \<and> differ(y', y) \<Longrightarrow> listen(y')  \<and> isReg(y',x)
+  \<and> isReg(y',x) \<Longrightarrow> listen(y') \<and> differ(y', y)
+  \<and> listen(y') \<Longrightarrow> True
+
+  \<and> isReg(y,x) \<Longrightarrow> True
+  \<and> listen(y) \<Longrightarrow> True
+)
+\<or>
+(
+  True \<Longrightarrow> broadcast(x) 
+  \<and> isReg(y,x) \<Longrightarrow> listen(y)
+  \<and> listen(y) \<Longrightarrow> True
+
+  \<and> listen(y') \<Longrightarrow> True
+  \<and> differ(y', y) \<Longrightarrow> True
+  \<and> isReg(y',x) \<Longrightarrow> True
+  \<and> isReg(Px,x) \<Longrightarrow> True
+  \<and> speak(Px) \<Longrightarrow> True
+)
+"
+
+value "
+(
+  True \<Rightarrow> broadcast(x) \<and> isReg(Px,x) \<and> speak(Px)
+  \<and> differ(y', y) \<Rightarrow> listen(y') \<and> isReg(y',x)
+  \<and> isReg(y',x) \<Rightarrow> listen(y') \<and> differ(y', y)
+  \<and> listen(y') \<Rightarrow> broadcast(x) \<and> isReg(Px,x) \<and> speak(Px)
+
+  \<and> isReg(y,x) \<Rightarrow> broadcast(x) \<and> isReg(Px,x) \<and> speak(Px)
+  \<and> listen(y) \<Rightarrow>  broadcast(x) \<and> isReg(Px,x) \<and> speak(Px)
+)
+\<or>
+(
+  True \<Rightarrow> broadcast(x) 
+  \<and> isReg(y,x) \<Rightarrow> listen(y)
+  \<and> listen(y) \<Rightarrow> broadcast(x) 
+
+  \<and> listen(y') \<Rightarrow> broadcast(x) 
+  \<and> differ(y', y) \<Rightarrow> broadcast(x) 
+  \<and> isReg(y',x) \<Rightarrow> broadcast(x) 
+  \<and> isReg(Px,x) \<Rightarrow> broadcast(x) 
+  \<and> speak(Px) \<Rightarrow> broadcast(x) 
+)
+"
+
+value "
+(
+  True \<Rightarrow> broadcast(x) \<and> isReg(Px,x) \<and> speak(Px)
+  \<and> differ(y', y) \<Rightarrow> broadcast(x) \<and> isReg(Px,x) \<and> speak(Px) \<and> isReg(y',x)
+  \<and> isReg(y',x) \<Rightarrow> broadcast(x) \<and> isReg(Px,x) \<and> speak(Px) \<and> differ(y', y)
+  \<and> listen(y') \<Rightarrow> broadcast(x) \<and> isReg(Px,x) \<and> speak(Px)
+
+  \<and> isReg(y,x) \<Rightarrow> broadcast(x) \<and> isReg(Px,x) \<and> speak(Px)
+  \<and> listen(y) \<Rightarrow>  broadcast(x) \<and> isReg(Px,x) \<and> speak(Px)
+)
+\<or>
+(
+  True \<Rightarrow> broadcast(x) 
+  \<and> isReg(y,x) \<Rightarrow> listen(y) \<and> broadcast(x)
+  \<and> listen(y) \<Rightarrow> broadcast(x) 
+
+  \<and> listen(y') \<Rightarrow> broadcast(x) 
+  \<and> differ(y', y) \<Rightarrow> broadcast(x) 
+  \<and> isReg(y',x) \<Rightarrow> broadcast(x) 
+  \<and> isReg(Px,x) \<Rightarrow> broadcast(x) 
+  \<and> speak(Px) \<Rightarrow> broadcast(x) 
+)
+"
+
+value "
+{
+broadcast(x),
+broadcast(x) \<and> isReg(Px,x) \<and> speak(Px), 
+broadcast(x) \<and> isReg(Px,x) \<and> speak(Px) \<and> listen(y'),
+broadcast(x) \<and> isReg(Px,x) \<and> speak(Px) \<and> listen(y),
+broadcast(x) \<and> isReg(Px,x) \<and> speak(Px) \<and> isReg(y,x),
+broadcast(x) \<and> isReg(Px,x) \<and> speak(Px) \<and> isReg(y',x) \<and> differ(y', y),
+} \<or>
+{
+broadcast(x),
+listen(y) \<and> broadcast(x),
+listen(y) \<and> broadcast(x) \<and> isReg(y,x),
+listen(y') \<and> broadcast(x),
+differ(y', y) \<and> broadcast(x),
+isReg(y',x) \<and> broadcast(x),
+isReg(Px,x) \<and> broadcast(x),
+speak(Px) \<and> broadcast(x),
+}"
 end
