@@ -44,6 +44,9 @@ fun mk_pair_4_no_product :: "(string * string list) list list list \<Rightarrow>
 "mk_pair_4_no_product [] = []" |
 "mk_pair_4_no_product (x#xs) = (mk_pair_3_no_product x) @ mk_pair_4_no_product xs"
 
+fun mk_Trigger_list :: "(string * string) list list list \<Rightarrow> (string * string) list list list" where
+"mk_Trigger_list [] = []" |
+"mk_Trigger_list (x#xs) = [(product_lists  x)] @ mk_Trigger_list xs"
 (*----
 get all pairs (Type, Instance) of a  trigger list or a synchron list
 ----*)
@@ -77,15 +80,14 @@ fun make_betaSet_3 :: "(string * string list) list list list \<Rightarrow> (stri
 "make_betaSet_3 (x#y#xs#ys) = merge_list_1 (List.product (make_betaSet_3 (y#xs#ys)) (x))"
 
 definition test_triggers_a :: "(string * string list) list list list" where
-"test_triggers_a = [[[(''1a'',[''1'',''2''])], [(''1b'',[''1'',''2''])]],
+"test_triggers_a = [[[(''1a'',[''1'',''2'',''3''])], [(''1b'',[''1'',''2''])]],
 [[(''2'',[''1''])]],
 [[(''3a'',[''1''])], [(''3b1'',[''1'']),(''3b2'',[''1'',''2''])]]
 ]"
 
 definition test_triggers :: "(string * string list) list list list" where
-"test_triggers = [[[(''1a'',[''1'',''2''])], [(''1b'',[''1'',''2''])]],
-[[(''2'',[''1''])]],
-[[(''3a'',[''1''])], [(''3b1'',[''1'']),(''3b2'',[''1'',''2''])]]
+"test_triggers = [
+[[(''3a'',[''1'', ''2''])], [(''3b1'',[''1'', ''2'']),(''3b2'',[''1'',''2''])]]
 ]"
 
 definition test_triggers_null :: "(string * string list) list list list" where
@@ -97,8 +99,8 @@ definition test_synchron_1 :: "(string * string list) list list list" where
 ]"
 
 definition test_synchron :: "(string * string list) list list list" where
-"test_synchron = [ [[(''4'', [''1'',''2''])]],
-[[(''5c'',[''1'']),(''5d'',[''1'',''2''])]]
+"test_synchron = [
+[[(''5c'',[''1'', ''2'', ''3'']),(''5d'',[''1'',''2''])]]
 ]"
 
 
