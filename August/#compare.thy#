@@ -5,9 +5,46 @@ begin
 value "(\<forall>j \<in> set test_synchron. \<forall>u \<in> set j. \<forall>t \<in> set u. \<exists>l \<in> set (snd t).\<forall>l1 \<in> set (snd t) - {l}. \<not> P (fst t) l1)" 
 value "(\<forall>j \<in> set test_synchron. \<forall>u \<in> set j. \<forall>t \<in> set u. \<forall>l \<in> set (snd t). P (fst t) l \<longrightarrow> (\<forall>l1 \<in> set (snd t) - {l}. \<not>P (fst t) l1))"
 
+notepad
+begin 
+  have "((\<forall>j \<in> set test_synchron. \<forall>u \<in> set j. \<forall>t \<in> set u. \<exists>l \<in> set (snd t).\<forall>l1 \<in> set (snd t) - {l}. \<not> P (fst t) l1)) \<Longrightarrow>
+    (\<forall>j \<in> set test_synchron. \<forall>u \<in> set j. \<forall>t \<in> set u. \<forall>l \<in> set (snd t). \<not>P (fst t) l \<longrightarrow> (\<forall>l1 \<in> set (snd t) - {l}. \<not>P (fst t) l1))" 
+  proof (rule classical)
+    assume "\<not> ?thesis"
+    then show ?thesis sorry
+  qed
+end
+(*
 lemma test_apart: "((\<forall>j \<in> set test_synchron. \<forall>u \<in> set j. \<forall>t \<in> set u. \<exists>l \<in> set (snd t).\<forall>l1 \<in> set (snd t) - {l}. \<not> P (fst t) l1)) \<Longrightarrow>
 (\<forall>j \<in> set test_synchron. \<forall>u \<in> set j. \<forall>t \<in> set u. \<forall>l \<in> set (snd t). P (fst t) l \<longrightarrow> (\<forall>l1 \<in> set (snd t) - {l}. \<not>P (fst t) l1))"
   by blast
+*)
+lemma de_Morgan:
+  assumes "\<not> (\<forall>x. P x)"
+  shows "\<exists>x. \<not> P x"
+proof (rule classical)
+  assume "\<nexists>x. \<not> P x"
+  have "\<forall>x. P x"
+  proof
+    fix x show "P x"
+    proof (rule classical)
+      assume "\<not> P x"
+      then have "\<exists>x. \<not> P x" ..
+      with \<open>\<nexists>x. \<not> P x\<close> show ?thesis by contradiction
+    qed
+  qed
+  with \<open>\<not> (\<forall>x. P x)\<close> show ?thesis by contradiction
+qed
+
+lemma test_apart_1: 
+  assumes "((\<forall>j \<in> set test_synchron. \<forall>u \<in> set j. \<forall>t \<in> set u. \<exists>l \<in> set (snd t).\<forall>l1 \<in> set (snd t) - {l}. \<not> P (fst t) l1))"
+  shows "(\<forall>j \<in> set test_synchron. \<forall>u \<in> set j. \<forall>t \<in> set u. \<forall>l \<in> set (snd t). P (fst t) l \<longrightarrow> (\<forall>l1 \<in> set (snd t) - {l}. \<not>P (fst t) l1))"
+proof (rule classical)
+  assume "\<not> ?thesis"
+  then show ?thesis 
+    by (metis Diff_iff assms empty_iff insert_iff)
+qed
+  
 (*
 lemma test_instance: "((P ''5c'' ''1'' \<longrightarrow>
   ((Q ''3a'' ''1'' \<and> \<not> Q ''3a'' ''2'' \<or> Q ''3a'' ''2'' \<and> \<not> Q ''3a'' ''1'') \<or>
@@ -85,7 +122,28 @@ begin
     then show ?thesis sorry
   qed
 end
+print_statement classical
 
+lemma test_equive: 
+  assumes "(\<exists>connector \<in> set BIP_Connector_2.\<exists>sync\<in>set (fst connector).(P (fst sync) (snd sync) \<longrightarrow> 
+((\<exists>trig\<in>set (snd connector).\<forall>elm\<in>set trig. Q (fst elm) (snd elm)) 
+  \<and> (\<forall>sync1\<in>set (fst connector) - {sync}. P (fst sync1) (snd sync1))
+  \<and> (\<forall>rs \<in> remaining_pairs (all_pairs test_synchron) (fst connector). \<not>P (fst rs) (snd rs))
+  \<and> (\<forall>rt \<in> remaining_pairs (all_pairs test_triggers) (concat (snd connector)). \<not>Q (fst rt) (snd rt)))
+))"
+  shows "((\<forall>connector\<in>set JavaBIP_Connector_2.\<forall>sync_list\<in>set (fst connector).\<forall>sync\<in>set sync_list. (P (fst sync) (snd sync) \<longrightarrow> 
+      ((\<exists>trig_list\<in>set(snd connector).\<exists>trig\<in>set trig_list. \<forall>t_elm\<in>set trig. (Q (fst t_elm) (snd t_elm)
+      \<and> (\<forall>h \<in> set (lookup_3 (fst t_elm) test_triggers) - {snd t_elm}. \<not>Q (fst t_elm) h)))
+      \<and> (\<forall>sync_1\<in>set(fst connector)-{sync_list}.\<exists>s_elm_1\<in>set(sync_1). P (fst s_elm_1) (snd s_elm_1)
+      \<and> (\<forall>l \<in> set (lookup_3 (fst s_elm_1) test_synchron) - {snd s_elm_1}. \<not>P (fst s_elm_1) l))
+    )
+))
+\<and> (\<forall>j \<in> set test_synchron. \<forall>u \<in> set j. \<forall>t \<in> set u. \<exists>l \<in> set (snd t).\<forall>l1 \<in> set (snd t) - {l}. \<not> P (fst t) l1) 
+\<and> (\<forall>i \<in> set test_triggers. \<forall>v \<in> set i. \<forall>k \<in> set v. \<exists>h \<in> set (snd k).\<forall>h1 \<in> set (snd k) - {h}. \<not> Q (fst k) h1))"
+proof (rule classical)
+  assume "\<not> ?thesis"
+  then show ?thesis sledgehammer
+qed
 (*
 value "
 \<forall>x \<in> Tracker.\<forall>y \<in> Peer. (
