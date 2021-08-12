@@ -100,7 +100,7 @@ definition test_synchron_1 :: "(string * string list) list list list" where
 
 definition test_synchron :: "(string * string list) list list list" where
 "test_synchron = [
-[[(''5c'',[''1'']),(''5d'',[''1'',''2''])]]
+[[(''5c'',[''1'', ''2'', ''3'']),(''5d'',[''1'',''2''])]]
 ]"
 
 

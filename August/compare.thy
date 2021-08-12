@@ -8,7 +8,59 @@ value "(\<forall>j \<in> set test_synchron. \<forall>u \<in> set j. \<forall>t \
 lemma test_apart: "((\<forall>j \<in> set test_synchron. \<forall>u \<in> set j. \<forall>t \<in> set u. \<exists>l \<in> set (snd t).\<forall>l1 \<in> set (snd t) - {l}. \<not> P (fst t) l1)) \<Longrightarrow>
 (\<forall>j \<in> set test_synchron. \<forall>u \<in> set j. \<forall>t \<in> set u. \<forall>l \<in> set (snd t). P (fst t) l \<longrightarrow> (\<forall>l1 \<in> set (snd t) - {l}. \<not>P (fst t) l1))"
   by blast
-
+(*
+lemma test_instance: "((P ''5c'' ''1'' \<longrightarrow>
+  ((Q ''3a'' ''1'' \<and> \<not> Q ''3a'' ''2'' \<or> Q ''3a'' ''2'' \<and> \<not> Q ''3a'' ''1'') \<or>
+   (Q ''3b1'' ''1'' \<and> \<not> Q ''3b1'' ''2'') \<and> Q ''3b2'' ''1'' \<and> \<not> Q ''3b2'' ''2'' \<or>
+   (Q ''3b1'' ''1'' \<and> \<not> Q ''3b1'' ''2'') \<and> Q ''3b2'' ''2'' \<and> \<not> Q ''3b2'' ''1'' \<or>
+   (Q ''3b1'' ''2'' \<and> \<not> Q ''3b1'' ''1'') \<and> Q ''3b2'' ''1'' \<and> \<not> Q ''3b2'' ''2'' \<or> (Q ''3b1'' ''2'' \<and> \<not> Q ''3b1'' ''1'') \<and> Q ''3b2'' ''2'' \<and> \<not> Q ''3b2'' ''1'') \<and>
+  (P ''5d'' ''1'' \<and> \<not> P ''5d'' ''2'' \<or> P ''5d'' ''2'' \<and> \<not> P ''5d'' ''1'')) \<and>
+ (P ''5d'' ''1'' \<longrightarrow>
+  ((Q ''3a'' ''1'' \<and> \<not> Q ''3a'' ''2'' \<or> Q ''3a'' ''2'' \<and> \<not> Q ''3a'' ''1'') \<or>
+   (Q ''3b1'' ''1'' \<and> \<not> Q ''3b1'' ''2'') \<and> Q ''3b2'' ''1'' \<and> \<not> Q ''3b2'' ''2'' \<or>
+   (Q ''3b1'' ''1'' \<and> \<not> Q ''3b1'' ''2'') \<and> Q ''3b2'' ''2'' \<and> \<not> Q ''3b2'' ''1'' \<or>
+   (Q ''3b1'' ''2'' \<and> \<not> Q ''3b1'' ''1'') \<and> Q ''3b2'' ''1'' \<and> \<not> Q ''3b2'' ''2'' \<or> (Q ''3b1'' ''2'' \<and> \<not> Q ''3b1'' ''1'') \<and> Q ''3b2'' ''2'' \<and> \<not> Q ''3b2'' ''1'') \<and>
+  P ''5c'' ''1'') \<and>
+ (P ''5d'' ''2'' \<longrightarrow>
+  ((Q ''3a'' ''1'' \<and> \<not> Q ''3a'' ''2'' \<or> Q ''3a'' ''2'' \<and> \<not> Q ''3a'' ''1'') \<or>
+   (Q ''3b1'' ''1'' \<and> \<not> Q ''3b1'' ''2'') \<and> Q ''3b2'' ''1'' \<and> \<not> Q ''3b2'' ''2'' \<or>
+   (Q ''3b1'' ''1'' \<and> \<not> Q ''3b1'' ''2'') \<and> Q ''3b2'' ''2'' \<and> \<not> Q ''3b2'' ''1'' \<or>
+   (Q ''3b1'' ''2'' \<and> \<not> Q ''3b1'' ''1'') \<and> Q ''3b2'' ''1'' \<and> \<not> Q ''3b2'' ''2'' \<or> (Q ''3b1'' ''2'' \<and> \<not> Q ''3b1'' ''1'') \<and> Q ''3b2'' ''2'' \<and> \<not> Q ''3b2'' ''1'') \<and>
+  P ''5c'' ''1'')) \<Longrightarrow> 
+\<not> (((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''1'') \<and> P ''5d'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''2'') \<or>
+  (P ''5d'' ''1'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''1'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''2'')) \<or>
+ ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''2'') \<and> P ''5d'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''1'') \<or>
+  (P ''5d'' ''1'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''2'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''1'')) \<or>
+ ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''1'') \<and> P ''5d'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''2'') \<or>
+  (P ''5d'' ''1'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''1'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''2'')) \<or>
+ ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''2'') \<and> P ''5d'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''1'') \<or>
+  (P ''5d'' ''1'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''2'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''1'')) \<or>
+ ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''1'') \<and> P ''5d'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''2'') \<or>
+  (P ''5d'' ''1'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''1'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''2'')) \<or>
+ ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''2'') \<and> P ''5d'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''1'') \<or>
+  (P ''5d'' ''1'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''2'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''1'')) \<or>
+ ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''1'') \<and> P ''5d'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''2'') \<or>
+  (P ''5d'' ''1'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''1'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''2'')) \<or>
+ ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''2'') \<and> P ''5d'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''1'') \<or>
+  (P ''5d'' ''1'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''2'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''1'')) \<or>
+ ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''1'') \<and> P ''5d'' ''2'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''2'') \<or>
+  (P ''5d'' ''2'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''1'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''2'')) \<or>
+ ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''2'') \<and> P ''5d'' ''2'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''1'') \<or>
+  (P ''5d'' ''2'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''2'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''1'')) \<or>
+ ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''1'') \<and> P ''5d'' ''2'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''2'') \<or>
+  (P ''5d'' ''2'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''1'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''2'')) \<or>
+ ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''2'') \<and> P ''5d'' ''2'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''1'') \<or>
+  (P ''5d'' ''2'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''2'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''1'')) \<or>
+ ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''1'') \<and> P ''5d'' ''2'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''2'') \<or>
+  (P ''5d'' ''2'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''1'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''2'')) \<or>
+ ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''2'') \<and> P ''5d'' ''2'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''1'') \<or>
+  (P ''5d'' ''2'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''2'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''1'')) \<or>
+ ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''1'') \<and> P ''5d'' ''2'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''2'') \<or>
+  (P ''5d'' ''2'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''1'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''2'')) \<or>
+ (P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''2'') \<and> P ''5d'' ''2'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''1'') \<or>
+ (P ''5d'' ''2'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''2'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''1''))"
+  sledgehammer
+  by meson*)
 lemma equations: "
 (\<exists>connector \<in> set BIP_Connector_2.\<exists>sync\<in>set (fst connector).(P (fst sync) (snd sync) \<longrightarrow> 
 ((\<exists>trig\<in>set (snd connector).\<forall>elm\<in>set trig. Q (fst elm) (snd elm)) 
@@ -16,7 +68,7 @@ lemma equations: "
   \<and> (\<forall>rs \<in> remaining_pairs (all_pairs test_synchron) (fst connector). \<not>P (fst rs) (snd rs))
   \<and> (\<forall>rt \<in> remaining_pairs (all_pairs test_triggers) (concat (snd connector)). \<not>Q (fst rt) (snd rt)))
 )) \<Longrightarrow>
-((\<forall>connector\<in>set JavaBIP_Connector_2.\<forall>sync_list\<in>set (fst connector).\<forall>sync\<in>set sync_list. (P (fst sync) (snd sync) \<longrightarrow> 
+(\<not>((\<forall>connector\<in>set JavaBIP_Connector_2.\<forall>sync_list\<in>set (fst connector).\<forall>sync\<in>set sync_list. (P (fst sync) (snd sync) \<longrightarrow> 
       ((\<exists>trig_list\<in>set(snd connector).\<exists>trig\<in>set trig_list. \<forall>t_elm\<in>set trig. (Q (fst t_elm) (snd t_elm)
       \<and> (\<forall>h \<in> set (lookup_3 (fst t_elm) test_triggers) - {snd t_elm}. \<not>Q (fst t_elm) h)))
       \<and> (\<forall>sync_1\<in>set(fst connector)-{sync_list}.\<exists>s_elm_1\<in>set(sync_1). P (fst s_elm_1) (snd s_elm_1)
@@ -24,7 +76,7 @@ lemma equations: "
     )
 ))
 \<and> (\<forall>j \<in> set test_synchron. \<forall>u \<in> set j. \<forall>t \<in> set u. \<exists>l \<in> set (snd t).\<forall>l1 \<in> set (snd t) - {l}. \<not> P (fst t) l1) 
-\<and> (\<forall>i \<in> set test_triggers. \<forall>v \<in> set i. \<forall>k \<in> set v. \<exists>h \<in> set (snd k).\<forall>h1 \<in> set (snd k) - {h}. \<not> Q (fst k) h1))
+\<and> (\<forall>i \<in> set test_triggers. \<forall>v \<in> set i. \<forall>k \<in> set v. \<exists>h \<in> set (snd k).\<forall>h1 \<in> set (snd k) - {h}. \<not> Q (fst k) h1)))
 "
   unfolding BIP_Connector_2_def JavaBIP_Connector_2_def test_triggers_def test_synchron_def
   sledgehammer
