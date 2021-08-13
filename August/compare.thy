@@ -82,11 +82,12 @@ begin
 "
   proof (rule classical)
     assume "\<not> ?thesis"
-    then show ?thesis sorry
+    then show ?thesis by smt
   qed
 end
 
 (*
+by presburger
 value "
 \<forall>x \<in> Tracker.\<forall>y \<in> Peer. (
   broadcast(x) \<and> isReg(y,x) \<longrightarrow> (speak(y) \<Longleftrightarrow> \<not>listen(y))
