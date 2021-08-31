@@ -8,59 +8,28 @@ value "(\<forall>j \<in> set test_synchron. \<forall>u \<in> set j. \<forall>t \
 lemma test_apart: "((\<forall>j \<in> set test_synchron. \<forall>u \<in> set j. \<forall>t \<in> set u. \<exists>l \<in> set (snd t).\<forall>l1 \<in> set (snd t) - {l}. \<not> P (fst t) l1)) \<Longrightarrow>
 (\<forall>j \<in> set test_synchron. \<forall>u \<in> set j. \<forall>t \<in> set u. \<forall>l \<in> set (snd t). P (fst t) l \<longrightarrow> (\<forall>l1 \<in> set (snd t) - {l}. \<not>P (fst t) l1))"
   by blast
-(*
-lemma test_instance: "((P ''5c'' ''1'' \<longrightarrow>
-  ((Q ''3a'' ''1'' \<and> \<not> Q ''3a'' ''2'' \<or> Q ''3a'' ''2'' \<and> \<not> Q ''3a'' ''1'') \<or>
-   (Q ''3b1'' ''1'' \<and> \<not> Q ''3b1'' ''2'') \<and> Q ''3b2'' ''1'' \<and> \<not> Q ''3b2'' ''2'' \<or>
-   (Q ''3b1'' ''1'' \<and> \<not> Q ''3b1'' ''2'') \<and> Q ''3b2'' ''2'' \<and> \<not> Q ''3b2'' ''1'' \<or>
-   (Q ''3b1'' ''2'' \<and> \<not> Q ''3b1'' ''1'') \<and> Q ''3b2'' ''1'' \<and> \<not> Q ''3b2'' ''2'' \<or> (Q ''3b1'' ''2'' \<and> \<not> Q ''3b1'' ''1'') \<and> Q ''3b2'' ''2'' \<and> \<not> Q ''3b2'' ''1'') \<and>
-  (P ''5d'' ''1'' \<and> \<not> P ''5d'' ''2'' \<or> P ''5d'' ''2'' \<and> \<not> P ''5d'' ''1'')) \<and>
- (P ''5d'' ''1'' \<longrightarrow>
-  ((Q ''3a'' ''1'' \<and> \<not> Q ''3a'' ''2'' \<or> Q ''3a'' ''2'' \<and> \<not> Q ''3a'' ''1'') \<or>
-   (Q ''3b1'' ''1'' \<and> \<not> Q ''3b1'' ''2'') \<and> Q ''3b2'' ''1'' \<and> \<not> Q ''3b2'' ''2'' \<or>
-   (Q ''3b1'' ''1'' \<and> \<not> Q ''3b1'' ''2'') \<and> Q ''3b2'' ''2'' \<and> \<not> Q ''3b2'' ''1'' \<or>
-   (Q ''3b1'' ''2'' \<and> \<not> Q ''3b1'' ''1'') \<and> Q ''3b2'' ''1'' \<and> \<not> Q ''3b2'' ''2'' \<or> (Q ''3b1'' ''2'' \<and> \<not> Q ''3b1'' ''1'') \<and> Q ''3b2'' ''2'' \<and> \<not> Q ''3b2'' ''1'') \<and>
-  P ''5c'' ''1'') \<and>
- (P ''5d'' ''2'' \<longrightarrow>
-  ((Q ''3a'' ''1'' \<and> \<not> Q ''3a'' ''2'' \<or> Q ''3a'' ''2'' \<and> \<not> Q ''3a'' ''1'') \<or>
-   (Q ''3b1'' ''1'' \<and> \<not> Q ''3b1'' ''2'') \<and> Q ''3b2'' ''1'' \<and> \<not> Q ''3b2'' ''2'' \<or>
-   (Q ''3b1'' ''1'' \<and> \<not> Q ''3b1'' ''2'') \<and> Q ''3b2'' ''2'' \<and> \<not> Q ''3b2'' ''1'' \<or>
-   (Q ''3b1'' ''2'' \<and> \<not> Q ''3b1'' ''1'') \<and> Q ''3b2'' ''1'' \<and> \<not> Q ''3b2'' ''2'' \<or> (Q ''3b1'' ''2'' \<and> \<not> Q ''3b1'' ''1'') \<and> Q ''3b2'' ''2'' \<and> \<not> Q ''3b2'' ''1'') \<and>
-  P ''5c'' ''1'')) \<Longrightarrow> 
-\<not> (((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''1'') \<and> P ''5d'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''2'') \<or>
-  (P ''5d'' ''1'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''1'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''2'')) \<or>
- ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''2'') \<and> P ''5d'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''1'') \<or>
-  (P ''5d'' ''1'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''2'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''1'')) \<or>
- ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''1'') \<and> P ''5d'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''2'') \<or>
-  (P ''5d'' ''1'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''1'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''2'')) \<or>
- ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''2'') \<and> P ''5d'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''1'') \<or>
-  (P ''5d'' ''1'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''2'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''1'')) \<or>
- ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''1'') \<and> P ''5d'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''2'') \<or>
-  (P ''5d'' ''1'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''1'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''2'')) \<or>
- ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''2'') \<and> P ''5d'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''1'') \<or>
-  (P ''5d'' ''1'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''2'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''1'')) \<or>
- ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''1'') \<and> P ''5d'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''2'') \<or>
-  (P ''5d'' ''1'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''1'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''2'')) \<or>
- ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''2'') \<and> P ''5d'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''1'') \<or>
-  (P ''5d'' ''1'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''2'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''2'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''1'')) \<or>
- ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''1'') \<and> P ''5d'' ''2'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''2'') \<or>
-  (P ''5d'' ''2'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''1'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''2'')) \<or>
- ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''2'') \<and> P ''5d'' ''2'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''1'') \<or>
-  (P ''5d'' ''2'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''2'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''1'')) \<or>
- ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''1'') \<and> P ''5d'' ''2'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''2'') \<or>
-  (P ''5d'' ''2'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''1'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''2'')) \<or>
- ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''2'') \<and> P ''5d'' ''2'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''1'') \<or>
-  (P ''5d'' ''2'' \<longrightarrow> (Q ''3a'' ''1'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''2'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''2'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''1'')) \<or>
- ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''1'') \<and> P ''5d'' ''2'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''2'') \<or>
-  (P ''5d'' ''2'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''1'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''2'')) \<or>
- ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''2'') \<and> P ''5d'' ''2'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''1'') \<or>
-  (P ''5d'' ''2'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''1'' \<and> Q ''3b2'' ''2'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''2'' \<and> \<not> Q ''3b2'' ''1'')) \<or>
- ((P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''1'') \<and> P ''5d'' ''2'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''2'') \<or>
-  (P ''5d'' ''2'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''1'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''2'')) \<or>
- (P ''5c'' ''1'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''2'') \<and> P ''5d'' ''2'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''1'') \<or>
- (P ''5d'' ''2'' \<longrightarrow> (Q ''3a'' ''2'' \<or> Q ''3b1'' ''2'' \<and> Q ''3b2'' ''2'') \<and> P ''5c'' ''1'' \<and> \<not> P ''5d'' ''1'' \<and> \<not> Q ''3a'' ''1'' \<and> \<not> Q ''3b1'' ''1'' \<and> \<not> Q ''3b2'' ''1''))"
-  sledgehammer
-  by meson*)
+
+lemma compare_tool: "((broadcast_x \<longrightarrow> (isReg_y_x \<longrightarrow> (speak_y \<and> \<not>listen_y) \<or> (listen_y \<and> \<not>speak_y))) \<and> (broadcast_x \<longrightarrow> (isReg_Px_x \<and> speak_Px \<and> (differ_y1_Px \<and> isReg_y1_x \<longrightarrow> listen_y1)) \<or> (isReg_y_x \<longrightarrow> listen_y)) \<and> (speak_y \<longrightarrow> broadcast_x \<and> isReg_y_x) \<and> (listen_y \<longrightarrow> broadcast_x \<and> isReg_y_x))
+\<Longrightarrow>
+((\<not>broadcast_x \<or> \<not>isReg_y_x \<or> speak_y \<or> listen_y) 
+\<and> (\<not>broadcast_x \<or> \<not>isReg_y_x \<or> \<not>listen_y \<or> listen_y) 
+\<and> (\<not>broadcast_x \<or> \<not>isReg_y_x \<or> \<not>listen_y \<or> \<not>speak_y) 
+\<and> (\<not>broadcast_x \<or> isReg_Px_x \<or> \<not>isReg_y_x \<or> listen_y) 
+\<and> (\<not>broadcast_x \<or> speak_Px \<or> \<not>isReg_y_x \<or> listen_y) 
+\<and> (\<not>broadcast_x \<or> \<not>differ_y1_Px \<or> \<not>isReg_y1_x \<or> listen_y1 \<or> \<not>isReg_y_x \<or> listen_y) 
+\<and> (\<not>speak_y \<or> broadcast_x) 
+\<and> (\<not>speak_y \<or> isReg_y_x) 
+\<and> (\<not>listen_y \<or> broadcast_x) 
+\<and> (\<not>listen_y \<or> isReg_y_x))
+"
+  by blast
+
+lemma compare_tool_1: "(broadcast_x \<longrightarrow> speak_y)
+\<Longrightarrow>
+(\<not> broadcast_x \<or> speak_y) 
+"
+  by blast
+
 notepad
 begin
   have"
@@ -77,16 +46,119 @@ begin
       \<and> (\<forall>l \<in> set (lookup_3 (fst s_elm_1) test_synchron) - {snd s_elm_1}. \<not>P (fst s_elm_1) l))
     )
 ))
-\<and> (\<forall>j \<in> set test_synchron. \<forall>u \<in> set j. \<forall>t \<in> set u. \<exists>l \<in> set (snd t).\<forall>l1 \<in> set (snd t) - {l}. \<not> P (fst t) l1) 
-\<and> (\<forall>i \<in> set test_triggers. \<forall>v \<in> set i. \<forall>k \<in> set v. \<exists>h \<in> set (snd k).\<forall>h1 \<in> set (snd k) - {h}. \<not> Q (fst k) h1))
+\<and> (\<forall>j \<in> set test_synchron. \<forall>u \<in> set j. \<forall>t \<in> set u. \<forall>l \<in> set (snd t).(P (fst t) l \<longrightarrow> (\<forall>l1 \<in> set (snd t) - {l}. \<not>P (fst t) l1)))
+\<and> (\<forall>i \<in> set test_triggers. \<forall>v \<in> set i. \<forall>k \<in> set v. \<forall>h \<in> set (snd k).(Q (fst k) h \<longrightarrow> (\<forall>h1 \<in> set (snd k) - {h}. \<not>Q (fst k) h1))))
 "
+    unfolding test_synchron_def test_triggers_def JavaBIP_Connector_2_def BIP_Connector_2_def
+    sledgehammer
+(*
   proof (rule classical)
     assume "\<not> ?thesis"
-    then show ?thesis sorry
+    then show ?thesis by smt
   qed
+*)
 end
 
+lemma "((speak_y \<longrightarrow> broadcast_x \<and> isReg_y_x \<and> \<not>listen_y \<and> (listen_y1 \<longrightarrow> broadcast_x \<and> differ_y1_y \<and> isReg_y1_x)) \<and> (listen_y \<longrightarrow> broadcast_x \<and> isReg_y_x \<and> \<not>speak_y \<and> (listen_y1 \<longrightarrow> broadcast_x \<and> differ_y1_y \<and> isReg_y1_x)))
+\<Longrightarrow>
+((\<not>speak_y \<or> broadcast_x) 
+\<and> (\<not>speak_y \<or> isReg_y_x) 
+\<and> (\<not>speak_y \<or> \<not>listen_y) 
+\<and> (\<not>speak_y \<or> \<not>listen_y1 \<or> broadcast_x) 
+\<and> (\<not>speak_y \<or> \<not>listen_y1 \<or> differ_y1_y) 
+\<and> (\<not>speak_y \<or> \<not>listen_y1 \<or> isReg_y1_x) 
+\<and> (\<not>listen_y \<or> broadcast_x) 
+\<and> (\<not>listen_y \<or> isReg_y_x) 
+\<and> (\<not>listen_y \<or> \<not>speak_y) 
+\<and> (\<not>listen_y \<or> \<not>listen_y1 \<or> broadcast_x) 
+\<and> (\<not>listen_y \<or> \<not>listen_y1 \<or> differ_y1_y) 
+\<and> (\<not>listen_y \<or> \<not>listen_y1 \<or> isReg_y1_x))"
+  by blast
+
+lemma "((P_4_1 \<longrightarrow> (Q_1_1 \<or> Q_2_1) \<and> (\<not>P_4_2 \<and> \<not>P_4_3) \<and> \<not>Q_1_2 \<and> \<not>Q_1_3 \<and> \<not>Q_2_2) \<or>
+ (P_4_1 \<longrightarrow> (Q_1_1 \<or> Q_2_2) \<and> (\<not>P_4_2 \<and> \<not>P_4_3) \<and> \<not>Q_1_2 \<and> \<not>Q_1_3 \<and> \<not>Q_2_1) \<or>
+ (P_4_1 \<longrightarrow> (Q_1_2 \<or> Q_2_1) \<and> (\<not>P_4_2 \<and> \<not>P_4_3) \<and> \<not>Q_1_1 \<and> \<not>Q_1_3 \<and> \<not>Q_2_2) \<or>
+ (P_4_1 \<longrightarrow> (Q_1_2 \<or> Q_2_2) \<and> (\<not>P_4_2 \<and> \<not>P_4_3) \<and> \<not>Q_1_1 \<and> \<not>Q_1_3 \<and> \<not>Q_2_1) \<or>
+ (P_4_1 \<longrightarrow> (Q_1_3 \<or> Q_2_1) \<and> (\<not>P_4_2 \<and> \<not>P_4_3) \<and> \<not>Q_1_1 \<and> \<not>Q_1_2 \<and> \<not>Q_2_2) \<or>
+ (P_4_1 \<longrightarrow> (Q_1_3 \<or> Q_2_2) \<and> (\<not>P_4_2 \<and> \<not>P_4_3) \<and> \<not>Q_1_1 \<and> \<not>Q_1_2 \<and> \<not>Q_2_1) \<or>
+ (P_4_2 \<longrightarrow> (Q_1_1 \<or> Q_2_1) \<and> (\<not>P_4_1 \<and> \<not>P_4_3) \<and> \<not>Q_1_2 \<and> \<not>Q_1_3 \<and> \<not>Q_2_2) \<or>
+ (P_4_2 \<longrightarrow> (Q_1_1 \<or> Q_2_2) \<and> (\<not>P_4_1 \<and> \<not>P_4_3) \<and> \<not>Q_1_2 \<and> \<not>Q_1_3 \<and> \<not>Q_2_1) \<or>
+ (P_4_2 \<longrightarrow> (Q_1_2 \<or> Q_2_1) \<and> (\<not>P_4_1 \<and> \<not>P_4_3) \<and> \<not>Q_1_1 \<and> \<not>Q_1_3 \<and> \<not>Q_2_2) \<or>
+ (P_4_2 \<longrightarrow> (Q_1_2 \<or> Q_2_2) \<and> (\<not>P_4_1 \<and> \<not>P_4_3) \<and> \<not>Q_1_1 \<and> \<not>Q_1_3 \<and> \<not>Q_2_1) \<or>
+ (P_4_2 \<longrightarrow> (Q_1_3 \<or> Q_2_1) \<and> (\<not>P_4_1 \<and> \<not>P_4_3) \<and> \<not>Q_1_1 \<and> \<not>Q_1_2 \<and> \<not>Q_2_2) \<or>
+ (P_4_2 \<longrightarrow> (Q_1_3 \<or> Q_2_2) \<and> (\<not>P_4_1 \<and> \<not>P_4_3) \<and> \<not>Q_1_1 \<and> \<not>Q_1_2 \<and> \<not>Q_2_1) \<or>
+ (P_4_3 \<longrightarrow> (Q_1_1 \<or> Q_2_1) \<and> (\<not>P_4_1 \<and> \<not>P_4_2) \<and> \<not>Q_1_2 \<and> \<not>Q_1_3 \<and> \<not>Q_2_2) \<or>
+ (P_4_3 \<longrightarrow> (Q_1_1 \<or> Q_2_2) \<and> (\<not>P_4_1 \<and> \<not>P_4_2) \<and> \<not>Q_1_2 \<and> \<not>Q_1_3 \<and> \<not>Q_2_1) \<or>
+ (P_4_3 \<longrightarrow> (Q_1_2 \<or> Q_2_1) \<and> (\<not>P_4_1 \<and> \<not>P_4_2) \<and> \<not>Q_1_1 \<and> \<not>Q_1_3 \<and> \<not>Q_2_2) \<or>
+ (P_4_3 \<longrightarrow> (Q_1_2 \<or> Q_2_2) \<and> (\<not>P_4_1 \<and> \<not>P_4_2) \<and> \<not>Q_1_1 \<and> \<not>Q_1_3 \<and> \<not>Q_2_1) \<or>
+ (P_4_3 \<longrightarrow> (Q_1_3 \<or> Q_2_1) \<and> (\<not>P_4_1 \<and> \<not>P_4_2) \<and> \<not>Q_1_1 \<and> \<not>Q_1_2 \<and> \<not>Q_2_2) \<or>
+ (P_4_3 \<longrightarrow> (Q_1_3 \<or> Q_2_2) \<and> (\<not>P_4_1 \<and> \<not>P_4_2) \<and> \<not>Q_1_1 \<and> \<not>Q_1_2 \<and> \<not>Q_2_1))
+\<Longrightarrow>
+(
+  (P_4_1 \<longrightarrow>  (Q_1_1 \<and> \<not>Q_1_2 \<and> \<not>Q_1_3 \<or> Q_1_2 \<and> \<not>Q_1_1 \<and> \<not>Q_1_3 \<or> Q_1_3 \<and> \<not>Q_1_1 \<and> \<not>Q_1_2) 
+	\<or> Q_2_1 \<and> \<not>Q_2_2 \<or> Q_2_2 \<and> \<not>Q_2_1) \<and>
+  (P_4_2 \<longrightarrow>  (Q_1_1 \<and> \<not>Q_1_2 \<and> \<not>Q_1_3 \<or> Q_1_2 \<and> \<not>Q_1_1 \<and> \<not>Q_1_3 \<or> Q_1_3 \<and> \<not>Q_1_1 \<and> \<not>Q_1_2) 
+  	\<or> Q_2_1 \<and> \<not>Q_2_2 \<or> Q_2_2 \<and> \<not>Q_2_1) \<and>
+  (P_4_3 \<longrightarrow>  (Q_1_1 \<and> \<not>Q_1_2 \<and> \<not>Q_1_3 \<or> Q_1_2 \<and> \<not>Q_1_1 \<and> \<not>Q_1_3 \<or> Q_1_3 \<and> \<not>Q_1_1 \<and> \<not>Q_1_2) 
+  	\<or> Q_2_1 \<and> \<not>Q_2_2 \<or> Q_2_2 \<and> \<not>Q_2_1) \<and>
+ (P_4_1 \<longrightarrow> \<not>P_4_2 \<and> \<not>P_4_3) \<and> (P_4_2 \<longrightarrow> \<not>P_4_1 \<and> \<not>P_4_3) \<and> (P_4_3 \<longrightarrow> \<not>P_4_1 \<and> \<not>P_4_2) \<and>
+ (Q_1_1 \<longrightarrow> \<not>Q_1_2 \<and> \<not>Q_1_3) \<and> (Q_1_2 \<longrightarrow> \<not>Q_1_1 \<and> \<not>Q_1_3) \<and> (Q_1_3 \<longrightarrow> \<not>Q_1_1 \<and> \<not>Q_1_2) \<and>
+ (Q_2_1 \<longrightarrow> \<not>Q_2_2) \<and> (Q_2_2 \<longrightarrow> \<not>Q_2_1)
+)"
+  by blast
+  
+value "((True \<longrightarrow> (False \<or> False) \<and> (\<not>False \<and> \<not>False) \<and> \<not>False \<and> \<not>False \<and> \<not>False) \<or>
+ (True \<longrightarrow> (False \<or> False) \<and> (\<not>False \<and> \<not>False) \<and> \<not>False \<and> \<not>False \<and> \<not>False) \<or>
+ (True \<longrightarrow> (False \<or> False) \<and> (\<not>False \<and> \<not>False) \<and> \<not>False \<and> \<not>False \<and> \<not>False) \<or>
+ (True \<longrightarrow> (False \<or> False) \<and> (\<not>False \<and> \<not>False) \<and> \<not>False \<and> \<not>False \<and> \<not>False) \<or>
+ (True \<longrightarrow> (False \<or> False) \<and> (\<not>False \<and> \<not>False) \<and> \<not>False \<and> \<not>False \<and> \<not>False) \<or>
+ (True \<longrightarrow> (False \<or> False) \<and> (\<not>False \<and> \<not>False) \<and> \<not>False \<and> \<not>False \<and> \<not>False) \<or>
+ (False \<longrightarrow> (False \<or> False) \<and> (\<not>True \<and> \<not>False) \<and> \<not>False \<and> \<not>False \<and> \<not>False) \<or>
+ (False \<longrightarrow> (False \<or> False) \<and> (\<not>True \<and> \<not>False) \<and> \<not>False \<and> \<not>False \<and> \<not>False) \<or>
+ (False \<longrightarrow> (False \<or> False) \<and> (\<not>True \<and> \<not>False) \<and> \<not>False \<and> \<not>False \<and> \<not>False) \<or>
+ (False \<longrightarrow> (False \<or> False) \<and> (\<not>True \<and> \<not>False) \<and> \<not>False \<and> \<not>False \<and> \<not>False) \<or>
+ (False \<longrightarrow> (False \<or> False) \<and> (\<not>True \<and> \<not>False) \<and> \<not>False \<and> \<not>False \<and> \<not>False) \<or>
+ (False \<longrightarrow> (False \<or> False) \<and> (\<not>True \<and> \<not>False) \<and> \<not>False \<and> \<not>False \<and> \<not>False) \<or>
+ (False \<longrightarrow> (False \<or> False) \<and> (\<not>True \<and> \<not>False) \<and> \<not>False \<and> \<not>False \<and> \<not>False) \<or>
+ (False \<longrightarrow> (False \<or> False) \<and> (\<not>True \<and> \<not>False) \<and> \<not>False \<and> \<not>False \<and> \<not>False) \<or>
+ (False \<longrightarrow> (False \<or> False) \<and> (\<not>True \<and> \<not>False) \<and> \<not>False \<and> \<not>False \<and> \<not>False) \<or>
+ (False \<longrightarrow> (False \<or> False) \<and> (\<not>True \<and> \<not>False) \<and> \<not>False \<and> \<not>False \<and> \<not>False) \<or>
+ (False \<longrightarrow> (False \<or> False) \<and> (\<not>True \<and> \<not>False) \<and> \<not>False \<and> \<not>False \<and> \<not>False) \<or>
+ (False \<longrightarrow> (False \<or> False) \<and> (\<not>True \<and> \<not>False) \<and> \<not>False \<and> \<not>False \<and> \<not>False))"
+
+value "(
+  (True \<longrightarrow>  (False \<and> \<not>False \<and> \<not>False \<or> False \<and> \<not>False \<and> \<not>False \<or> False \<and> \<not>False \<and> \<not>False) 
+	\<or> False \<and> \<not>False \<or> False \<and> \<not>False) \<and>
+  (False \<longrightarrow>  (False \<and> \<not>False \<and> \<not>False \<or> False \<and> \<not>False \<and> \<not>False \<or> False \<and> \<not>False \<and> \<not>False) 
+  	\<or> False \<and> \<not>False \<or> False \<and> \<not>False) \<and>
+  (False \<longrightarrow>  (False \<and> \<not>False \<and> \<not>False \<or> False \<and> \<not>False \<and> \<not>False \<or> False \<and> \<not>False \<and> \<not>False) 
+  	\<or> False \<and> \<not>False \<or> False \<and> \<not>False) \<and>
+ (True \<longrightarrow> \<not>False \<and> \<not>False) \<and> (False \<longrightarrow> \<not>True \<and> \<not>False) \<and> (False \<longrightarrow> \<not>True \<and> \<not>False) \<and>
+ (False \<longrightarrow> \<not>False \<and> \<not>False) \<and> (False \<longrightarrow> \<not>False \<and> \<not>False) \<and> (False \<longrightarrow> \<not>False \<and> \<not>False) \<and>
+ (False \<longrightarrow> \<not>False) \<and> (False \<longrightarrow> \<not>False)
+)"
+
+lemma "((speak_y \<longrightarrow> broadcast_x \<and> isReg_y_x \<and> \<not>listen_y) 
+\<and> (listen_y \<longrightarrow> broadcast_x \<and> isReg_y_x \<and> \<not>speak_y) 
+\<and> (
+	listen_y1 \<longrightarrow> broadcast_x \<and> differ_y1_Px \<and> isReg_y1_x \<and> isReg_Px_x \<and> (speak_Px \<or> listen_Px)
+))
+\<Longrightarrow>
+((\<not>speak_y \<or> broadcast_x) 
+\<and> (\<not>speak_y \<or> isReg_y_x) 
+\<and> (\<not>speak_y \<or> \<not>listen_y) 
+\<and> (\<not>listen_y \<or> broadcast_x) 
+\<and> (\<not>listen_y \<or> isReg_y_x) 
+\<and> (\<not>listen_y \<or> \<not>speak_y) 
+\<and> (\<not>listen_y1 \<or> broadcast_x) 
+\<and> (\<not>listen_y1 \<or> differ_y1_Px) 
+\<and> (\<not>listen_y1 \<or> isReg_y1_x) 
+\<and> (\<not>listen_y1 \<or> isReg_Px_x) 
+\<and> (\<not>listen_y1 \<or> speak_Px \<or> listen_Px))"
+  by blast
+
 (*
+by presburger
 value "
 \<forall>x \<in> Tracker.\<forall>y \<in> Peer. (
   broadcast(x) \<and> isReg(y,x) \<longrightarrow> (speak(y) \<Longleftrightarrow> \<not>listen(y))
