@@ -79,15 +79,21 @@ fun make_betaSet_3 :: "(string * string list) list list list \<Rightarrow> (stri
 "make_betaSet_3 (x#y#xs#[]) = merge_list_1 (List.product (merge_list (List.product xs y)) (x))"|
 "make_betaSet_3 (x#y#xs#ys) = merge_list_1 (List.product (make_betaSet_3 (y#xs#ys)) (x))"
 
-definition test_triggers_a :: "(string * string list) list list list" where
-"test_triggers_a = [[[(''1a'',[''1'',''2'',''3''])], [(''1b'',[''1'',''2''])]],
-[[(''2'',[''1''])]],
-[[(''3a'',[''1''])], [(''3b1'',[''1'']),(''3b2'',[''1'',''2''])]]
-]"
+fun mk_jvb :: "'a list \<Rightarrow> 'b \<Rightarrow> ('a \<times> 'b) list" where
+"mk_jvb [] y = []"|
+"mk_jvb (x#xs) y = [(Pair x) y] @ mk_jvb xs y"
 
+(*------------------------------------------------------------------------------------------*)
+(*test List of all the trigger C = {C_1, C_2, ..., C_n}*)
+definition test_triggers_1 :: "(string * string list) list list list" where
+"test_triggers_1 = [[[(''1a'',[''1'',''2''])], [(''1b'',[''1'',''2''])]],
+[[(''2'',[''1''])]],
+[[(''3a'',[''1''])], [(''3b1'',[''1'']),(''3b2'',[''1'',''2''])]],
+[[(''4'',[''1''])]]
+]"
 definition test_triggers :: "(string * string list) list list list" where
 "test_triggers = [
-[[(''1'',[''1'',''2'',''3''])], [(''2'',[''1'',''2''])]]
+[[(''1a'',[''1'',''2'']), (''1b'',[''1''])], [(''2'',[''1'',''2'',''3''])]]
 ]"
 
 definition test_triggers_null :: "(string * string list) list list list" where
@@ -101,40 +107,14 @@ definition test_synchron_1 :: "(string * string list) list list list" where
 definition test_synchron :: "(string * string list) list list list" where
 "test_synchron = [
 [[(''4'', [''1'',''2''])]],
-[[(''5c'',[''1'',''2'']),(''5d'',[''1'',''2''])]]
+[[(''5c'',[''1'',''2'']),(''5d'',[''1'',''2'', ''3''])]]
 ]"
 
+definition Connector :: "((string \<times> string) list list \<times> (string \<times> string) list list list) list" where
+"Connector = mk_jvb (mk_pair_4_no_product test_synchron) (mk_pair_4 (make_betaSet_3 test_triggers))"
 
-(*final: create the connectors: fst: synchron, snd: trigger*)
-value "List.product (concat (make_betaSet_1 test_synchron)) (make_betaSet_1 test_triggers)"
-
-(*if trigger null: couldn't be applied*)
-value "List.product (concat (make_betaSet_1 test_synchron)) (make_betaSet_1 test_triggers_null)"
-
-(*use this method to generate the connectors*)
-value "concat (make_betaSet_1 test_synchron)"
 
 (*------------------------------- test -------------------------------*)
-(*exported list Y_k of trigger C_k*)
-definition test_3_triggers :: "(string * string list) list list" where
-"test_3_triggers = 
-[[(''3a'',[''1''])], [(''3b1'',[''1'']),(''3b2'',[''1'',''2''])]]
-"
-
-definition test_1_triggers :: "(string * string list) list list" where
-"test_1_triggers = 
-[[(''1a'',[''1'',''2''])], [(''1b'',[''1'',''2''])]]
-"
-
-definition test_2_triggers :: "(string * string list) list list" where
-"test_2_triggers = 
-[[(''2'',[''1''])]]
-"
-definition test_4_triggers :: "(string * string list) list list" where
-"test_4_triggers = 
-[[(''4'',[''1''])]]
-"
-value "mk_pair_3 test_1_triggers"
 
 (*test List of all the trigger C = {C_1, C_2, ..., C_n}*)
 definition test_triggers_1 :: "(string * string list) list list list" where
@@ -152,47 +132,20 @@ definition test_triggers_2 :: "(string * string list) list list list" where
 [[(''5a'',[''1''])], [(''5b'',[''6''])]]
 ]"
 
-value "make_betaSet_3 test_triggers"
-value "make_betaSet_3 test_triggers_1"
-value "make_betaSet_3 test_triggers_2"
+value "Connector" 
 
-(*Final: make all possible combination of pairs in triggers or rendezvous connector*)
-value "mk_pair_4 (make_betaSet_3 test_triggers)"
-value "mk_pair_4 (make_betaSet_3 test_triggers_1)"
-value "mk_pair_4 (make_betaSet_3 test_triggers_2)"
+lemma for_synchron: "(\<forall>j \<in> set test_synchron. \<forall>u \<in> set j. \<forall>t \<in> set u. \<forall>l \<in> set (snd t).(P ((fst t), l) \<longrightarrow> (\<forall>l1 \<in> set (snd t) - {l}. \<not>P ((fst t), l1))))
+\<Longrightarrow>
+(\<forall>j \<in> set test_synchron. \<forall>u \<in> set j. \<forall>t \<in> set u. \<forall>l \<in> set (snd t). (P ((fst t), l) \<longleftrightarrow> (P ((fst t), l) \<and> (\<forall>l1 \<in> set (snd t) - {l}. \<not>P ((fst t), l1)))))"
+  by blast
 
 
-(*synchron*)
-definition test_synchron_12 :: "(string * string list) list list list" where
-"test_synchron_12 = [ [[(''4'', [''1'',''2''])]],
-[[(''5c'',[''1'']),(''5d'',[''1'',''2''])]]
-]"
+lemma for_trigger: "(\<forall>i \<in> set test_triggers. \<forall>v \<in> set i. \<forall>k \<in> set v. \<forall>h \<in> set (snd k).(Q ((fst k), h) \<longrightarrow> (\<forall>h1 \<in> set (snd k) - {h}. \<not>Q ((fst k), h1))))
+\<Longrightarrow>
+(\<forall>i \<in> set test_triggers. \<forall>v \<in> set i. \<forall>k \<in> set v. \<forall>h \<in> set (snd k). (Q ((fst k), h) \<longleftrightarrow> (Q ((fst k), h) \<and> (\<forall>h1 \<in> set (snd k) - {h}. \<not>Q ((fst k), h1)))))"
+  by blast
 
-value "mk_pair_4 test_synchron"
-value "concat (concat (mk_pair_4 test_synchron))"
-value "\<forall>x \<in> set (concat (concat (mk_pair_4 test_synchron))) - {(''5c'', ''1''), (''5d'', ''2'')}. P (fst x) (snd x)"
+value "(\<forall>connector\<in>set Connector.\<forall>trig_list\<in>set(snd connector).\<forall>trig\<in>set trig_list. \<forall>t_elm\<in>set trig. (Q ((fst t_elm), (snd t_elm)) \<and> (\<forall>h \<in> set (lookup_3 (fst t_elm) test_triggers) - {snd t_elm}. \<not>Q ((fst t_elm), h)) ))"
 
-value "List.product (concat (mk_pair_4 test_synchron)) (mk_pair_4 (make_betaSet_3 test_triggers))"
-
-value "mk_pair_3_no_product test_1_triggers"
-value "mk_pair_4_no_product test_triggers"
-value "concat (mk_pair_4 test_synchron)" 
-value "Pair (concat (mk_pair_4 test_synchron)) (mk_pair_4 (make_betaSet_3 test_triggers))"
-
-value "all_pairs test_triggers"
-value "all_pairs test_triggers_2"
-(*synchron*)
-definition connectors :: "((string \<times> string) list list \<times> (string \<times> string) list list) list" where
-"connectors = List.product (mk_pair_4 test_synchron) (mk_pair_4 (make_betaSet_3 test_triggers))"
-
-
-value "connectors"
-value "concat [[(''4'', ''1'')]]"
-value "concat [[(''3a'', ''1'')], [(''4'', ''1'')], [(''1a'', ''1'')]]"
-
-value "all_pairs test_triggers"
-value "concat (concat (mk_pair_3_no_product test_1_triggers))"
-value "remaining_ports (all_pairs test_triggers) (concat (concat (mk_pair_3_no_product test_1_triggers)))"
-
-value "union (set (concat [[(''4'', ''1'')]])) (set (concat [[(''3a'', ''1'')], [(''2'', ''1'')], [(''1a'', ''1'')]]))"
+value "(\<forall>i \<in> set test_triggers. \<forall>v \<in> set i. \<forall>k \<in> set v. \<forall>h \<in> set (snd k).(Q ((fst k), h)) \<longrightarrow> (\<forall>h \<in> set (lookup_3 (fst k) test_triggers) - {h}. \<not>Q ((fst k), h)))"
 end
