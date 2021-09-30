@@ -87,7 +87,11 @@ definition test_triggers_a :: "(string * string list) list list list" where
 
 definition test_triggers :: "(string * string list) list list list" where
 "test_triggers = [
+<<<<<<< Updated upstream
 [[(''1'',[''1'',''2'',''3''])], [(''2'',[''1'',''2''])]]
+=======
+[[(''3b1'',[''1'', ''2'']),(''3b2'',[''1'',''2''])]]
+>>>>>>> Stashed changes
 ]"
 
 definition test_triggers_null :: "(string * string list) list list list" where
@@ -100,7 +104,11 @@ definition test_synchron_1 :: "(string * string list) list list list" where
 
 definition test_synchron :: "(string * string list) list list list" where
 "test_synchron = [
+<<<<<<< Updated upstream
 [[(''4'', [''1'',''2''])]]
+=======
+[[(''5c'',[''1'',''2'']),(''5d'',[''1'',''2''])]]
+>>>>>>> Stashed changes
 ]"
 
 

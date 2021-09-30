@@ -1,0 +1,417 @@
+\documentclass{article}      
+\usepackage{color}           
+\usepackage{alltt}           
+\usepackage[latin1]{inputenc}
+\usepackage{hyperref}
+\title{compare.thy}
+
+\newcommand{\syntaxNULL}[1]{\textcolor[rgb]{0.0,0.0,0.0}{#1}}
+\newcommand{\syntaxCOMMENTA}[1]{\textcolor[rgb]{0.8,0.0,0.0}{#1}}
+\newcommand{\syntaxCOMMENTB}[1]{\textcolor[rgb]{1.0,0.5176470588235295,0.0}{#1}}
+\newcommand{\syntaxCOMMENTC}[1]{\textcolor[rgb]{0.4,0.0,0.8}{#1}}
+\newcommand{\syntaxCOMMENTD}[1]{\textcolor[rgb]{0.8,0.4,0.0}{#1}}
+\newcommand{\syntaxDIGIT}[1]{\textcolor[rgb]{1.0,0.0,0.0}{#1}}
+\newcommand{\syntaxFUNCTION}[1]{\textcolor[rgb]{0.6,0.4,1.0}{#1}}
+\newcommand{\syntaxINVALID}[1]{\colorbox[rgb]{1.0,1.0,0.8}{\textcolor[rgb]{1.0,0.0,0.4}{#1}}}
+\newcommand{\syntaxKEYWORDA}[1]{\textcolor[rgb]{0.0,0.4,0.6}{\textbf{#1}}}
+\newcommand{\syntaxKEYWORDB}[1]{\textcolor[rgb]{0.0,0.6,0.4}{\textbf{#1}}}
+\newcommand{\syntaxKEYWORDC}[1]{\textcolor[rgb]{0.0,0.6,1.0}{\textbf{#1}}}
+\newcommand{\syntaxKEYWORDD}[1]{\textcolor[rgb]{0.4,0.8,1.0}{\textbf{#1}}}
+\newcommand{\syntaxLABEL}[1]{\textcolor[rgb]{0.00784313725490196,0.7254901960784313,0.00784313725490196}{#1}}
+\newcommand{\syntaxLITERALA}[1]{\textcolor[rgb]{1.0,0.0,0.8}{#1}}
+\newcommand{\syntaxLITERALB}[1]{\textcolor[rgb]{0.8,0.0,0.8}{#1}}
+\newcommand{\syntaxLITERALC}[1]{\textcolor[rgb]{0.6,0.0,0.8}{#1}}
+\newcommand{\syntaxLITERALD}[1]{\textcolor[rgb]{0.4,0.0,0.8}{#1}}
+\newcommand{\syntaxMARKUP}[1]{\textcolor[rgb]{0.0,0.0,1.0}{#1}}
+\newcommand{\syntaxOPERATOR}[1]{\textcolor[rgb]{0.0,0.0,0.0}{\textbf{#1}}}
+\newcommand{\syntaxNULL}[1]{\textcolor[rgb]{0.0,0.0,0.0}{#1}}
+\newcommand{\syntaxCOMMENTA}[1]{\textcolor[rgb]{0.8,0.0,0.0}{#1}}
+\newcommand{\syntaxCOMMENTB}[1]{\textcolor[rgb]{1.0,0.5176470588235295,0.0}{#1}}
+\newcommand{\syntaxCOMMENTC}[1]{\textcolor[rgb]{0.4,0.0,0.8}{#1}}
+\newcommand{\syntaxCOMMENTD}[1]{\textcolor[rgb]{0.8,0.4,0.0}{#1}}
+\newcommand{\syntaxDIGIT}[1]{\textcolor[rgb]{1.0,0.0,0.0}{#1}}
+\newcommand{\syntaxFUNCTION}[1]{\textcolor[rgb]{0.6,0.4,1.0}{#1}}
+\newcommand{\syntaxINVALID}[1]{\colorbox[rgb]{1.0,1.0,0.8}{\textcolor[rgb]{1.0,0.0,0.4}{#1}}}
+\newcommand{\syntaxKEYWORDA}[1]{\textcolor[rgb]{0.0,0.4,0.6}{\textbf{#1}}}
+\newcommand{\syntaxKEYWORDB}[1]{\textcolor[rgb]{0.0,0.6,0.4}{\textbf{#1}}}
+\newcommand{\syntaxKEYWORDC}[1]{\textcolor[rgb]{0.0,0.6,1.0}{\textbf{#1}}}
+\newcommand{\syntaxKEYWORDD}[1]{\textcolor[rgb]{0.4,0.8,1.0}{\textbf{#1}}}
+\newcommand{\syntaxLABEL}[1]{\textcolor[rgb]{0.00784313725490196,0.7254901960784313,0.00784313725490196}{#1}}
+\newcommand{\syntaxLITERALA}[1]{\textcolor[rgb]{1.0,0.0,0.8}{#1}}
+\newcommand{\syntaxLITERALB}[1]{\textcolor[rgb]{0.8,0.0,0.8}{#1}}
+\newcommand{\syntaxLITERALC}[1]{\textcolor[rgb]{0.6,0.0,0.8}{#1}}
+\newcommand{\syntaxLITERALD}[1]{\textcolor[rgb]{0.4,0.0,0.8}{#1}}
+\newcommand{\syntaxMARKUP}[1]{\textcolor[rgb]{0.0,0.0,1.0}{#1}}
+\newcommand{\syntaxOPERATOR}[1]{\textcolor[rgb]{0.0,0.0,0.0}{\textbf{#1}}}
+\newcommand{\syntaxNULL}[1]{\textcolor[rgb]{0.0,0.0,0.0}{#1}}
+\newcommand{\syntaxCOMMENTA}[1]{\textcolor[rgb]{0.8,0.0,0.0}{#1}}
+\newcommand{\syntaxCOMMENTB}[1]{\textcolor[rgb]{1.0,0.5176470588235295,0.0}{#1}}
+\newcommand{\syntaxCOMMENTC}[1]{\textcolor[rgb]{0.4,0.0,0.8}{#1}}
+\newcommand{\syntaxCOMMENTD}[1]{\textcolor[rgb]{0.8,0.4,0.0}{#1}}
+\newcommand{\syntaxDIGIT}[1]{\textcolor[rgb]{1.0,0.0,0.0}{#1}}
+\newcommand{\syntaxFUNCTION}[1]{\textcolor[rgb]{0.6,0.4,1.0}{#1}}
+\newcommand{\syntaxINVALID}[1]{\colorbox[rgb]{1.0,1.0,0.8}{\textcolor[rgb]{1.0,0.0,0.4}{#1}}}
+\newcommand{\syntaxKEYWORDA}[1]{\textcolor[rgb]{0.0,0.4,0.6}{\textbf{#1}}}
+\newcommand{\syntaxKEYWORDB}[1]{\textcolor[rgb]{0.0,0.6,0.4}{\textbf{#1}}}
+\newcommand{\syntaxKEYWORDC}[1]{\textcolor[rgb]{0.0,0.6,1.0}{\textbf{#1}}}
+\newcommand{\syntaxKEYWORDD}[1]{\textcolor[rgb]{0.4,0.8,1.0}{\textbf{#1}}}
+\newcommand{\syntaxLABEL}[1]{\textcolor[rgb]{0.00784313725490196,0.7254901960784313,0.00784313725490196}{#1}}
+\newcommand{\syntaxLITERALA}[1]{\textcolor[rgb]{1.0,0.0,0.8}{#1}}
+\newcommand{\syntaxLITERALB}[1]{\textcolor[rgb]{0.8,0.0,0.8}{#1}}
+\newcommand{\syntaxLITERALC}[1]{\textcolor[rgb]{0.6,0.0,0.8}{#1}}
+\newcommand{\syntaxLITERALD}[1]{\textcolor[rgb]{0.4,0.0,0.8}{#1}}
+\newcommand{\syntaxMARKUP}[1]{\textcolor[rgb]{0.0,0.0,1.0}{#1}}
+\newcommand{\syntaxOPERATOR}[1]{\textcolor[rgb]{0.0,0.0,0.0}{\textbf{#1}}}
+\newcommand{\syntaxNULL}[1]{\textcolor[rgb]{0.0,0.0,0.0}{\textbf{#1}}}
+\newcommand{\syntaxCOMMENTA}[1]{\textcolor[rgb]{0.8,0.0,0.0}{\textbf{#1}}}
+\newcommand{\syntaxCOMMENTB}[1]{\textcolor[rgb]{1.0,0.5176470588235295,0.0}{\textbf{#1}}}
+\newcommand{\syntaxCOMMENTC}[1]{\textcolor[rgb]{0.4,0.0,0.8}{\textbf{#1}}}
+\newcommand{\syntaxCOMMENTD}[1]{\textcolor[rgb]{0.8,0.4,0.0}{\textbf{#1}}}
+\newcommand{\syntaxDIGIT}[1]{\textcolor[rgb]{1.0,0.0,0.0}{\textbf{#1}}}
+\newcommand{\syntaxFUNCTION}[1]{\textcolor[rgb]{0.6,0.4,1.0}{\textbf{#1}}}
+\newcommand{\syntaxINVALID}[1]{\colorbox[rgb]{1.0,1.0,0.8}{\textcolor[rgb]{1.0,0.0,0.4}{\textbf{#1}}}}
+\newcommand{\syntaxKEYWORDA}[1]{\textcolor[rgb]{0.0,0.4,0.6}{#1}}
+\newcommand{\syntaxKEYWORDB}[1]{\textcolor[rgb]{0.0,0.6,0.4}{#1}}
+\newcommand{\syntaxKEYWORDC}[1]{\textcolor[rgb]{0.0,0.6,1.0}{#1}}
+\newcommand{\syntaxKEYWORDD}[1]{\textcolor[rgb]{0.4,0.8,1.0}{#1}}
+\newcommand{\syntaxLABEL}[1]{\textcolor[rgb]{0.00784313725490196,0.7254901960784313,0.00784313725490196}{\textbf{#1}}}
+\newcommand{\syntaxLITERALA}[1]{\textcolor[rgb]{1.0,0.0,0.8}{\textbf{#1}}}
+\newcommand{\syntaxLITERALB}[1]{\textcolor[rgb]{0.8,0.0,0.8}{\textbf{#1}}}
+\newcommand{\syntaxLITERALC}[1]{\textcolor[rgb]{0.6,0.0,0.8}{\textbf{#1}}}
+\newcommand{\syntaxLITERALD}[1]{\textcolor[rgb]{0.4,0.0,0.8}{\textbf{#1}}}
+\newcommand{\syntaxMARKUP}[1]{\textcolor[rgb]{0.0,0.0,1.0}{\textbf{#1}}}
+\newcommand{\syntaxOPERATOR}[1]{\textcolor[rgb]{0.0,0.0,0.0}{#1}}
+\newcommand{\syntaxNULL}[1]{\textcolor[rgb]{0.0,0.0,0.0}{#1}}
+\newcommand{\syntaxCOMMENTA}[1]{\textcolor[rgb]{0.8,0.0,0.0}{#1}}
+\newcommand{\syntaxCOMMENTB}[1]{\textcolor[rgb]{1.0,0.5176470588235295,0.0}{#1}}
+\newcommand{\syntaxCOMMENTC}[1]{\textcolor[rgb]{0.4,0.0,0.8}{#1}}
+\newcommand{\syntaxCOMMENTD}[1]{\textcolor[rgb]{0.8,0.4,0.0}{#1}}
+\newcommand{\syntaxDIGIT}[1]{\textcolor[rgb]{1.0,0.0,0.0}{#1}}
+\newcommand{\syntaxFUNCTION}[1]{\textcolor[rgb]{0.6,0.4,1.0}{#1}}
+\newcommand{\syntaxINVALID}[1]{\colorbox[rgb]{1.0,1.0,0.8}{\textcolor[rgb]{1.0,0.0,0.4}{#1}}}
+\newcommand{\syntaxKEYWORDA}[1]{\textcolor[rgb]{0.0,0.4,0.6}{\textbf{#1}}}
+\newcommand{\syntaxKEYWORDB}[1]{\textcolor[rgb]{0.0,0.6,0.4}{\textbf{#1}}}
+\newcommand{\syntaxKEYWORDC}[1]{\textcolor[rgb]{0.0,0.6,1.0}{\textbf{#1}}}
+\newcommand{\syntaxKEYWORDD}[1]{\textcolor[rgb]{0.4,0.8,1.0}{\textbf{#1}}}
+\newcommand{\syntaxLABEL}[1]{\textcolor[rgb]{0.00784313725490196,0.7254901960784313,0.00784313725490196}{#1}}
+\newcommand{\syntaxLITERALA}[1]{\textcolor[rgb]{1.0,0.0,0.8}{#1}}
+\newcommand{\syntaxLITERALB}[1]{\textcolor[rgb]{0.8,0.0,0.8}{#1}}
+\newcommand{\syntaxLITERALC}[1]{\textcolor[rgb]{0.6,0.0,0.8}{#1}}
+\newcommand{\syntaxLITERALD}[1]{\textcolor[rgb]{0.4,0.0,0.8}{#1}}
+\newcommand{\syntaxMARKUP}[1]{\textcolor[rgb]{0.0,0.0,1.0}{#1}}
+\newcommand{\syntaxOPERATOR}[1]{\textcolor[rgb]{0.0,0.0,0.0}{\textbf{#1}}}
+\newcommand{\syntaxNULL}[1]{\textcolor[rgb]{0.0,0.0,0.0}{#1}}
+\newcommand{\syntaxCOMMENTA}[1]{\textcolor[rgb]{0.8,0.0,0.0}{#1}}
+\newcommand{\syntaxCOMMENTB}[1]{\textcolor[rgb]{1.0,0.5176470588235295,0.0}{#1}}
+\newcommand{\syntaxCOMMENTC}[1]{\textcolor[rgb]{0.4,0.0,0.8}{#1}}
+\newcommand{\syntaxCOMMENTD}[1]{\textcolor[rgb]{0.8,0.4,0.0}{#1}}
+\newcommand{\syntaxDIGIT}[1]{\textcolor[rgb]{1.0,0.0,0.0}{#1}}
+\newcommand{\syntaxFUNCTION}[1]{\textcolor[rgb]{0.6,0.4,1.0}{#1}}
+\newcommand{\syntaxINVALID}[1]{\colorbox[rgb]{1.0,1.0,0.8}{\textcolor[rgb]{1.0,0.0,0.4}{#1}}}
+\newcommand{\syntaxKEYWORDA}[1]{\textcolor[rgb]{0.0,0.4,0.6}{\textbf{#1}}}
+\newcommand{\syntaxKEYWORDB}[1]{\textcolor[rgb]{0.0,0.6,0.4}{\textbf{#1}}}
+\newcommand{\syntaxKEYWORDC}[1]{\textcolor[rgb]{0.0,0.6,1.0}{\textbf{#1}}}
+\newcommand{\syntaxKEYWORDD}[1]{\textcolor[rgb]{0.4,0.8,1.0}{\textbf{#1}}}
+\newcommand{\syntaxLABEL}[1]{\textcolor[rgb]{0.00784313725490196,0.7254901960784313,0.00784313725490196}{#1}}
+\newcommand{\syntaxLITERALA}[1]{\textcolor[rgb]{1.0,0.0,0.8}{#1}}
+\newcommand{\syntaxLITERALB}[1]{\textcolor[rgb]{0.8,0.0,0.8}{#1}}
+\newcommand{\syntaxLITERALC}[1]{\textcolor[rgb]{0.6,0.0,0.8}{#1}}
+\newcommand{\syntaxLITERALD}[1]{\textcolor[rgb]{0.4,0.0,0.8}{#1}}
+\newcommand{\syntaxMARKUP}[1]{\textcolor[rgb]{0.0,0.0,1.0}{#1}}
+\newcommand{\syntaxOPERATOR}[1]{\textcolor[rgb]{0.0,0.0,0.0}{\textbf{#1}}}
+\newcommand{\syntaxNULL}[1]{\textcolor[rgb]{1.0,1.0,1.0}{#1}}
+\newcommand{\syntaxCOMMENTA}[1]{\textcolor[rgb]{0.0,0.0,0.0}{#1}}
+\newcommand{\syntaxCOMMENTB}[1]{\textcolor[rgb]{0.0,0.0,0.0}{#1}}
+\newcommand{\syntaxCOMMENTC}[1]{\textcolor[rgb]{0.0,0.0,0.0}{#1}}
+\newcommand{\syntaxCOMMENTD}[1]{\textcolor[rgb]{0.0,0.0,0.0}{#1}}
+\newcommand{\syntaxDIGIT}[1]{\textcolor[rgb]{0.0,0.0,0.0}{\textbf{{\it #1}}}}
+\newcommand{\syntaxFUNCTION}[1]{\textcolor[rgb]{0.0,0.0,0.0}{#1}}
+\newcommand{\syntaxINVALID}[1]{\textcolor[rgb]{0.0,0.0,0.0}{#1}}
+\newcommand{\syntaxKEYWORDA}[1]{\textcolor[rgb]{0.0,0.0,0.0}{#1}}
+\newcommand{\syntaxKEYWORDB}[1]{\textcolor[rgb]{0.0,0.0,0.0}{#1}}
+\newcommand{\syntaxKEYWORDC}[1]{\textcolor[rgb]{0.0,0.0,0.0}{#1}}
+\newcommand{\syntaxKEYWORDD}[1]{\textcolor[rgb]{0.0,0.0,0.0}{#1}}
+\newcommand{\syntaxLABEL}[1]{\textcolor[rgb]{0.0,0.0,0.0}{#1}}
+
+\newcommand{\gutter}[1]{\textcolor[rgb]{0,0,0}{{|}#1}}
+\newcommand{\gutterH}[1]{\textcolor[rgb]{1,0,0}{{|}#1}}
+
+\definecolor{bgcolor}{rgb}{1.0,1.0,1.0}
+\newsavebox{\opencurlybracket}%
+\newsavebox{\closecurlybracket}%
+\newsavebox{\lessthan}%
+\newsavebox{\greaterthan}%
+\newsavebox{\dollarbox}%
+\newsavebox{\underscorebox}%
+\newsavebox{\andbox}%
+\newsavebox{\hashbox}%
+\newsavebox{\backslashbox}%
+\newsavebox{\atbox}%
+\newsavebox{\percentbox}%
+\newsavebox{\hatbox}%
+\setbox\opencurlybracket=\hbox{\verb.{.}%
+\setbox\closecurlybracket=\hbox{\verb.}.}%
+\setbox\lessthan=\hbox{\verb.<.}%
+\setbox\dollarbox=\hbox{\verb.$.}%
+\setbox\underscorebox=\hbox{\verb._.}%
+\setbox\andbox=\hbox{\verb.&.}%
+\setbox\hashbox=\hbox{\verb.#.}%
+\setbox\atbox=\hbox{\verb.@.}%
+\setbox\backslashbox=\hbox{\verb.\.}%
+\setbox\greaterthan=\hbox{\verb.>.}%
+\setbox\percentbox=\hbox{\verb.\%.}%
+\setbox\hatbox=\hbox{\verb.^.}%
+\def\urltilda{\kern -.15em\lower .7ex\hbox{\~{}}\kern .04em}
+\begin{document}
+\pagecolor{bgcolor}
+\noindent
+\ttfamily
+\syntaxNULL{}\gutter{\ \ \ \ 1{|}\ }\syntaxKEYWORDA{theory}{\ }compare\hspace*{\fill}\\
+\gutter{\ \ \ \ 2{|}\ }{\ }{\ }\syntaxKEYWORDB{imports}{\ }Main{\ }\hspace*{\fill}\\
+\gutter{\ \ \ \ 3{|}\ }\syntaxLITERALA{"/Volumes/Setup/Isabelle/Isabelle{-}Code/August/libs\usebox{\underscorebox}functions"}{\ }\syntaxLITERALA{"/Volumes/Setup/Isabelle/Isabelle{-}Code/August/bip"}{\ }\syntaxLITERALA{"/Volumes/Setup/Isabelle/Isabelle{-}Code/August/javabip"}\hspace*{\fill}\\
+\gutter{\ \ \ \ 4{|}\ }\syntaxKEYWORDB{begin}\hspace*{\fill}\\
+\gutterH{\ \ \ \ 5{|}\ }\syntaxKEYWORDA{value}{\ }\syntaxLITERALA{"(\<forall>j{\ }\<in>{\ }set{\ }test\usebox{\underscorebox}synchron.{\ }\<forall>u{\ }\<in>{\ }set{\ }j.{\ }\<forall>t{\ }\<in>{\ }set{\ }u.{\ }\<exists>l{\ }\<in>{\ }set{\ }(snd{\ }t).\<forall>l1{\ }\<in>{\ }set{\ }(snd{\ }t){\ }{-}{\ }\usebox{\opencurlybracket}l\usebox{\closecurlybracket}.{\ }\<not>{\ }P{\ }(fst{\ }t){\ }l1)"}{\ }\hspace*{\fill}\\
+\gutter{\ \ \ \ 6{|}\ }\syntaxKEYWORDA{value}{\ }\syntaxLITERALA{"(\<forall>j{\ }\<in>{\ }set{\ }test\usebox{\underscorebox}synchron.{\ }\<forall>u{\ }\<in>{\ }set{\ }j.{\ }\<forall>t{\ }\<in>{\ }set{\ }u.{\ }\<forall>l{\ }\<in>{\ }set{\ }(snd{\ }t).{\ }P{\ }(fst{\ }t){\ }l{\ }\<longrightarrow>{\ }(\<forall>l1{\ }\<in>{\ }set{\ }(snd{\ }t){\ }{-}{\ }\usebox{\opencurlybracket}l\usebox{\closecurlybracket}.{\ }\<not>P{\ }(fst{\ }t){\ }l1))"}\hspace*{\fill}\\
+\gutter{\ \ \ \ 7{|}\ }\hspace*{\fill}\\
+\gutter{\ \ \ \ 8{|}\ }\syntaxKEYWORDA{lemma}{\ }test\usebox{\underscorebox}apart\syntaxOPERATOR{:}{\ }\syntaxLITERALA{"((\<forall>j{\ }\<in>{\ }set{\ }test\usebox{\underscorebox}synchron.{\ }\<forall>u{\ }\<in>{\ }set{\ }j.{\ }\<forall>t{\ }\<in>{\ }set{\ }u.{\ }\<exists>l{\ }\<in>{\ }set{\ }(snd{\ }t).\<forall>l1{\ }\<in>{\ }set{\ }(snd{\ }t){\ }{-}{\ }\usebox{\opencurlybracket}l\usebox{\closecurlybracket}.{\ }\<not>{\ }P{\ }(fst{\ }t){\ }l1)){\ }\<Longrightarrow>}\hspace*{\fill}\\
+\gutter{\ \ \ \ 9{|}\ }\syntaxLITERALA{(\<forall>j{\ }\<in>{\ }set{\ }test\usebox{\underscorebox}synchron.{\ }\<forall>u{\ }\<in>{\ }set{\ }j.{\ }\<forall>t{\ }\<in>{\ }set{\ }u.{\ }\<forall>l{\ }\<in>{\ }set{\ }(snd{\ }t).{\ }P{\ }(fst{\ }t){\ }l{\ }\<longrightarrow>{\ }(\<forall>l1{\ }\<in>{\ }set{\ }(snd{\ }t){\ }{-}{\ }\usebox{\opencurlybracket}l\usebox{\closecurlybracket}.{\ }\<not>P{\ }(fst{\ }t){\ }l1))"}\hspace*{\fill}\\
+\gutterH{\ \ \ 10{|}\ }{\ }{\ }\syntaxKEYWORDA{by}{\ }blast\hspace*{\fill}\\
+\gutter{\ \ \ 11{|}\ }\hspace*{\fill}\\
+\gutter{\ \ \ 12{|}\ }\syntaxKEYWORDA{lemma}{\ }test\usebox{\underscorebox}instance\syntaxOPERATOR{:}{\ }\syntaxLITERALA{"(((P{\ }''5c''{\ }''1''{\ }\<longrightarrow>}\hspace*{\fill}\\
+\gutter{\ \ \ 13{|}\ }\syntaxLITERALA{((Q{\ }''1a''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''2''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''3''{\ }\<or>{\ }Q{\ }''1a''{\ }''2''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''3''{\ }\<or>{\ }Q{\ }''1a''{\ }''3''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''2''){\ }\<or>}\hspace*{\fill}\\
+\gutter{\ \ \ 14{|}\ }\syntaxLITERALA{Q{\ }''1b''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1b''{\ }''2''{\ }\<or>{\ }Q{\ }''1b''{\ }''2''{\ }\<and>{\ }\<not>{\ }Q{\ }''1b''{\ }''1''){\ }\<and>}\hspace*{\fill}\\
+\gutterH{\ \ \ 15{|}\ }\syntaxLITERALA{P{\ }''5d''{\ }''1''){\ }\<and>}\hspace*{\fill}\\
+\gutter{\ \ \ 16{|}\ }\syntaxLITERALA{(P{\ }''5d''{\ }''1''{\ }\<longrightarrow>}\hspace*{\fill}\\
+\gutter{\ \ \ 17{|}\ }\syntaxLITERALA{((Q{\ }''1a''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''2''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''3''{\ }\<or>{\ }Q{\ }''1a''{\ }''2''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''3''{\ }\<or>{\ }Q{\ }''1a''{\ }''3''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''2''){\ }\<or>}\hspace*{\fill}\\
+\gutter{\ \ \ 18{|}\ }\syntaxLITERALA{Q{\ }''1b''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1b''{\ }''2''{\ }\<or>{\ }Q{\ }''1b''{\ }''2''{\ }\<and>{\ }\<not>{\ }Q{\ }''1b''{\ }''1''){\ }\<and>}\hspace*{\fill}\\
+\gutter{\ \ \ 19{|}\ }\syntaxLITERALA{P{\ }''5c''{\ }''1'')){\ }\<and>}\hspace*{\fill}\\
+\gutterH{\ \ \ 20{|}\ }\syntaxLITERALA{(\<not>{\ }Q{\ }''1a''{\ }''2''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''3''{\ }\<or>{\ }\<not>{\ }Q{\ }''1a''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''3''{\ }\<or>{\ }\<not>{\ }Q{\ }''1a''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''2''){\ }\<and>{\ }(\<not>{\ }Q{\ }''1b''{\ }''2''{\ }\<or>{\ }\<not>{\ }Q{\ }''1b''{\ }''1'')){\ }\<Longrightarrow>{\ }}\hspace*{\fill}\\
+\gutter{\ \ \ 21{|}\ }\syntaxLITERALA{(((P{\ }''5c''{\ }''1''{\ }\<longrightarrow>{\ }(Q{\ }''1a''{\ }''1''{\ }\<or>{\ }Q{\ }''1b''{\ }''1''){\ }\<and>{\ }P{\ }''5d''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''2''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''3''{\ }\<and>{\ }\<not>{\ }Q{\ }''1b''{\ }''2''){\ }\<or>}\hspace*{\fill}\\
+\gutter{\ \ \ 22{|}\ }\syntaxLITERALA{{\ }{\ }(P{\ }''5d''{\ }''1''{\ }\<longrightarrow>{\ }(Q{\ }''1a''{\ }''1''{\ }\<or>{\ }Q{\ }''1b''{\ }''1''){\ }\<and>{\ }P{\ }''5c''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''2''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''3''{\ }\<and>{\ }\<not>{\ }Q{\ }''1b''{\ }''2'')){\ }\<or>}\hspace*{\fill}\\
+\gutter{\ \ \ 23{|}\ }\syntaxLITERALA{{\ }((P{\ }''5c''{\ }''1''{\ }\<longrightarrow>{\ }(Q{\ }''1a''{\ }''1''{\ }\<or>{\ }Q{\ }''1b''{\ }''2''){\ }\<and>{\ }P{\ }''5d''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''2''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''3''{\ }\<and>{\ }\<not>{\ }Q{\ }''1b''{\ }''1''){\ }\<or>}\hspace*{\fill}\\
+\gutter{\ \ \ 24{|}\ }\syntaxLITERALA{{\ }{\ }(P{\ }''5d''{\ }''1''{\ }\<longrightarrow>{\ }(Q{\ }''1a''{\ }''1''{\ }\<or>{\ }Q{\ }''1b''{\ }''2''){\ }\<and>{\ }P{\ }''5c''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''2''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''3''{\ }\<and>{\ }\<not>{\ }Q{\ }''1b''{\ }''1'')){\ }\<or>}\hspace*{\fill}\\
+\gutterH{\ \ \ 25{|}\ }\syntaxLITERALA{{\ }((P{\ }''5c''{\ }''1''{\ }\<longrightarrow>{\ }(Q{\ }''1a''{\ }''2''{\ }\<or>{\ }Q{\ }''1b''{\ }''1''){\ }\<and>{\ }P{\ }''5d''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''3''{\ }\<and>{\ }\<not>{\ }Q{\ }''1b''{\ }''2''){\ }\<or>}\hspace*{\fill}\\
+\gutter{\ \ \ 26{|}\ }\syntaxLITERALA{{\ }{\ }(P{\ }''5d''{\ }''1''{\ }\<longrightarrow>{\ }(Q{\ }''1a''{\ }''2''{\ }\<or>{\ }Q{\ }''1b''{\ }''1''){\ }\<and>{\ }P{\ }''5c''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''3''{\ }\<and>{\ }\<not>{\ }Q{\ }''1b''{\ }''2'')){\ }\<or>}\hspace*{\fill}\\
+\gutter{\ \ \ 27{|}\ }\syntaxLITERALA{{\ }((P{\ }''5c''{\ }''1''{\ }\<longrightarrow>{\ }(Q{\ }''1a''{\ }''2''{\ }\<or>{\ }Q{\ }''1b''{\ }''2''){\ }\<and>{\ }P{\ }''5d''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''3''{\ }\<and>{\ }\<not>{\ }Q{\ }''1b''{\ }''1''){\ }\<or>}\hspace*{\fill}\\
+\gutter{\ \ \ 28{|}\ }\syntaxLITERALA{{\ }{\ }(P{\ }''5d''{\ }''1''{\ }\<longrightarrow>{\ }(Q{\ }''1a''{\ }''2''{\ }\<or>{\ }Q{\ }''1b''{\ }''2''){\ }\<and>{\ }P{\ }''5c''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''3''{\ }\<and>{\ }\<not>{\ }Q{\ }''1b''{\ }''1'')){\ }\<or>}\hspace*{\fill}\\
+\gutter{\ \ \ 29{|}\ }\syntaxLITERALA{{\ }((P{\ }''5c''{\ }''1''{\ }\<longrightarrow>{\ }(Q{\ }''1a''{\ }''3''{\ }\<or>{\ }Q{\ }''1b''{\ }''1''){\ }\<and>{\ }P{\ }''5d''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''2''{\ }\<and>{\ }\<not>{\ }Q{\ }''1b''{\ }''2''){\ }\<or>}\hspace*{\fill}\\
+\gutterH{\ \ \ 30{|}\ }\syntaxLITERALA{{\ }{\ }(P{\ }''5d''{\ }''1''{\ }\<longrightarrow>{\ }(Q{\ }''1a''{\ }''3''{\ }\<or>{\ }Q{\ }''1b''{\ }''1''){\ }\<and>{\ }P{\ }''5c''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''2''{\ }\<and>{\ }\<not>{\ }Q{\ }''1b''{\ }''2'')){\ }\<or>}\hspace*{\fill}\\
+\gutter{\ \ \ 31{|}\ }\syntaxLITERALA{{\ }(P{\ }''5c''{\ }''1''{\ }\<longrightarrow>{\ }(Q{\ }''1a''{\ }''3''{\ }\<or>{\ }Q{\ }''1b''{\ }''2''){\ }\<and>{\ }P{\ }''5d''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''2''{\ }\<and>{\ }\<not>{\ }Q{\ }''1b''{\ }''1''){\ }\<or>}\hspace*{\fill}\\
+\gutter{\ \ \ 32{|}\ }\syntaxLITERALA{{\ }(P{\ }''5d''{\ }''1''{\ }\<longrightarrow>{\ }(Q{\ }''1a''{\ }''3''{\ }\<or>{\ }Q{\ }''1b''{\ }''2''){\ }\<and>{\ }P{\ }''5c''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''1''{\ }\<and>{\ }\<not>{\ }Q{\ }''1a''{\ }''2''{\ }\<and>{\ }\<not>{\ }Q{\ }''1b''{\ }''1''))"}\hspace*{\fill}\\
+\gutter{\ \ \ 33{|}\ }{\ }{\ }\hspace*{\fill}\\
+\gutter{\ \ \ 34{|}\ }{\ }{\ }\syntaxKEYWORDA{by}{\ }meson\hspace*{\fill}\\
+\gutterH{\ \ \ 35{|}\ }\hspace*{\fill}\\
+\gutter{\ \ \ 36{|}\ }\syntaxKEYWORDA{notepad}\hspace*{\fill}\\
+\gutter{\ \ \ 37{|}\ }\syntaxKEYWORDB{begin}\hspace*{\fill}\\
+\gutter{\ \ \ 38{|}\ }{\ }{\ }\syntaxKEYWORDA{have}\syntaxLITERALA{"}\hspace*{\fill}\\
+\gutter{\ \ \ 39{|}\ }\syntaxLITERALA{(\<exists>connector{\ }\<in>{\ }set{\ }BIP\usebox{\underscorebox}Connector\usebox{\underscorebox}2.\<exists>sync\<in>set{\ }(fst{\ }connector).(P{\ }(fst{\ }sync){\ }(snd{\ }sync){\ }\<longrightarrow>{\ }}\hspace*{\fill}\\
+\gutterH{\ \ \ 40{|}\ }\syntaxLITERALA{((\<exists>trig\<in>set{\ }(snd{\ }connector).\<forall>elm\<in>set{\ }trig.{\ }Q{\ }(fst{\ }elm){\ }(snd{\ }elm)){\ }}\hspace*{\fill}\\
+\gutter{\ \ \ 41{|}\ }\syntaxLITERALA{{\ }{\ }\<and>{\ }(\<forall>sync1\<in>set{\ }(fst{\ }connector){\ }{-}{\ }\usebox{\opencurlybracket}sync\usebox{\closecurlybracket}.{\ }P{\ }(fst{\ }sync1){\ }(snd{\ }sync1))}\hspace*{\fill}\\
+\gutter{\ \ \ 42{|}\ }\syntaxLITERALA{{\ }{\ }\<and>{\ }(\<forall>rs{\ }\<in>{\ }remaining\usebox{\underscorebox}pairs{\ }(all\usebox{\underscorebox}pairs{\ }test\usebox{\underscorebox}synchron){\ }(fst{\ }connector).{\ }\<not>P{\ }(fst{\ }rs){\ }(snd{\ }rs))}\hspace*{\fill}\\
+\gutter{\ \ \ 43{|}\ }\syntaxLITERALA{{\ }{\ }\<and>{\ }(\<forall>rt{\ }\<in>{\ }remaining\usebox{\underscorebox}pairs{\ }(all\usebox{\underscorebox}pairs{\ }test\usebox{\underscorebox}triggers){\ }(concat{\ }(snd{\ }connector)).{\ }\<not>Q{\ }(fst{\ }rt){\ }(snd{\ }rt)))}\hspace*{\fill}\\
+\gutter{\ \ \ 44{|}\ }\syntaxLITERALA{)){\ }\<Longrightarrow>}\hspace*{\fill}\\
+\gutterH{\ \ \ 45{|}\ }\syntaxLITERALA{((\<forall>connector\<in>set{\ }JavaBIP\usebox{\underscorebox}Connector\usebox{\underscorebox}2.\<forall>sync\usebox{\underscorebox}list\<in>set{\ }(fst{\ }connector).\<forall>sync\<in>set{\ }sync\usebox{\underscorebox}list.{\ }(P{\ }(fst{\ }sync){\ }(snd{\ }sync){\ }\<longrightarrow>{\ }}\hspace*{\fill}\\
+\gutter{\ \ \ 46{|}\ }\syntaxLITERALA{{\ }{\ }{\ }{\ }{\ }{\ }((\<exists>trig\usebox{\underscorebox}list\<in>set(snd{\ }connector).\<exists>trig\<in>set{\ }trig\usebox{\underscorebox}list.{\ }\<forall>t\usebox{\underscorebox}elm\<in>set{\ }trig.{\ }(Q{\ }(fst{\ }t\usebox{\underscorebox}elm){\ }(snd{\ }t\usebox{\underscorebox}elm)}\hspace*{\fill}\\
+\gutter{\ \ \ 47{|}\ }\syntaxLITERALA{{\ }{\ }{\ }{\ }{\ }{\ }\<and>{\ }(\<forall>h{\ }\<in>{\ }set{\ }(lookup\usebox{\underscorebox}3{\ }(fst{\ }t\usebox{\underscorebox}elm){\ }test\usebox{\underscorebox}triggers){\ }{-}{\ }\usebox{\opencurlybracket}snd{\ }t\usebox{\underscorebox}elm\usebox{\closecurlybracket}.{\ }\<not>Q{\ }(fst{\ }t\usebox{\underscorebox}elm){\ }h)))}\hspace*{\fill}\\
+\gutter{\ \ \ 48{|}\ }\syntaxLITERALA{{\ }{\ }{\ }{\ }{\ }{\ }\<and>{\ }(\<forall>sync\usebox{\underscorebox}1\<in>set(fst{\ }connector){-}\usebox{\opencurlybracket}sync\usebox{\underscorebox}list\usebox{\closecurlybracket}.\<exists>s\usebox{\underscorebox}elm\usebox{\underscorebox}1\<in>set(sync\usebox{\underscorebox}1).{\ }P{\ }(fst{\ }s\usebox{\underscorebox}elm\usebox{\underscorebox}1){\ }(snd{\ }s\usebox{\underscorebox}elm\usebox{\underscorebox}1)}\hspace*{\fill}\\
+\gutter{\ \ \ 49{|}\ }\syntaxLITERALA{{\ }{\ }{\ }{\ }{\ }{\ }\<and>{\ }(\<forall>l{\ }\<in>{\ }set{\ }(lookup\usebox{\underscorebox}3{\ }(fst{\ }s\usebox{\underscorebox}elm\usebox{\underscorebox}1){\ }test\usebox{\underscorebox}synchron){\ }{-}{\ }\usebox{\opencurlybracket}snd{\ }s\usebox{\underscorebox}elm\usebox{\underscorebox}1\usebox{\closecurlybracket}.{\ }\<not>P{\ }(fst{\ }s\usebox{\underscorebox}elm\usebox{\underscorebox}1){\ }l))}\hspace*{\fill}\\
+\gutterH{\ \ \ 50{|}\ }\syntaxLITERALA{{\ }{\ }{\ }{\ })}\hspace*{\fill}\\
+\gutter{\ \ \ 51{|}\ }\syntaxLITERALA{))}\hspace*{\fill}\\
+\gutter{\ \ \ 52{|}\ }\syntaxLITERALA{\<and>{\ }(\<forall>j{\ }\<in>{\ }set{\ }test\usebox{\underscorebox}synchron.{\ }\<forall>u{\ }\<in>{\ }set{\ }j.{\ }\<forall>t{\ }\<in>{\ }set{\ }u.{\ }\<exists>l{\ }\<in>{\ }set{\ }(snd{\ }t).\<forall>l1{\ }\<in>{\ }set{\ }(snd{\ }t){\ }{-}{\ }\usebox{\opencurlybracket}l\usebox{\closecurlybracket}.{\ }\<not>{\ }P{\ }(fst{\ }t){\ }l1){\ }}\hspace*{\fill}\\
+\gutter{\ \ \ 53{|}\ }\syntaxLITERALA{\<and>{\ }(\<forall>i{\ }\<in>{\ }set{\ }test\usebox{\underscorebox}triggers.{\ }\<forall>v{\ }\<in>{\ }set{\ }i.{\ }\<forall>k{\ }\<in>{\ }set{\ }v.{\ }\<exists>h{\ }\<in>{\ }set{\ }(snd{\ }k).\<forall>h1{\ }\<in>{\ }set{\ }(snd{\ }k){\ }{-}{\ }\usebox{\opencurlybracket}h\usebox{\closecurlybracket}.{\ }\<not>{\ }Q{\ }(fst{\ }k){\ }h1))}\hspace*{\fill}\\
+\gutter{\ \ \ 54{|}\ }\syntaxLITERALA{"}\hspace*{\fill}\\
+\gutterH{\ \ \ 55{|}\ }{\ }{\ }\syntaxKEYWORDA{proof}{\ }\syntaxOPERATOR{(}rule{\ }classical\syntaxOPERATOR{)}\hspace*{\fill}\\
+\gutter{\ \ \ 56{|}\ }{\ }{\ }{\ }{\ }\syntaxKEYWORDC{assume}{\ }\syntaxLITERALA{"\<not>{\ }?thesis"}\hspace*{\fill}\\
+\gutter{\ \ \ 57{|}\ }{\ }{\ }{\ }{\ }\syntaxKEYWORDA{then}{\ }\syntaxKEYWORDC{show}{\ }?thesis{\ }\syntaxKEYWORDA{by}{\ }force\hspace*{\fill}\\
+\gutter{\ \ \ 58{|}\ }{\ }{\ }\syntaxKEYWORDA{qed}\hspace*{\fill}\\
+\gutter{\ \ \ 59{|}\ }\syntaxKEYWORDB{end}\hspace*{\fill}\\
+\gutterH{\ \ \ 60{|}\ }\hspace*{\fill}\\
+\gutter{\ \ \ 61{|}\ }\syntaxCOMMENTA{(*}\hspace*{\fill}\\
+\gutter{\ \ \ 62{|}\ }\syntaxCOMMENTA{by{\ }presburger}\hspace*{\fill}\\
+\gutter{\ \ \ 63{|}\ }\syntaxCOMMENTA{value{\ }"}\hspace*{\fill}\\
+\gutter{\ \ \ 64{|}\ }\syntaxCOMMENTA{\<forall>x{\ }\<in>{\ }Tracker.\<forall>y{\ }\<in>{\ }Peer.{\ }(}\hspace*{\fill}\\
+\gutterH{\ \ \ 65{|}\ }\syntaxCOMMENTA{{\ }{\ }broadcast(x){\ }\<and>{\ }isReg(y,x){\ }\<longrightarrow>{\ }(speak(y){\ }\<Longleftrightarrow>{\ }\<not>listen(y))}\hspace*{\fill}\\
+\gutter{\ \ \ 66{|}\ }\syntaxCOMMENTA{)}\hspace*{\fill}\\
+\gutter{\ \ \ 67{|}\ }\syntaxCOMMENTA{\<equiv>}\hspace*{\fill}\\
+\gutter{\ \ \ 68{|}\ }\syntaxCOMMENTA{\<forall>x{\ }\<in>{\ }Tracker.\<forall>y{\ }\<in>{\ }Peer.{\ }(}\hspace*{\fill}\\
+\gutter{\ \ \ 69{|}\ }\syntaxCOMMENTA{{\ }{\ }broadcast(x){\ }\<and>{\ }isReg(y,x){\ }\<longrightarrow>{\ }(speak(y){\ }\<and>{\ }\<not>listen(y){\ }\<or>{\ }(listen(y){\ }\<and>{\ }\<not>speak(y)))}\hspace*{\fill}\\
+\gutterH{\ \ \ 70{|}\ }\syntaxCOMMENTA{)}\hspace*{\fill}\\
+\gutter{\ \ \ 71{|}\ }\syntaxCOMMENTA{\<And>}\hspace*{\fill}\\
+\gutter{\ \ \ 72{|}\ }\hspace*{\fill}\\
+\gutter{\ \ \ 73{|}\ }\syntaxCOMMENTA{k{\ }\<noteq>{\ }j}\hspace*{\fill}\\
+\gutter{\ \ \ 74{|}\ }\syntaxCOMMENTA{k{\ }\<in>{\ }{[}1,m{]}}\hspace*{\fill}\\
+\gutterH{\ \ \ 75{|}\ }\syntaxCOMMENTA{"}\hspace*{\fill}\\
+\gutter{\ \ \ 76{|}\ }\syntaxCOMMENTA{value{\ }"\<forall>x{\ }\<in>{\ }Tracker.{\ }(}\hspace*{\fill}\\
+\gutter{\ \ \ 77{|}\ }\syntaxCOMMENTA{{\ }{\ }broadcast(x){\ }\<longrightarrow>{\ }(}\hspace*{\fill}\\
+\gutter{\ \ \ 78{|}\ }\syntaxCOMMENTA{{\ }{\ }{\ }{\ }\<exists>y{\ }\<in>{\ }Peer.(isReg(y,x){\ }\<and>{\ }speak(y){\ }\<and>{\ }(}\hspace*{\fill}\\
+\gutter{\ \ \ 79{|}\ }\syntaxCOMMENTA{{\ }{\ }{\ }{\ }{\ }{\ }\<forall>y'\<in>Peer.(differ(y',{\ }y){\ }\<and>{\ }isReg(y',x){\ }\<longrightarrow>{\ }listen(y')){\ }}\hspace*{\fill}\\
+\gutterH{\ \ \ 80{|}\ }\syntaxCOMMENTA{{\ }{\ }{\ }{\ }))}\hspace*{\fill}\\
+\gutter{\ \ \ 81{|}\ }\syntaxCOMMENTA{{\ }{\ }{\ }{\ }\<or>{\ }(\<forall>y{\ }\<in>{\ }Peer.{\ }isReg(y,x){\ }\<longrightarrow>{\ }listen(y))}\hspace*{\fill}\\
+\gutter{\ \ \ 82{|}\ }\syntaxCOMMENTA{{\ }{\ })}\hspace*{\fill}\\
+\gutter{\ \ \ 83{|}\ }\syntaxCOMMENTA{)"}\hspace*{\fill}\\
+\gutter{\ \ \ 84{|}\ }\hspace*{\fill}\\
+\gutterH{\ \ \ 85{|}\ }\syntaxCOMMENTA{value{\ }"}\hspace*{\fill}\\
+\gutter{\ \ \ 86{|}\ }\syntaxCOMMENTA{\<forall>x{\ }\<in>{\ }Tracker.\<forall>y{\ }\<in>{\ }Peer.{\ }(}\hspace*{\fill}\\
+\gutter{\ \ \ 87{|}\ }\syntaxCOMMENTA{{\ }{\ }\<not>(broadcast(x){\ }\<and>{\ }isReg(y,x)){\ }\<or>{\ }(\<not>speak(y)\<and>listen(y){\ }\<or>{\ }\<not>listen(y)\<and>speak(y))}\hspace*{\fill}\\
+\gutter{\ \ \ 88{|}\ }\syntaxCOMMENTA{)"}\hspace*{\fill}\\
+\gutter{\ \ \ 89{|}\ }\hspace*{\fill}\\
+\gutterH{\ \ \ 90{|}\ }\syntaxCOMMENTA{value{\ }"}\hspace*{\fill}\\
+\gutter{\ \ \ 91{|}\ }\syntaxCOMMENTA{\<not>broadcast(x){\ }\<or>{\ }\<not>isReg(y,x){\ }\<or>{\ }\<not>speak(y)\<and>listen(y){\ }\<or>{\ }\<not>listen(y)\<and>speak(y)}\hspace*{\fill}\\
+\gutter{\ \ \ 92{|}\ }\syntaxCOMMENTA{"}\hspace*{\fill}\\
+\gutter{\ \ \ 93{|}\ }\hspace*{\fill}\\
+\gutter{\ \ \ 94{|}\ }\hspace*{\fill}\\
+\gutterH{\ \ \ 95{|}\ }\syntaxCOMMENTA{(*{-}{-}{-}{-}{-}{-}{-}{-}{-}*)}\hspace*{\fill}\\
+\gutter{\ \ \ 96{|}\ }\syntaxCOMMENTA{value{\ }"}\hspace*{\fill}\\
+\gutter{\ \ \ 97{|}\ }\syntaxCOMMENTA{\<forall>x{\ }\<in>{\ }Tracker.{\ }(}\hspace*{\fill}\\
+\gutter{\ \ \ 98{|}\ }\syntaxCOMMENTA{{\ }{\ }broadcast(x){\ }\<longrightarrow>{\ }(}\hspace*{\fill}\\
+\gutter{\ \ \ 99{|}\ }\syntaxCOMMENTA{{\ }{\ }{\ }{\ }\<exists>y{\ }\<in>{\ }Peer.(isReg(y,x){\ }\<and>{\ }speak(y){\ }\<and>{\ }(}\hspace*{\fill}\\
+\gutterH{\ \ 100{|}\ }\syntaxCOMMENTA{{\ }{\ }{\ }{\ }{\ }{\ }\<forall>y'\<in>Peer.(differ(y',{\ }y){\ }\<and>{\ }isReg(y',x){\ }\<longrightarrow>{\ }listen(y')){\ }}\hspace*{\fill}\\
+\gutter{\ \ 101{|}\ }\syntaxCOMMENTA{{\ }{\ }{\ }{\ }))}\hspace*{\fill}\\
+\gutter{\ \ 102{|}\ }\syntaxCOMMENTA{{\ }{\ }{\ }{\ }\<or>{\ }(\<forall>y{\ }\<in>{\ }Peer.{\ }isReg(y,x){\ }\<longrightarrow>{\ }listen(y))}\hspace*{\fill}\\
+\gutter{\ \ 103{|}\ }\syntaxCOMMENTA{{\ }{\ })}\hspace*{\fill}\\
+\gutter{\ \ 104{|}\ }\syntaxCOMMENTA{)"}\hspace*{\fill}\\
+\gutterH{\ \ 105{|}\ }\hspace*{\fill}\\
+\gutter{\ \ 106{|}\ }\syntaxCOMMENTA{value{\ }"}\hspace*{\fill}\\
+\gutter{\ \ 107{|}\ }\syntaxCOMMENTA{\<forall>x{\ }\<in>{\ }Tracker.{\ }(}\hspace*{\fill}\\
+\gutter{\ \ 108{|}\ }\syntaxCOMMENTA{{\ }{\ }\<not>broadcast(x){\ }\<or>{\ }(}\hspace*{\fill}\\
+\gutter{\ \ 109{|}\ }\syntaxCOMMENTA{{\ }{\ }{\ }{\ }\<exists>y{\ }\<in>{\ }Peer.(broadcast(x){\ }\<and>{\ }isReg(y,x){\ }\<and>{\ }speak(y){\ }\<and>{\ }(}\hspace*{\fill}\\
+\gutterH{\ \ 110{|}\ }\syntaxCOMMENTA{{\ }{\ }{\ }{\ }{\ }{\ }\<forall>y'\<in>Peer.(\<not>(differ(y',{\ }y){\ }\<and>{\ }isReg(y',x)){\ }\<or>{\ }listen(y'){\ }\<and>{\ }differ(y',{\ }y){\ }\<and>{\ }isReg(y',x)){\ }}\hspace*{\fill}\\
+\gutter{\ \ 111{|}\ }\syntaxCOMMENTA{{\ }{\ }{\ }{\ }))}\hspace*{\fill}\\
+\gutter{\ \ 112{|}\ }\syntaxCOMMENTA{{\ }{\ })}\hspace*{\fill}\\
+\gutter{\ \ 113{|}\ }\syntaxCOMMENTA{{\ }{\ }\<or>{\ }(\<forall>y{\ }\<in>{\ }Peer.{\ }broadcast(x){\ }\<and>{\ }(\<not>isReg(y,x){\ }\<or>{\ }isReg(y,x){\ }\<and>{\ }listen(y)))}\hspace*{\fill}\\
+\gutter{\ \ 114{|}\ }\syntaxCOMMENTA{)"}\hspace*{\fill}\\
+\gutterH{\ \ 115{|}\ }\hspace*{\fill}\\
+\gutter{\ \ 116{|}\ }\syntaxCOMMENTA{value{\ }"}\hspace*{\fill}\\
+\gutter{\ \ 117{|}\ }\syntaxCOMMENTA{{\ }{\ }\<not>broadcast(x){\ }\<or>{\ }(}\hspace*{\fill}\\
+\gutter{\ \ 118{|}\ }\syntaxCOMMENTA{{\ }{\ }{\ }{\ }broadcast(x){\ }\<and>{\ }isReg(Px,x){\ }\<and>{\ }speak(Px){\ }\<and>{\ }(}\hspace*{\fill}\\
+\gutter{\ \ 119{|}\ }\syntaxCOMMENTA{{\ }{\ }{\ }{\ }{\ }{\ }\<not>(differ(y',{\ }y){\ }\<and>{\ }isReg(y',x)){\ }\<or>{\ }listen(y'){\ }\<and>{\ }differ(y',{\ }y){\ }\<and>{\ }isReg(y',x){\ }}\hspace*{\fill}\\
+\gutterH{\ \ 120{|}\ }\syntaxCOMMENTA{{\ }{\ }{\ }{\ })}\hspace*{\fill}\\
+\gutter{\ \ 121{|}\ }\syntaxCOMMENTA{{\ }{\ })}\hspace*{\fill}\\
+\gutter{\ \ 122{|}\ }\syntaxCOMMENTA{{\ }{\ }\<or>{\ }broadcast(x){\ }\<and>{\ }(\<not>isReg(y,x){\ }\<or>{\ }isReg(y,x){\ }\<and>{\ }listen(y))}\hspace*{\fill}\\
+\gutter{\ \ 123{|}\ }\syntaxCOMMENTA{"}\hspace*{\fill}\\
+\gutter{\ \ 124{|}\ }\hspace*{\fill}\\
+\gutterH{\ \ 125{|}\ }\syntaxCOMMENTA{value{\ }"}\hspace*{\fill}\\
+\gutter{\ \ 126{|}\ }\syntaxCOMMENTA{\<not>broadcast(x){\ }}\hspace*{\fill}\\
+\gutter{\ \ 127{|}\ }\syntaxCOMMENTA{\<or>{\ }(}\hspace*{\fill}\\
+\gutter{\ \ 128{|}\ }\syntaxCOMMENTA{{\ }{\ }{\ }{\ }broadcast(x){\ }\<and>{\ }isReg(Px,x){\ }\<and>{\ }speak(Px){\ }}\hspace*{\fill}\\
+\gutter{\ \ 129{|}\ }\syntaxCOMMENTA{{\ }{\ }{\ }{\ }\<and>{\ }(\<not>differ(y',{\ }y){\ }\<or>{\ }listen(y'){\ }\<and>{\ }differ(y',{\ }y){\ }\<and>{\ }isReg(y',x))}\hspace*{\fill}\\
+\gutterH{\ \ 130{|}\ }\syntaxCOMMENTA{{\ }{\ }{\ }{\ }\<and>{\ }(\<not>isReg(y',x){\ }\<or>{\ }listen(y'){\ }\<and>{\ }differ(y',{\ }y){\ }\<and>{\ }isReg(y',x))}\hspace*{\fill}\\
+\gutter{\ \ 131{|}\ }\syntaxCOMMENTA{{\ }{\ })}\hspace*{\fill}\\
+\gutter{\ \ 132{|}\ }\syntaxCOMMENTA{\<or>{\ }broadcast(x){\ }\<and>{\ }(\<not>isReg(y,x){\ }\<or>{\ }isReg(y,x){\ }\<and>{\ }listen(y))}\hspace*{\fill}\\
+\gutter{\ \ 133{|}\ }\syntaxCOMMENTA{"}\hspace*{\fill}\\
+\gutter{\ \ 134{|}\ }\hspace*{\fill}\\
+\gutterH{\ \ 135{|}\ }\syntaxCOMMENTA{value{\ }"}\hspace*{\fill}\\
+\gutter{\ \ 136{|}\ }\syntaxCOMMENTA{(broadcast(x){\ }\<Rightarrow>{\ }False)}\hspace*{\fill}\\
+\gutter{\ \ 137{|}\ }\syntaxCOMMENTA{\<or>{\ }}\hspace*{\fill}\\
+\gutter{\ \ 138{|}\ }\syntaxCOMMENTA{(}\hspace*{\fill}\\
+\gutter{\ \ 139{|}\ }\syntaxCOMMENTA{{\ }{\ }{\ }{\ }(True{\ }\<Rightarrow>{\ }broadcast(x))}\hspace*{\fill}\\
+\gutterH{\ \ 140{|}\ }\syntaxCOMMENTA{{\ }{\ }{\ }{\ }\<and>{\ }(True{\ }\<Rightarrow>{\ }isReg(Px,x)){\ }}\hspace*{\fill}\\
+\gutter{\ \ 141{|}\ }\syntaxCOMMENTA{{\ }{\ }{\ }{\ }\<and>{\ }(True{\ }\<Rightarrow>{\ }speak(Px)){\ }}\hspace*{\fill}\\
+\gutter{\ \ 142{|}\ }\syntaxCOMMENTA{{\ }{\ }{\ }{\ }\<and>{\ }(\<not>differ(y',{\ }y){\ }\<or>{\ }listen(y'){\ }\<and>{\ }differ(y',{\ }y){\ }\<and>{\ }isReg(y',x))}\hspace*{\fill}\\
+\gutter{\ \ 143{|}\ }\syntaxCOMMENTA{{\ }{\ }{\ }{\ }\<and>{\ }(\<not>isReg(y',x){\ }\<or>{\ }listen(y'){\ }\<and>{\ }differ(y',{\ }y){\ }\<and>{\ }isReg(y',x))}\hspace*{\fill}\\
+\gutter{\ \ 144{|}\ }\syntaxCOMMENTA{)}\hspace*{\fill}\\
+\gutterH{\ \ 145{|}\ }\syntaxCOMMENTA{\<or>{\ }}\hspace*{\fill}\\
+\gutter{\ \ 146{|}\ }\syntaxCOMMENTA{(}\hspace*{\fill}\\
+\gutter{\ \ 147{|}\ }\syntaxCOMMENTA{{\ }{\ }(True{\ }\<Rightarrow>{\ }broadcast(x)){\ }}\hspace*{\fill}\\
+\gutter{\ \ 148{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }(\<not>isReg(y,x){\ }\<or>{\ }isReg(y,x){\ }\<and>{\ }listen(y))}\hspace*{\fill}\\
+\gutter{\ \ 149{|}\ }\syntaxCOMMENTA{)}\hspace*{\fill}\\
+\gutterH{\ \ 150{|}\ }\syntaxCOMMENTA{"}\hspace*{\fill}\\
+\gutter{\ \ 151{|}\ }\hspace*{\fill}\\
+\gutter{\ \ 152{|}\ }\syntaxCOMMENTA{value{\ }"}\hspace*{\fill}\\
+\gutter{\ \ 153{|}\ }\syntaxCOMMENTA{(}\hspace*{\fill}\\
+\gutter{\ \ 154{|}\ }\syntaxCOMMENTA{{\ }{\ }True{\ }\<Longrightarrow>{\ }broadcast(x)}\hspace*{\fill}\\
+\gutterH{\ \ 155{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }True{\ }\<Longrightarrow>{\ }isReg(Px,x)}\hspace*{\fill}\\
+\gutter{\ \ 156{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }True{\ }\<Longrightarrow>{\ }speak(Px)}\hspace*{\fill}\\
+\gutter{\ \ 157{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }differ(y',{\ }y){\ }\<Longrightarrow>{\ }listen(y'){\ }{\ }\<and>{\ }isReg(y',x)}\hspace*{\fill}\\
+\gutter{\ \ 158{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }isReg(y',x){\ }\<Longrightarrow>{\ }listen(y'){\ }\<and>{\ }differ(y',{\ }y)}\hspace*{\fill}\\
+\gutter{\ \ 159{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }listen(y'){\ }\<Longrightarrow>{\ }True}\hspace*{\fill}\\
+\gutterH{\ \ 160{|}\ }\hspace*{\fill}\\
+\gutter{\ \ 161{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }isReg(y,x){\ }\<Longrightarrow>{\ }True}\hspace*{\fill}\\
+\gutter{\ \ 162{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }listen(y){\ }\<Longrightarrow>{\ }True}\hspace*{\fill}\\
+\gutter{\ \ 163{|}\ }\syntaxCOMMENTA{)}\hspace*{\fill}\\
+\gutter{\ \ 164{|}\ }\syntaxCOMMENTA{\<or>}\hspace*{\fill}\\
+\gutterH{\ \ 165{|}\ }\syntaxCOMMENTA{(}\hspace*{\fill}\\
+\gutter{\ \ 166{|}\ }\syntaxCOMMENTA{{\ }{\ }True{\ }\<Longrightarrow>{\ }broadcast(x){\ }}\hspace*{\fill}\\
+\gutter{\ \ 167{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }isReg(y,x){\ }\<Longrightarrow>{\ }listen(y)}\hspace*{\fill}\\
+\gutter{\ \ 168{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }listen(y){\ }\<Longrightarrow>{\ }True}\hspace*{\fill}\\
+\gutter{\ \ 169{|}\ }\hspace*{\fill}\\
+\gutterH{\ \ 170{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }listen(y'){\ }\<Longrightarrow>{\ }True}\hspace*{\fill}\\
+\gutter{\ \ 171{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }differ(y',{\ }y){\ }\<Longrightarrow>{\ }True}\hspace*{\fill}\\
+\gutter{\ \ 172{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }isReg(y',x){\ }\<Longrightarrow>{\ }True}\hspace*{\fill}\\
+\gutter{\ \ 173{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }isReg(Px,x){\ }\<Longrightarrow>{\ }True}\hspace*{\fill}\\
+\gutter{\ \ 174{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }speak(Px){\ }\<Longrightarrow>{\ }True}\hspace*{\fill}\\
+\gutterH{\ \ 175{|}\ }\syntaxCOMMENTA{)}\hspace*{\fill}\\
+\gutter{\ \ 176{|}\ }\syntaxCOMMENTA{"}\hspace*{\fill}\\
+\gutter{\ \ 177{|}\ }\hspace*{\fill}\\
+\gutter{\ \ 178{|}\ }\syntaxCOMMENTA{value{\ }"}\hspace*{\fill}\\
+\gutter{\ \ 179{|}\ }\syntaxCOMMENTA{(}\hspace*{\fill}\\
+\gutterH{\ \ 180{|}\ }\syntaxCOMMENTA{{\ }{\ }True{\ }\<Rightarrow>{\ }broadcast(x){\ }\<and>{\ }isReg(Px,x){\ }\<and>{\ }speak(Px)}\hspace*{\fill}\\
+\gutter{\ \ 181{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }differ(y',{\ }y){\ }\<Rightarrow>{\ }listen(y'){\ }\<and>{\ }isReg(y',x)}\hspace*{\fill}\\
+\gutter{\ \ 182{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }isReg(y',x){\ }\<Rightarrow>{\ }listen(y'){\ }\<and>{\ }differ(y',{\ }y)}\hspace*{\fill}\\
+\gutter{\ \ 183{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }listen(y'){\ }\<Rightarrow>{\ }broadcast(x){\ }\<and>{\ }isReg(Px,x){\ }\<and>{\ }speak(Px)}\hspace*{\fill}\\
+\gutter{\ \ 184{|}\ }\hspace*{\fill}\\
+\gutterH{\ \ 185{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }isReg(y,x){\ }\<Rightarrow>{\ }broadcast(x){\ }\<and>{\ }isReg(Px,x){\ }\<and>{\ }speak(Px)}\hspace*{\fill}\\
+\gutter{\ \ 186{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }listen(y){\ }\<Rightarrow>{\ }{\ }broadcast(x){\ }\<and>{\ }isReg(Px,x){\ }\<and>{\ }speak(Px)}\hspace*{\fill}\\
+\gutter{\ \ 187{|}\ }\syntaxCOMMENTA{)}\hspace*{\fill}\\
+\gutter{\ \ 188{|}\ }\syntaxCOMMENTA{\<or>}\hspace*{\fill}\\
+\gutter{\ \ 189{|}\ }\syntaxCOMMENTA{(}\hspace*{\fill}\\
+\gutterH{\ \ 190{|}\ }\syntaxCOMMENTA{{\ }{\ }True{\ }\<Rightarrow>{\ }broadcast(x){\ }}\hspace*{\fill}\\
+\gutter{\ \ 191{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }isReg(y,x){\ }\<Rightarrow>{\ }listen(y)}\hspace*{\fill}\\
+\gutter{\ \ 192{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }listen(y){\ }\<Rightarrow>{\ }broadcast(x){\ }}\hspace*{\fill}\\
+\gutter{\ \ 193{|}\ }\hspace*{\fill}\\
+\gutter{\ \ 194{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }listen(y'){\ }\<Rightarrow>{\ }broadcast(x){\ }}\hspace*{\fill}\\
+\gutterH{\ \ 195{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }differ(y',{\ }y){\ }\<Rightarrow>{\ }broadcast(x){\ }}\hspace*{\fill}\\
+\gutter{\ \ 196{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }isReg(y',x){\ }\<Rightarrow>{\ }broadcast(x){\ }}\hspace*{\fill}\\
+\gutter{\ \ 197{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }isReg(Px,x){\ }\<Rightarrow>{\ }broadcast(x){\ }}\hspace*{\fill}\\
+\gutter{\ \ 198{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }speak(Px){\ }\<Rightarrow>{\ }broadcast(x){\ }}\hspace*{\fill}\\
+\gutter{\ \ 199{|}\ }\syntaxCOMMENTA{)}\hspace*{\fill}\\
+\gutterH{\ \ 200{|}\ }\syntaxCOMMENTA{"}\hspace*{\fill}\\
+\gutter{\ \ 201{|}\ }\hspace*{\fill}\\
+\gutter{\ \ 202{|}\ }\syntaxCOMMENTA{value{\ }"}\hspace*{\fill}\\
+\gutter{\ \ 203{|}\ }\syntaxCOMMENTA{(}\hspace*{\fill}\\
+\gutter{\ \ 204{|}\ }\syntaxCOMMENTA{{\ }{\ }True{\ }\<Rightarrow>{\ }broadcast(x){\ }\<and>{\ }isReg(Px,x){\ }\<and>{\ }speak(Px)}\hspace*{\fill}\\
+\gutterH{\ \ 205{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }differ(y',{\ }y){\ }\<Rightarrow>{\ }broadcast(x){\ }\<and>{\ }isReg(Px,x){\ }\<and>{\ }speak(Px){\ }\<and>{\ }isReg(y',x)}\hspace*{\fill}\\
+\gutter{\ \ 206{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }isReg(y',x){\ }\<Rightarrow>{\ }broadcast(x){\ }\<and>{\ }isReg(Px,x){\ }\<and>{\ }speak(Px){\ }\<and>{\ }differ(y',{\ }y)}\hspace*{\fill}\\
+\gutter{\ \ 207{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }listen(y'){\ }\<Rightarrow>{\ }broadcast(x){\ }\<and>{\ }isReg(Px,x){\ }\<and>{\ }speak(Px)}\hspace*{\fill}\\
+\gutter{\ \ 208{|}\ }\hspace*{\fill}\\
+\gutter{\ \ 209{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }isReg(y,x){\ }\<Rightarrow>{\ }broadcast(x){\ }\<and>{\ }isReg(Px,x){\ }\<and>{\ }speak(Px)}\hspace*{\fill}\\
+\gutterH{\ \ 210{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }listen(y){\ }\<Rightarrow>{\ }{\ }broadcast(x){\ }\<and>{\ }isReg(Px,x){\ }\<and>{\ }speak(Px)}\hspace*{\fill}\\
+\gutter{\ \ 211{|}\ }\syntaxCOMMENTA{)}\hspace*{\fill}\\
+\gutter{\ \ 212{|}\ }\syntaxCOMMENTA{\<or>}\hspace*{\fill}\\
+\gutter{\ \ 213{|}\ }\syntaxCOMMENTA{(}\hspace*{\fill}\\
+\gutter{\ \ 214{|}\ }\syntaxCOMMENTA{{\ }{\ }True{\ }\<Rightarrow>{\ }broadcast(x){\ }}\hspace*{\fill}\\
+\gutterH{\ \ 215{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }isReg(y,x){\ }\<Rightarrow>{\ }listen(y){\ }\<and>{\ }broadcast(x)}\hspace*{\fill}\\
+\gutter{\ \ 216{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }listen(y){\ }\<Rightarrow>{\ }broadcast(x){\ }}\hspace*{\fill}\\
+\gutter{\ \ 217{|}\ }\hspace*{\fill}\\
+\gutter{\ \ 218{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }listen(y'){\ }\<Rightarrow>{\ }broadcast(x){\ }}\hspace*{\fill}\\
+\gutter{\ \ 219{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }differ(y',{\ }y){\ }\<Rightarrow>{\ }broadcast(x){\ }}\hspace*{\fill}\\
+\gutterH{\ \ 220{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }isReg(y',x){\ }\<Rightarrow>{\ }broadcast(x){\ }}\hspace*{\fill}\\
+\gutter{\ \ 221{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }isReg(Px,x){\ }\<Rightarrow>{\ }broadcast(x){\ }}\hspace*{\fill}\\
+\gutter{\ \ 222{|}\ }\syntaxCOMMENTA{{\ }{\ }\<and>{\ }speak(Px){\ }\<Rightarrow>{\ }broadcast(x){\ }}\hspace*{\fill}\\
+\gutter{\ \ 223{|}\ }\syntaxCOMMENTA{)}\hspace*{\fill}\\
+\gutter{\ \ 224{|}\ }\syntaxCOMMENTA{"}\hspace*{\fill}\\
+\gutterH{\ \ 225{|}\ }\hspace*{\fill}\\
+\gutter{\ \ 226{|}\ }\syntaxCOMMENTA{value{\ }"}\hspace*{\fill}\\
+\gutter{\ \ 227{|}\ }\syntaxCOMMENTA{\usebox{\opencurlybracket}}\hspace*{\fill}\\
+\gutter{\ \ 228{|}\ }\syntaxCOMMENTA{broadcast(x),}\hspace*{\fill}\\
+\gutter{\ \ 229{|}\ }\syntaxCOMMENTA{broadcast(x){\ }\<and>{\ }isReg(Px,x){\ }\<and>{\ }speak(Px),{\ }}\hspace*{\fill}\\
+\gutterH{\ \ 230{|}\ }\syntaxCOMMENTA{broadcast(x){\ }\<and>{\ }isReg(Px,x){\ }\<and>{\ }speak(Px){\ }\<and>{\ }listen(y'),}\hspace*{\fill}\\
+\gutter{\ \ 231{|}\ }\syntaxCOMMENTA{broadcast(x){\ }\<and>{\ }isReg(Px,x){\ }\<and>{\ }speak(Px){\ }\<and>{\ }listen(y),}\hspace*{\fill}\\
+\gutter{\ \ 232{|}\ }\syntaxCOMMENTA{broadcast(x){\ }\<and>{\ }isReg(Px,x){\ }\<and>{\ }speak(Px){\ }\<and>{\ }isReg(y,x),}\hspace*{\fill}\\
+\gutter{\ \ 233{|}\ }\syntaxCOMMENTA{broadcast(x){\ }\<and>{\ }isReg(Px,x){\ }\<and>{\ }speak(Px){\ }\<and>{\ }isReg(y',x){\ }\<and>{\ }differ(y',{\ }y),}\hspace*{\fill}\\
+\gutter{\ \ 234{|}\ }\syntaxCOMMENTA{\usebox{\closecurlybracket}{\ }\<or>}\hspace*{\fill}\\
+\gutterH{\ \ 235{|}\ }\syntaxCOMMENTA{\usebox{\opencurlybracket}}\hspace*{\fill}\\
+\gutter{\ \ 236{|}\ }\syntaxCOMMENTA{broadcast(x),}\hspace*{\fill}\\
+\gutter{\ \ 237{|}\ }\syntaxCOMMENTA{listen(y){\ }\<and>{\ }broadcast(x),}\hspace*{\fill}\\
+\gutter{\ \ 238{|}\ }\syntaxCOMMENTA{listen(y){\ }\<and>{\ }broadcast(x){\ }\<and>{\ }isReg(y,x),}\hspace*{\fill}\\
+\gutter{\ \ 239{|}\ }\syntaxCOMMENTA{listen(y'){\ }\<and>{\ }broadcast(x),}\hspace*{\fill}\\
+\gutterH{\ \ 240{|}\ }\syntaxCOMMENTA{differ(y',{\ }y){\ }\<and>{\ }broadcast(x),}\hspace*{\fill}\\
+\gutter{\ \ 241{|}\ }\syntaxCOMMENTA{isReg(y',x){\ }\<and>{\ }broadcast(x),}\hspace*{\fill}\\
+\gutter{\ \ 242{|}\ }\syntaxCOMMENTA{isReg(Px,x){\ }\<and>{\ }broadcast(x),}\hspace*{\fill}\\
+\gutter{\ \ 243{|}\ }\syntaxCOMMENTA{speak(Px){\ }\<and>{\ }broadcast(x),}\hspace*{\fill}\\
+\gutter{\ \ 244{|}\ }\syntaxCOMMENTA{\usebox{\closecurlybracket}"}\hspace*{\fill}\\
+\gutterH{\ \ 245{|}\ }\syntaxCOMMENTA{*)}\hspace*{\fill}\\
+\gutter{\ \ 246{|}\ }\syntaxKEYWORDB{end}\hspace*{\fill}\\
+\mbox{}
+\normalfont
+\end{document}

@@ -9,6 +9,7 @@ lemma test_apart: "((\<forall>j \<in> set test_synchron. \<forall>u \<in> set j.
 (\<forall>j \<in> set test_synchron. \<forall>u \<in> set j. \<forall>t \<in> set u. \<forall>l \<in> set (snd t). P (fst t) l \<longrightarrow> (\<forall>l1 \<in> set (snd t) - {l}. \<not>P (fst t) l1))"
   by blast
 
+<<<<<<< Updated upstream
 lemma compare_tool: "((broadcast_x \<longrightarrow> (isReg_y_x \<longrightarrow> (speak_y \<and> \<not>listen_y) \<or> (listen_y \<and> \<not>speak_y))) \<and> (broadcast_x \<longrightarrow> (isReg_Px_x \<and> speak_Px \<and> (differ_y1_Px \<and> isReg_y1_x \<longrightarrow> listen_y1)) \<or> (isReg_y_x \<longrightarrow> listen_y)) \<and> (speak_y \<longrightarrow> broadcast_x \<and> isReg_y_x) \<and> (listen_y \<longrightarrow> broadcast_x \<and> isReg_y_x))
 \<Longrightarrow>
 ((\<not>broadcast_x \<or> \<not>isReg_y_x \<or> speak_y \<or> listen_y) 
@@ -29,6 +30,161 @@ lemma compare_tool_1: "(broadcast_x \<longrightarrow> speak_y)
 (\<not> broadcast_x \<or> speak_y) 
 "
   by blast
+=======
+(*
+lemma test_instance: "
+(((P_5c_1 \<longrightarrow> (Q_1a_1 \<or> Q_1b_1) \<and> P_5d_1 \<and> \<not> Q_1a_2 \<and> \<not> Q_1a_3 \<and> \<not> Q_1b_2) \<or>
+  (P_5d_1 \<longrightarrow> (Q_1a_1 \<or> Q_1b_1) \<and> P_5c_1 \<and> \<not> Q_1a_2 \<and> \<not> Q_1a_3 \<and> \<not> Q_1b_2)) \<or>
+ ((P_5c_1 \<longrightarrow> (Q_1a_1 \<or> Q_1b_2) \<and> P_5d_1 \<and> \<not> Q_1a_2 \<and> \<not> Q_1a_3 \<and> \<not> Q_1b_1) \<or>
+  (P_5d_1 \<longrightarrow> (Q_1a_1 \<or> Q_1b_2) \<and> P_5c_1 \<and> \<not> Q_1a_2 \<and> \<not> Q_1a_3 \<and> \<not> Q_1b_1)) \<or>
+ ((P_5c_1 \<longrightarrow> (Q_1a_2 \<or> Q_1b_1) \<and> P_5d_1 \<and> \<not> Q_1a_1 \<and> \<not> Q_1a_3 \<and> \<not> Q_1b_2) \<or>
+  (P_5d_1 \<longrightarrow> (Q_1a_2 \<or> Q_1b_1) \<and> P_5c_1 \<and> \<not> Q_1a_1 \<and> \<not> Q_1a_3 \<and> \<not> Q_1b_2)) \<or>
+ ((P_5c_1 \<longrightarrow> (Q_1a_2 \<or> Q_1b_2) \<and> P_5d_1 \<and> \<not> Q_1a_1 \<and> \<not> Q_1a_3 \<and> \<not> Q_1b_1) \<or>
+  (P_5d_1 \<longrightarrow> (Q_1a_2 \<or> Q_1b_2) \<and> P_5c_1 \<and> \<not> Q_1a_1 \<and> \<not> Q_1a_3 \<and> \<not> Q_1b_1)) \<or>
+ ((P_5c_1 \<longrightarrow> (Q_1a_3 \<or> Q_1b_1) \<and> P_5d_1 \<and> \<not> Q_1a_1 \<and> \<not> Q_1a_2 \<and> \<not> Q_1b_2) \<or>
+  (P_5d_1 \<longrightarrow> (Q_1a_3 \<or> Q_1b_1) \<and> P_5c_1 \<and> \<not> Q_1a_1 \<and> \<not> Q_1a_2 \<and> \<not> Q_1b_2)) \<or>
+ (P_5c_1 \<longrightarrow> (Q_1a_3 \<or> Q_1b_2) \<and> P_5d_1 \<and> \<not> Q_1a_1 \<and> \<not> Q_1a_2 \<and> \<not> Q_1b_1) \<or>
+ (P_5d_1 \<longrightarrow> (Q_1a_3 \<or> Q_1b_2) \<and> P_5c_1 \<and> \<not> Q_1a_1 \<and> \<not> Q_1a_2 \<and> \<not> Q_1b_1)) \<Longrightarrow>
+(((P_5c_1 \<longrightarrow>
+((Q_1a_1 \<and> \<not> Q_1a_2 \<and> \<not> Q_1a_3 \<or> Q_1a_2 \<and> \<not> Q_1a_1 \<and> \<not> Q_1a_3 \<or> Q_1a_3 \<and> \<not> Q_1a_1 \<and> \<not> Q_1a_2) \<or>
+Q_1b_1 \<and> \<not> Q_1b_2 \<or> Q_1b_2 \<and> \<not> Q_1b_1) \<and>
+P_5d_1) \<and>
+(P_5d_1 \<longrightarrow>
+((Q_1a_1 \<and> \<not> Q_1a_2 \<and> \<not> Q_1a_3 \<or> Q_1a_2 \<and> \<not> Q_1a_1 \<and> \<not> Q_1a_3 \<or> Q_1a_3 \<and> \<not> Q_1a_1 \<and> \<not> Q_1a_2) \<or>
+Q_1b_1 \<and> \<not> Q_1b_2 \<or> Q_1b_2 \<and> \<not> Q_1b_1) \<and>
+P_5c_1)) \<and>
+(\<not> Q_1a_2 \<and> \<not> Q_1a_3 \<or> \<not> Q_1a_1 \<and> \<not> Q_1a_3 \<or> \<not> Q_1a_1 \<and> \<not> Q_1a_2) \<and> (\<not> Q_1b_2 \<or> \<not> Q_1b_1))"
+*)
+lemma test_inc_2:"(((P_5c_1 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_1 \<and> Q_3b2_1) \<and> P_5d_1 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_2) \<or>
+  (P_5d_1 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_1 \<and> Q_3b2_1) \<and> P_5c_1 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_2)) \<or>
+ ((P_5c_1 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_1 \<and> Q_3b2_2) \<and> P_5d_1 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_1) \<or>
+  (P_5d_1 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_1 \<and> Q_3b2_2) \<and> P_5c_1 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_1)) \<or>
+ ((P_5c_1 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_2 \<and> Q_3b2_1) \<and> P_5d_1 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_2) \<or>
+  (P_5d_1 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_2 \<and> Q_3b2_1) \<and> P_5c_1 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_2)) \<or>
+ ((P_5c_1 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_2 \<and> Q_3b2_2) \<and> P_5d_1 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_1) \<or>
+  (P_5d_1 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_2 \<and> Q_3b2_2) \<and> P_5c_1 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_1)) \<or>
+ ((P_5c_1 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_1 \<and> Q_3b2_1) \<and> P_5d_1 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_2) \<or>
+  (P_5d_1 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_1 \<and> Q_3b2_1) \<and> P_5c_1 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_2)) \<or>
+ ((P_5c_1 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_1 \<and> Q_3b2_2) \<and> P_5d_1 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_1) \<or>
+  (P_5d_1 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_1 \<and> Q_3b2_2) \<and> P_5c_1 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_1)) \<or>
+ ((P_5c_1 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_2 \<and> Q_3b2_1) \<and> P_5d_1 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_2) \<or>
+  (P_5d_1 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_2 \<and> Q_3b2_1) \<and> P_5c_1 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_2)) \<or>
+ ((P_5c_1 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_2 \<and> Q_3b2_2) \<and> P_5d_1 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_1) \<or>
+  (P_5d_1 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_2 \<and> Q_3b2_2) \<and> P_5c_1 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_1)) \<or>
+ ((P_5c_1 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_1 \<and> Q_3b2_1) \<and> P_5d_2 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_2) \<or>
+  (P_5d_2 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_1 \<and> Q_3b2_1) \<and> P_5c_1 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_2)) \<or>
+ ((P_5c_1 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_1 \<and> Q_3b2_2) \<and> P_5d_2 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_1) \<or>
+  (P_5d_2 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_1 \<and> Q_3b2_2) \<and> P_5c_1 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_1)) \<or>
+ ((P_5c_1 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_2 \<and> Q_3b2_1) \<and> P_5d_2 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_2) \<or>
+  (P_5d_2 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_2 \<and> Q_3b2_1) \<and> P_5c_1 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_2)) \<or>
+ ((P_5c_1 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_2 \<and> Q_3b2_2) \<and> P_5d_2 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_1) \<or>
+  (P_5d_2 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_2 \<and> Q_3b2_2) \<and> P_5c_1 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_1)) \<or>
+ ((P_5c_1 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_1 \<and> Q_3b2_1) \<and> P_5d_2 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_2) \<or>
+  (P_5d_2 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_1 \<and> Q_3b2_1) \<and> P_5c_1 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_2)) \<or>
+ ((P_5c_1 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_1 \<and> Q_3b2_2) \<and> P_5d_2 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_1) \<or>
+  (P_5d_2 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_1 \<and> Q_3b2_2) \<and> P_5c_1 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_1)) \<or>
+ ((P_5c_1 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_2 \<and> Q_3b2_1) \<and> P_5d_2 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_2) \<or>
+  (P_5d_2 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_2 \<and> Q_3b2_1) \<and> P_5c_1 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_2)) \<or>
+ ((P_5c_1 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_2 \<and> Q_3b2_2) \<and> P_5d_2 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_1) \<or>
+  (P_5d_2 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_2 \<and> Q_3b2_2) \<and> P_5c_1 \<and> (\<not> P_5c_2 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_1)) \<or>
+ ((P_5c_2 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_1 \<and> Q_3b2_1) \<and> P_5d_1 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_2) \<or>
+  (P_5d_1 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_1 \<and> Q_3b2_1) \<and> P_5c_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_2)) \<or>
+ ((P_5c_2 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_1 \<and> Q_3b2_2) \<and> P_5d_1 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_1) \<or>
+  (P_5d_1 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_1 \<and> Q_3b2_2) \<and> P_5c_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_1)) \<or>
+ ((P_5c_2 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_2 \<and> Q_3b2_1) \<and> P_5d_1 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_2) \<or>
+  (P_5d_1 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_2 \<and> Q_3b2_1) \<and> P_5c_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_2)) \<or>
+ ((P_5c_2 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_2 \<and> Q_3b2_2) \<and> P_5d_1 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_1) \<or>
+  (P_5d_1 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_2 \<and> Q_3b2_2) \<and> P_5c_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_1)) \<or>
+ ((P_5c_2 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_1 \<and> Q_3b2_1) \<and> P_5d_1 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_2) \<or>
+  (P_5d_1 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_1 \<and> Q_3b2_1) \<and> P_5c_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_2)) \<or>
+ ((P_5c_2 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_1 \<and> Q_3b2_2) \<and> P_5d_1 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_1) \<or>
+  (P_5d_1 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_1 \<and> Q_3b2_2) \<and> P_5c_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_1)) \<or>
+ ((P_5c_2 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_2 \<and> Q_3b2_1) \<and> P_5d_1 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_2) \<or>
+  (P_5d_1 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_2 \<and> Q_3b2_1) \<and> P_5c_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_2)) \<or>
+ ((P_5c_2 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_2 \<and> Q_3b2_2) \<and> P_5d_1 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_1) \<or>
+  (P_5d_1 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_2 \<and> Q_3b2_2) \<and> P_5c_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_1)) \<or>
+ ((P_5c_2 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_1 \<and> Q_3b2_1) \<and> P_5d_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_2) \<or>
+  (P_5d_2 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_1 \<and> Q_3b2_1) \<and> P_5c_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_2)) \<or>
+ ((P_5c_2 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_1 \<and> Q_3b2_2) \<and> P_5d_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_1) \<or>
+  (P_5d_2 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_1 \<and> Q_3b2_2) \<and> P_5c_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_1)) \<or>
+ ((P_5c_2 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_2 \<and> Q_3b2_1) \<and> P_5d_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_2) \<or>
+  (P_5d_2 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_2 \<and> Q_3b2_1) \<and> P_5c_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_2)) \<or>
+ ((P_5c_2 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_2 \<and> Q_3b2_2) \<and> P_5d_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_1) \<or>
+  (P_5d_2 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_2 \<and> Q_3b2_2) \<and> P_5c_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_1)) \<or>
+ ((P_5c_2 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_1 \<and> Q_3b2_1) \<and> P_5d_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_2) \<or>
+  (P_5d_2 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_1 \<and> Q_3b2_1) \<and> P_5c_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_2)) \<or>
+ ((P_5c_2 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_1 \<and> Q_3b2_2) \<and> P_5d_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_1) \<or>
+  (P_5d_2 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_1 \<and> Q_3b2_2) \<and> P_5c_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_1)) \<or>
+ ((P_5c_2 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_2 \<and> Q_3b2_1) \<and> P_5d_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_2) \<or>
+  (P_5d_2 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_2 \<and> Q_3b2_1) \<and> P_5c_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_2)) \<or>
+ ((P_5c_2 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_2 \<and> Q_3b2_2) \<and> P_5d_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_1) \<or>
+  (P_5d_2 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_2 \<and> Q_3b2_2) \<and> P_5c_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_3 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_1)) \<or>
+ ((P_5c_3 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_1 \<and> Q_3b2_1) \<and> P_5d_1 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_2) \<or>
+  (P_5d_1 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_1 \<and> Q_3b2_1) \<and> P_5c_3 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_2)) \<or>
+ ((P_5c_3 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_1 \<and> Q_3b2_2) \<and> P_5d_1 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_1) \<or>
+  (P_5d_1 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_1 \<and> Q_3b2_2) \<and> P_5c_3 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_1)) \<or>
+ ((P_5c_3 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_2 \<and> Q_3b2_1) \<and> P_5d_1 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_2) \<or>
+  (P_5d_1 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_2 \<and> Q_3b2_1) \<and> P_5c_3 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_2)) \<or>
+ ((P_5c_3 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_2 \<and> Q_3b2_2) \<and> P_5d_1 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_1) \<or>
+  (P_5d_1 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_2 \<and> Q_3b2_2) \<and> P_5c_3 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_1)) \<or>
+ ((P_5c_3 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_1 \<and> Q_3b2_1) \<and> P_5d_1 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_2) \<or>
+  (P_5d_1 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_1 \<and> Q_3b2_1) \<and> P_5c_3 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_2)) \<or>
+ ((P_5c_3 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_1 \<and> Q_3b2_2) \<and> P_5d_1 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_1) \<or>
+  (P_5d_1 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_1 \<and> Q_3b2_2) \<and> P_5c_3 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_1)) \<or>
+ ((P_5c_3 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_2 \<and> Q_3b2_1) \<and> P_5d_1 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_2) \<or>
+  (P_5d_1 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_2 \<and> Q_3b2_1) \<and> P_5c_3 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_2)) \<or>
+ ((P_5c_3 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_2 \<and> Q_3b2_2) \<and> P_5d_1 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_1) \<or>
+  (P_5d_1 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_2 \<and> Q_3b2_2) \<and> P_5c_3 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_2) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_1)) \<or>
+ ((P_5c_3 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_1 \<and> Q_3b2_1) \<and> P_5d_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_2) \<or>
+  (P_5d_2 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_1 \<and> Q_3b2_1) \<and> P_5c_3 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_2)) \<or>
+ ((P_5c_3 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_1 \<and> Q_3b2_2) \<and> P_5d_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_1) \<or>
+  (P_5d_2 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_1 \<and> Q_3b2_2) \<and> P_5c_3 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_1)) \<or>
+ ((P_5c_3 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_2 \<and> Q_3b2_1) \<and> P_5d_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_2) \<or>
+  (P_5d_2 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_2 \<and> Q_3b2_1) \<and> P_5c_3 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_2)) \<or>
+ ((P_5c_3 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_2 \<and> Q_3b2_2) \<and> P_5d_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_1) \<or>
+  (P_5d_2 \<longrightarrow> (Q_3a_1 \<or> Q_3b1_2 \<and> Q_3b2_2) \<and> P_5c_3 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_2 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_1)) \<or>
+ ((P_5c_3 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_1 \<and> Q_3b2_1) \<and> P_5d_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_2) \<or>
+  (P_5d_2 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_1 \<and> Q_3b2_1) \<and> P_5c_3 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_2)) \<or>
+ ((P_5c_3 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_1 \<and> Q_3b2_2) \<and> P_5d_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_1) \<or>
+  (P_5d_2 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_1 \<and> Q_3b2_2) \<and> P_5c_3 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_2 \<and> \<not> Q_3b2_1)) \<or>
+ ((P_5c_3 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_2 \<and> Q_3b2_1) \<and> P_5d_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_2) \<or>
+  (P_5d_2 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_2 \<and> Q_3b2_1) \<and> P_5c_3 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_2)) \<or>
+ (P_5c_3 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_2 \<and> Q_3b2_2) \<and> P_5d_2 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_1) \<or>
+ (P_5d_2 \<longrightarrow> (Q_3a_2 \<or> Q_3b1_2 \<and> Q_3b2_2) \<and> P_5c_3 \<and> (\<not> P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5d_1) \<and> \<not> Q_3a_1 \<and> \<not> Q_3b1_1 \<and> \<not> Q_3b2_1)) \<Longrightarrow>
+((((P_5c_1 \<longrightarrow>
+    ((Q_3a_1 \<and> \<not> Q_3a_2 \<or> Q_3a_2 \<and> \<not> Q_3a_1) \<or>
+     (Q_3b1_1 \<and> \<not> Q_3b1_2) \<and> Q_3b2_1 \<and> \<not> Q_3b2_2 \<or>
+     (Q_3b1_1 \<and> \<not> Q_3b1_2) \<and> Q_3b2_2 \<and> \<not> Q_3b2_1 \<or>
+     (Q_3b1_2 \<and> \<not> Q_3b1_1) \<and> Q_3b2_1 \<and> \<not> Q_3b2_2 \<or> (Q_3b1_2 \<and> \<not> Q_3b1_1) \<and> Q_3b2_2 \<and> \<not> Q_3b2_1) \<and>
+    (P_5d_1 \<and> \<not> P_5d_2 \<or> P_5d_2 \<and> \<not> P_5d_1)) \<and>
+   (P_5c_2 \<longrightarrow>
+    ((Q_3a_1 \<and> \<not> Q_3a_2 \<or> Q_3a_2 \<and> \<not> Q_3a_1) \<or>
+     (Q_3b1_1 \<and> \<not> Q_3b1_2) \<and> Q_3b2_1 \<and> \<not> Q_3b2_2 \<or>
+     (Q_3b1_1 \<and> \<not> Q_3b1_2) \<and> Q_3b2_2 \<and> \<not> Q_3b2_1 \<or>
+     (Q_3b1_2 \<and> \<not> Q_3b1_1) \<and> Q_3b2_1 \<and> \<not> Q_3b2_2 \<or> (Q_3b1_2 \<and> \<not> Q_3b1_1) \<and> Q_3b2_2 \<and> \<not> Q_3b2_1) \<and>
+    (P_5d_1 \<and> \<not> P_5d_2 \<or> P_5d_2 \<and> \<not> P_5d_1)) \<and>
+   (P_5c_3 \<longrightarrow>
+    ((Q_3a_1 \<and> \<not> Q_3a_2 \<or> Q_3a_2 \<and> \<not> Q_3a_1) \<or>
+     (Q_3b1_1 \<and> \<not> Q_3b1_2) \<and> Q_3b2_1 \<and> \<not> Q_3b2_2 \<or>
+     (Q_3b1_1 \<and> \<not> Q_3b1_2) \<and> Q_3b2_2 \<and> \<not> Q_3b2_1 \<or>
+     (Q_3b1_2 \<and> \<not> Q_3b1_1) \<and> Q_3b2_1 \<and> \<not> Q_3b2_2 \<or> (Q_3b1_2 \<and> \<not> Q_3b1_1) \<and> Q_3b2_2 \<and> \<not> Q_3b2_1) \<and>
+    (P_5d_1 \<and> \<not> P_5d_2 \<or> P_5d_2 \<and> \<not> P_5d_1))) \<and>
+  (P_5d_1 \<longrightarrow>
+   ((Q_3a_1 \<and> \<not> Q_3a_2 \<or> Q_3a_2 \<and> \<not> Q_3a_1) \<or>
+    (Q_3b1_1 \<and> \<not> Q_3b1_2) \<and> Q_3b2_1 \<and> \<not> Q_3b2_2 \<or>
+    (Q_3b1_1 \<and> \<not> Q_3b1_2) \<and> Q_3b2_2 \<and> \<not> Q_3b2_1 \<or>
+    (Q_3b1_2 \<and> \<not> Q_3b1_1) \<and> Q_3b2_1 \<and> \<not> Q_3b2_2 \<or> (Q_3b1_2 \<and> \<not> Q_3b1_1) \<and> Q_3b2_2 \<and> \<not> Q_3b2_1) \<and>
+   (P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5c_3 \<or> P_5c_2 \<and> \<not> P_5c_1 \<and> \<not> P_5c_3 \<or> P_5c_3 \<and> \<not> P_5c_1 \<and> \<not> P_5c_2)) \<and>
+  (P_5d_2 \<longrightarrow>
+   ((Q_3a_1 \<and> \<not> Q_3a_2 \<or> Q_3a_2 \<and> \<not> Q_3a_1) \<or>
+    (Q_3b1_1 \<and> \<not> Q_3b1_2) \<and> Q_3b2_1 \<and> \<not> Q_3b2_2 \<or>
+    (Q_3b1_1 \<and> \<not> Q_3b1_2) \<and> Q_3b2_2 \<and> \<not> Q_3b2_1 \<or>
+    (Q_3b1_2 \<and> \<not> Q_3b1_1) \<and> Q_3b2_1 \<and> \<not> Q_3b2_2 \<or> (Q_3b1_2 \<and> \<not> Q_3b1_1) \<and> Q_3b2_2 \<and> \<not> Q_3b2_1) \<and>
+   (P_5c_1 \<and> \<not> P_5c_2 \<and> \<not> P_5c_3 \<or> P_5c_2 \<and> \<not> P_5c_1 \<and> \<not> P_5c_3 \<or> P_5c_3 \<and> \<not> P_5c_1 \<and> \<not> P_5c_2))) \<and>
+ ((\<not> P_5c_2 \<and> \<not> P_5c_3 \<or> \<not> P_5c_1 \<and> \<not> P_5c_3 \<or> \<not> P_5c_1 \<and> \<not> P_5c_2) \<and> (\<not> P_5d_2 \<or> \<not> P_5d_1)) \<and>
+ (\<not> Q_3a_2 \<or> \<not> Q_3a_1) \<and> (\<not> Q_3b1_2 \<or> \<not> Q_3b1_1) \<and> (\<not> Q_3b2_2 \<or> \<not> Q_3b2_1))
+"
+>>>>>>> Stashed changes
 
 notepad
 begin
@@ -54,11 +210,12 @@ begin
 (*
   proof (rule classical)
     assume "\<not> ?thesis"
-    then show ?thesis by smt
+    then show ?thesis by force
   qed
 *)
 end
 
+<<<<<<< Updated upstream
 lemma "((speak_y \<longrightarrow> broadcast_x \<and> isReg_y_x \<and> \<not>listen_y \<and> (listen_y1 \<longrightarrow> broadcast_x \<and> differ_y1_y \<and> isReg_y1_x)) \<and> (listen_y \<longrightarrow> broadcast_x \<and> isReg_y_x \<and> \<not>speak_y \<and> (listen_y1 \<longrightarrow> broadcast_x \<and> differ_y1_y \<and> isReg_y1_x)))
 \<Longrightarrow>
 ((\<not>speak_y \<or> broadcast_x) 
@@ -157,6 +314,74 @@ lemma "((speak_y \<longrightarrow> broadcast_x \<and> isReg_y_x \<and> \<not>lis
 \<and> (\<not>listen_y1 \<or> speak_Px \<or> listen_Px))"
   by blast
 
+=======
+locale geometry = 
+  fixes parallel :: "'line \<Rightarrow> 'line \<Rightarrow> bool"
+  and intersect :: "'line \<Rightarrow> 'line \<Rightarrow> bool"
+  and angle :: "'line \<Rightarrow> 'line \<Rightarrow> nat" 
+  assumes axiom1: "parallel l1 l2 \<Longrightarrow> angle l1 l2 = 0"
+  and axiom2: "intersect l1 l2 \<Longrightarrow> \<not> (angle l1 l2 = 0)"
+begin
+lemma parallel_not_intersect: "parallel l1 l2 \<Longrightarrow> \<not> intersect l1 l2"
+  using axiom1 axiom2 by blast
+end
+
+lemma test_2: "(((P_5c_1 \<longrightarrow> (Q_1a_1 \<or> Q_1b_1) \<and> P_5d_1 \<and> \<not>Q_1a_2 \<and> \<not>Q_1a_3 \<and> \<not>Q_1b_2) \<or>
+  (P_5d_1 \<longrightarrow> (Q_1a_1 \<or> Q_1b_1) \<and> P_5c_1 \<and> \<not>Q_1a_2 \<and> \<not>Q_1a_3 \<and> \<not>Q_1b_2)) \<or>
+ ((P_5c_1 \<longrightarrow> (Q_1a_1 \<or> Q_1b_2) \<and> P_5d_1 \<and> \<not>Q_1a_2 \<and> \<not>Q_1a_3 \<and> \<not>Q_1b_1) \<or>
+  (P_5d_1 \<longrightarrow> (Q_1a_1 \<or> Q_1b_2) \<and> P_5c_1 \<and> \<not>Q_1a_2 \<and> \<not>Q_1a_3 \<and> \<not>Q_1b_1)) \<or>
+ ((P_5c_1 \<longrightarrow> (Q_1a_2 \<or> Q_1b_1) \<and> P_5d_1 \<and> \<not>Q_1a_1 \<and> \<not>Q_1a_3 \<and> \<not>Q_1b_2) \<or>
+  (P_5d_1 \<longrightarrow> (Q_1a_2 \<or> Q_1b_1) \<and> P_5c_1 \<and> \<not>Q_1a_1 \<and> \<not>Q_1a_3 \<and> \<not>Q_1b_2)) \<or>
+ ((P_5c_1 \<longrightarrow> (Q_1a_2 \<or> Q_1b_2) \<and> P_5d_1 \<and> \<not>Q_1a_1 \<and> \<not>Q_1a_3 \<and> \<not>Q_1b_1) \<or>
+  (P_5d_1 \<longrightarrow> (Q_1a_2 \<or> Q_1b_2) \<and> P_5c_1 \<and> \<not>Q_1a_1 \<and> \<not>Q_1a_3 \<and> \<not>Q_1b_1)) \<or>
+ ((P_5c_1 \<longrightarrow> (Q_1a_3 \<or> Q_1b_1) \<and> P_5d_1 \<and> \<not>Q_1a_1 \<and> \<not>Q_1a_2 \<and> \<not>Q_1b_2) \<or>
+  (P_5d_1 \<longrightarrow> (Q_1a_3 \<or> Q_1b_1) \<and> P_5c_1 \<and> \<not>Q_1a_1 \<and> \<not>Q_1a_2 \<and> \<not>Q_1b_2)) \<or>
+ (P_5c_1 \<longrightarrow> (Q_1a_3 \<or> Q_1b_2) \<and> P_5d_1 \<and> \<not>Q_1a_1 \<and> \<not>Q_1a_2 \<and> \<not>Q_1b_1) \<or>
+ (P_5d_1 \<longrightarrow> (Q_1a_3 \<or> Q_1b_2) \<and> P_5c_1 \<and> \<not>Q_1a_1 \<and> \<not>Q_1a_2 \<and> \<not>Q_1b_1))
+\<Longrightarrow>
+(((P_5c_1 \<longrightarrow>
+	(Q_1a_1 \<and> \<not>Q_1a_2 \<and> \<not>Q_1a_3 
+	\<or> Q_1a_2 \<and> \<not>Q_1a_1 \<and> \<not>Q_1a_3 
+	\<or> Q_1a_3 \<and> \<not>Q_1a_1 \<and> \<not>Q_1a_2
+	\<or> Q_1b_1 \<and> \<not>Q_1b_2 
+	\<or> Q_1b_2 \<and> \<not>Q_1b_1) \<and>
+	P_5d_1) \<and>
+(P_5d_1 \<longrightarrow>
+	(Q_1a_1 \<and> \<not>Q_1a_2 \<and> \<not>Q_1a_3 
+	\<or> Q_1a_2 \<and> \<not>Q_1a_1 \<and> \<not>Q_1a_3 
+	\<or> Q_1a_3 \<and> \<not>Q_1a_1 \<and> \<not>Q_1a_2
+	\<or> Q_1b_1 \<and> \<not>Q_1b_2 
+	\<or> Q_1b_2 \<and> \<not>Q_1b_1) \<and>
+	P_5c_1) \<and>
+(\<not>Q_1a_2 \<and> \<not>Q_1a_3 \<or> \<not>Q_1a_1 \<and> \<not>Q_1a_3 \<or> \<not>Q_1a_1 \<and> \<not>Q_1a_2) \<and> (\<not>Q_1b_2 \<or> \<not>Q_1b_1)))"
+
+(*
+locale comparision_1 = 
+  fixes test_synchron :: "(string * string list) list list list" 
+  and test_triggers :: "(string * string list) list list list" 
+  and BIP_Connector_2 :: "((string \<times> string) list \<times> (string \<times> string) list list) list"
+  and JavaBIP_Connector_2 :: "((string \<times> string) list list \<times> (string \<times> string) list list list) list"
+  assumes axiom1: "BIP_Connector_2 = List.product (concat (mk_pair_4 test_synchron)) (product_lists (mk_Trigger_list (mk_pair_4_no_product test_triggers)))"
+  and axiom2: "JavaBIP_Connector_2 = mk_jvb (mk_pair_4_no_product test_synchron) (mk_Trigger_list (mk_pair_4_no_product test_triggers))"
+begin
+lemma test_1: "(\<exists>connector \<in> set BIP_Connector_2.\<exists>sync\<in>set (fst connector).(P (fst sync) (snd sync) \<longrightarrow> 
+((\<exists>trig\<in>set (snd connector).\<forall>elm\<in>set trig. Q (fst elm) (snd elm)) 
+  \<and> (\<forall>sync1\<in>set (fst connector) - {sync}. P (fst sync1) (snd sync1))
+  \<and> (\<forall>rs \<in> remaining_pairs (all_pairs test_synchron) (fst connector). \<not>P (fst rs) (snd rs))
+  \<and> (\<forall>rt \<in> remaining_pairs (all_pairs test_triggers) (concat (snd connector)). \<not>Q (fst rt) (snd rt)))
+)) \<Longrightarrow>
+((\<forall>connector\<in>set JavaBIP_Connector_2.\<forall>sync_list\<in>set (fst connector).\<forall>sync\<in>set sync_list. (P (fst sync) (snd sync) \<longrightarrow> 
+      ((\<exists>trig_list\<in>set(snd connector).\<exists>trig\<in>set trig_list. \<forall>t_elm\<in>set trig. (Q (fst t_elm) (snd t_elm)
+      \<and> (\<forall>h \<in> set (lookup_3 (fst t_elm) test_triggers) - {snd t_elm}. \<not>Q (fst t_elm) h)))
+      \<and> (\<forall>sync_1\<in>set(fst connector)-{sync_list}.\<exists>s_elm_1\<in>set(sync_1). P (fst s_elm_1) (snd s_elm_1)
+      \<and> (\<forall>l \<in> set (lookup_3 (fst s_elm_1) test_synchron) - {snd s_elm_1}. \<not>P (fst s_elm_1) l))
+    )
+))
+\<and> (\<forall>j \<in> set test_synchron. \<forall>u \<in> set j. \<forall>t \<in> set u. \<exists>l \<in> set (snd t).\<forall>l1 \<in> set (snd t) - {l}. \<not> P (fst t) l1) 
+\<and> (\<forall>i \<in> set test_triggers. \<forall>v \<in> set i. \<forall>k \<in> set v. \<exists>h \<in> set (snd k).\<forall>h1 \<in> set (snd k) - {h}. \<not> Q (fst k) h1))"
+  
+end*)
+>>>>>>> Stashed changes
 (*
 by presburger
 value "
